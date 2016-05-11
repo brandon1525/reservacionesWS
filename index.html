@@ -3,6 +3,7 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="css/index.css">
 		<meta charset="UTF-8">
 		<title>Reserva</title>
 	</head>
@@ -13,6 +14,9 @@
 					<div class="col-xs-12 col-md-offset-4 col-md-4">
 						<p><h1>Selecciona tu destino</h1></p>
 						<p><small>Arrastra el punto y confirma tu destino</small></p>
+					</div>
+					<div class="col-xs-12" id="map"></div>
+					<div class="col-xs-12 col-md-offset-4 col-md-4">
 						<button class="btn btn-block btn-lg btn-default">Buscar</button>
 					</div>
 				</div>
@@ -47,4 +51,67 @@
 	</body>
 	<script type="text/javascript" src="js/angular.min.js"></script>
 	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript">
+	var marker;
+	var geocoder;
+	var map;
+	var infowindow;
+	function initMap() {
+		var myLatLng = {lat: 23.4598087, lng: -100.3507389};
+		map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 6,
+			center: myLatLng
+		});
+
+		marker = new google.maps.Marker({
+			map: map,
+			draggable: true,
+			animation: google.maps.Animation.DROP,
+			position: {lat: 23.4598087, lng: -100.3507389}
+		});
+		geocoder = new google.maps.Geocoder;
+		infowindow = new google.maps.InfoWindow;
+		marker.addListener('click', toggleBounce);
+		marker.addListener('dragend', obtenerInfo);
+	}
+
+	function toggleBounce() {
+		if (marker.getAnimation() !== null) {
+			marker.setAnimation(null);
+		} else {
+			marker.setAnimation(google.maps.Animation.BOUNCE);
+		}
+	}
+	function obtenerInfo(){
+		console.log("here");
+		var lat = this.getPosition().lat();
+		console.log(lat);
+		var lng = this.getPosition().lng();
+		console.log(lng);
+		var latlng = {lat: lat, lng: lng};
+		geocoder.geocode({'location': latlng}, function(results, status) {
+			if (status === google.maps.GeocoderStatus.OK) {
+				if (results[1]) {
+					infowindow.setContent(results[1].formatted_address);
+					//infowindow.open(map, this);
+					console.log("como que pedo");
+				} else {
+					window.alert('No results found');
+				}
+			} else {
+				window.alert('Geocoder failed due to: ' + status);
+			}
+		});
+
+	}
+	$(window).resize(function () {
+		var h = $(window).height(),
+		offsetTop = 30; // Calculate the top offset
+		$('#map').css('height', (h - offsetTop));
+	}).resize();
+    </script>
+	<script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7zi0iyv1inGdIwlU5PV4n6S7pVRyKwQA&callback=initMap">
+    </script>
+
 </html>
