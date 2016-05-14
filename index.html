@@ -52,49 +52,75 @@
 	<script type="text/javascript" src="js/angular.min.js"></script>
 	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
 	<script type="text/javascript">
-	var marker;
+	var markerS;
+	var markerLl;
+	var LineS;
+	var LineLl;
+	var linea;
 	var geocoder;
 	var map;
 	var infowindow;
+	var imageMS = 'img/Salida.png';
+	var imageMLl='img/Llegada.png';
 	function initMap() {
 		var myLatLng = {lat: 23.4598087, lng: -100.3507389};
 		map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 6,
+			zoom: 4,
 			center: myLatLng
 		});
 
-		marker = new google.maps.Marker({
+		markerS = new google.maps.Marker({
 			map: map,
 			draggable: true,
 			animation: google.maps.Animation.DROP,
-			position: {lat: 23.4598087, lng: -100.3507389}
+			position: {lat: 21.864865607746523, lng: -102.28433265000001},
+			icon: imageMS
+		});
+		markerLl = new google.maps.Marker({
+			map: map,
+			draggable: true,
+			animation: google.maps.Animation.DROP,
+			position:{lat: 36.24719896448074, lng: -115.11636390000001},
+			icon:imageMLl
 		});
 		geocoder = new google.maps.Geocoder;
 		infowindow = new google.maps.InfoWindow;
-		marker.addListener('click', toggleBounce);
-		marker.addListener('dragend', obtenerInfo);
+		markerLl.addListener('click', toggleBounceLl);
+		markerLl.addListener('dragend', obtenerInfoLl);
+		markerS.addListener('click', toggleBounceS);
+		markerS.addListener('dragend', obtenerInfoS);
 	}
-
-	function toggleBounce() {
-		if (marker.getAnimation() !== null) {
-			marker.setAnimation(null);
+	//function borrar(){
+  	//	flightPath.setMap(null);
+	//}
+	function toggleBounceS() {
+		if (markerS.getAnimation() !== null) {
+			markerS.setAnimation(null);
 		} else {
-			marker.setAnimation(google.maps.Animation.BOUNCE);
+			markerS.setAnimation(google.maps.Animation.BOUNCE);
 		}
 	}
-	function obtenerInfo(){
-		console.log("here");
+	function toggleBounceLl() {
+		if (markerLl.getAnimation() !== null) {
+			markerLl.setAnimation(null);
+		} else {
+			markerLl.setAnimation(google.maps.Animation.BOUNCE);
+		}
+	}
+	function obtenerInfoS(){
+		console.log("Salida:");
 		var lat = this.getPosition().lat();
 		console.log(lat);
 		var lng = this.getPosition().lng();
 		console.log(lng);
+		LineS={lat: lat,lng: lng};
 		var latlng = {lat: lat, lng: lng};
 		geocoder.geocode({'location': latlng}, function(results, status) {
 			if (status === google.maps.GeocoderStatus.OK) {
 				if (results[1]) {
 					infowindow.setContent(results[1].formatted_address);
 					//infowindow.open(map, this);
-					console.log("como que pedo");
+					//console.log("como que pedo");
 				} else {
 					window.alert('No results found');
 				}
@@ -102,8 +128,49 @@
 				window.alert('Geocoder failed due to: ' + status);
 			}
 		});
-
 	}
+	function obtenerInfoLl(){
+		console.log("Llegada:");
+		var lat = this.getPosition().lat();
+		console.log(lat);
+		var lng = this.getPosition().lng();
+		console.log(lng);
+		LineLl={lat: lat,lng: lng};
+		var latlng = {lat: lat, lng: lng};
+		geocoder.geocode({'location': latlng}, function(results, status) {
+			if (status === google.maps.GeocoderStatus.OK) {
+				if (results[1]) {
+					infowindow.setContent(results[1].formatted_address);
+					//infowindow.open(map, this);
+					//console.log("como que pedo");
+				} else {
+					window.alert('No results found');
+				}
+			} else {
+				window.alert('Geocoder failed due to: ' + status);
+			}
+		});
+		var LineaVuelo=[LineS,LineLl];
+		dibujaLinea(LineaVuelo);
+		marca();
+  		
+  	}
+  	function dibujaLinea(LineaVuelo){
+		linea = new google.maps.Polyline({
+    		path: LineaVuelo,
+    		geodesic: true,
+    		strokeColor: '#FF0000',
+    		strokeOpacity: 1.0,
+    		strokeWeight: 2
+  		});
+  	}
+  	function marca(){
+  		linea.setMap(map);
+  	}
+  	function desmarca(){
+  		linea.setMap(null);
+  	}
+
 	$(window).resize(function () {
 		var h = $(window).height(),
 		offsetTop = 30; // Calculate the top offset
