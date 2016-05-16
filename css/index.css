@@ -1,3 +1,37 @@
 #map{
 	height: 100%; 
 }
+video#bgvid {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -100;
+	-ms-transform: translateX(-50%) translateY(-50%);
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+	background-size: cover; 
+}
+.panel_fondo{
+	border-radius: 12px;
+	background-color: transparent;
+	border-color: transparent !important;
+}
+.panel_fondo >.panel-heading{
+	color: white;
+    background-color: #009688;
+	background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 0) 100%);
+	border-radius: 12px;
+}
+.panel_fondo >.panel-body{
+	background-color: rgba(0, 150, 136, 0.21) !important;
+	background-color: #fff !important;
+}
+div#collapse1,div#collapse2,div#collapse3,div#collapse4{
+	background-color: white;
+	border-radius: 12px;
+}

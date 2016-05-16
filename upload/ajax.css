@@ -1,0 +1,18 @@
+#cajaformulario div{
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 500px;
+    width: 45%;
+    border: 1px solid #999999;
+    margin-left: 25%;
+    background-image: url(images/527e3cf6afbf84cb1b63345ddde33923%20copia.png);
+}
+
+#cajadatos{
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #999999;
+}
+#cajadatos progress{
+    width: 100%;
+}
