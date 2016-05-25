@@ -1,301 +1,380 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" type="text/css" href="css/index.css">
-		<meta charset="UTF-8">
-		<title>Reserva</title>
-	</head>
-	<body >
-		<video autoplay loop id="bgvid">
-			<source src="video/409020694.mp4" type="video/mp4">
-			</video>
-		<div class="container">
-			<header id="cabecera">
-				<div class="row">
-					<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-4 col-md-4">
-						<img class="img-responsive" src="img/logo.png" style="width: 100%;">
-					</div>
-				</div>
-				
-			</header>
-			<section >
-				<h2 id="reloj_contador"></h2>
-				<p ></p>
-			</section>
-			<section>
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="panel-group" id="accordion1">
-							<div class="panel_fondo panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion1" href="#collapse1">Vuelo</a>
-									</h4>
-								</div>
-								<div id="collapse1" class="panel-collapse collapse in">
-									<div class="panel-body">
-										<p><h1>Selecciona tu destino</h1></p>
-										<p><small>Arrastra el punto y confirma tu destino</small></p>
-										<button type="button" class="btn btn-default btn-block" aria-label="Left Align" id="btn_mostrar_mapa" style="display: none;">
-											<span class="glyphicon glyphicon-map-marker" aria-hidden="true"> Mostrar mapa</span>
-										</button>
-										<div class="col-xs-12" id="map" style="margin-bottom: 10px;"></div>
-										<div class="row" style="margin-top: 20px;">
-											<div class="col-xs-12 col-md-6 text-center">
-												<div class="input-group">
-													<span class="input-group-addon" id="basic-addon1">Salida</span>
-													<input type="text" class="form-control" placeholder="Salida" aria-describedby="basic-addon1" disabled id="text_salida">
-												</div>
-											</div>
-											<div class="col-xs-12 col-md-6 text-center">
-												<div class="input-group">
-													<span class="input-group-addon" id="basic-addon1">Llegada</span>
-													<input type="text" class="form-control" placeholder="Llegada" aria-describedby="basic-addon1" disabled id="text_llegada">
-												</div>
-											</div>
-										</div>
-										<div class="row" style="height: 300px;">
-											<div class="col-xs-4" id="aeromexico">
-												<img src="img/aeromexico.png" style="width: 100%;">
-											</div>
-											<div class="col-xs-4" id="interjet">
-												<img src="img/interjet.png" style="width: 100%;">
-											</div>
-											<div class="col-xs-4" id="uber">
-												<img src="img/uber_transparent.png" style="width: 100%;" >
-											</div>
-											<div class="col-xs-4" id="mexicana">
-												<img src="img/Mexicana_Logo.png" style="width: 100%;">
-											</div>
-											<div class="col-xs-4" id="privejets">
-												<img src="img/prive_jets.png" style="width: 100%;">
-											</div>
-											<div class="col-xs-4" id="volaris">
-												<img src="img/volaris.png" style="width: 100%;">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="panel-group" id="accordion2">
-							<div class="panel_fondo panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion2" href="#collapse2">Hotel</a>
-									</h4>
-								</div>
-								<div id="collapse2" class="panel-collapse collapse">
-									<div class="panel-body">
-										<div class="table-responsive">
-											<table class="table table-striped" id="table_hoteles">
-												<thead>
-													<tr>
-														<th></th>
-														<th>Nombre</th>
-														<th>Ciudad</th>
-														<th>Estrellas</th>
-													</tr>
-												</thead>
-												<tbody>
+   <head>
+      <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css">
+      <link rel="stylesheet" type="text/css" href="css/index.css">
+      <style>
+         .activo{
+         background-color: red;	
+         }
+         .desactivo{
+         background-color: blue;	
+         }
+         .asiento{
+         margin: 5px;
+         width: 10px;
+         height: 10px;
+         }
+         #fondo-avion{
+         width: 1100 px; 
+         height: 63px; 
+         border-radius: 200px 100px 100px 200px; 
+         background-color: #b8b4ad;
+         border: 2px solid;
+         }	
+      </style>
+      <meta charset="UTF-8">
+      <title>Reserva</title>
+   </head>
+   <body >
+      <video autoplay loop id="bgvid">
+         <source src="video/409020694.mp4" type="video/mp4">
+      </video>
+      <div class="container">
+         <header id="cabecera">
+            <div class="row">
+               <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-4 col-md-4">
+                  <img class="img-responsive" src="img/logo.png" style="width: 100%;">
+               </div>
+            </div>
+         </header>
+         <section >
+            <h2 id="reloj_contador"></h2>
+            <p ></p>
+         </section>
+         <section>
+            <div class="row">
+               <div class="col-xs-12">
+                  <div class="panel-group" id="accordion1">
+                     <div class="panel_fondo panel panel-default">
+                        <div class="panel-heading">
+                           <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion1" href="#collapse1">Vuelo</a>
+                           </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                           <div class="panel-body">
+                              <p>
+                              <h1>Selecciona tu destino</h1>
+                              </p>
+                              <p><small>Arrastra el punto y confirma tu destino</small></p>
+                              <button type="button" class="btn btn-default btn-block" aria-label="Left Align" id="btn_mostrar_mapa" style="display: none;">
+                              <span class="glyphicon glyphicon-map-marker" aria-hidden="true"> Mostrar mapa</span>
+                              </button>
+                              <div class="col-xs-12" id="map" style="margin-bottom: 10px;"></div>
+                              <div class="row" style="margin-top: 20px;">
+                                 <div class="col-xs-12 col-md-6 text-center">
+                                    <div class="input-group">
+                                       <span class="input-group-addon" id="basic-addon1">Salida</span>
+                                       <input type="text" class="form-control" placeholder="Salida" aria-describedby="basic-addon1" disabled id="text_salida">
+                                    </div>
+                                 </div>
+                                 <div class="col-xs-12 col-md-6 text-center">
+                                    <div class="input-group">
+                                       <span class="input-group-addon" id="basic-addon1">Llegada</span>
+                                       <input type="text" class="form-control" placeholder="Llegada" aria-describedby="basic-addon1" disabled id="text_llegada">
+                                    </div>
+                                 </div>
+                                 <div class="col-xs-12 col-md-6 text-center">
+                                    <div  class="input-group">
+                                       <span class="input-group-addon">Fecha de salida</span>
+                                       <input type="text" class="form-control" placeholder="Fecha salida" aria-describedby="basic-addon1" id="fechaS">
+                                       <span class="input-group-addon">Hora de salida</span>
+                                       <input type="text" class="form-control" placeholder="Hora salida" aria-describedby="basic-addon1" id="horaS">
+                                    </div>
+                                 </div>
+                                 <div class="col-xs-12 col-md-6 text-center">
+                                    <div class="input-group">
+                                       <span class="input-group-addon">Numero de asientos</span>
+                                       <input type="number" class="form-control " placeholder="Numero de asientos" aria-describedby="basic-addon1" id="num">
+                                       <button type="submit" id="btn1" class="form-control">Buscar</button>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="tabla1 row">
+                              	<div class="table-responsive">
+									<table id="Aerolinea_vuelos" class="table">
+										<thead>
+											<tr>
+												<th>Aerolinea</th>
+												<th>Fecha Salida</th>
+												<th>Hora Salida</th>
+												<th>Fecha Llegada</th>
+												<th>Hora Llegada</th>
+												<th>Numero de Vuelo</th>
+												<th>Precio</th>
+											</tr>
+										</thead>
+										<tbody class="metelo">
+											<tr>
 
-												</tbody>
-											</table>
-										</div>
-									</div>
+											</tr>
+										</tbody>
+									</table>
 								</div>
-							</div>
-						</div>
-						<div class="panel-group" id="accordion3">
-							<div class="panel_fondo panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion3" href="#collapse3">Paquetes</a>
-									</h4>
-								</div>
-								<div id="collapse3" class="panel-collapse collapse">
-									<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-								</div>
-							</div>
-						</div>
-						<div class="panel-group" id="accordion4">
-							<div class="panel_fondo panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion4" href="#collapse4">Comprobante de pago</a>
-									</h4>
-								</div>
-								<div id="collapse4" class="panel-collapse collapse">
-									<div class="panel-body">
-										<div class="form-group">
-											<label for="palabra_secreta">Palabra secreta</label>
-											<input class="form-control" id="palabra_secreta" type="text">
-										</div>
-										<div class="form-group">
-											<label for="ejemplo_archivo_1">Adjuntar un archivo</label>
-											<input type="file" id="archivo_1">
-											<p class="help-block">Sube tu archivo</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-	</body>
-	<script type="text/javascript" src="js/angular.min.js"></script>
-	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
-	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/index.js"></script>
-	<script type="text/javascript">
-	var markerS;
-	var markerLl;
-	var LineS;
-	var LineLl;
-	var linea;
-	var geocoder;
-	var map;
-	var infowindow;
-	var imageMS = 'img/Salida.png';
-	var imageMLl='img/Llegada.png';
-	function initMap() {
-		var myLatLng = {lat: 23.4598087, lng: -100.3507389};
-		map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 5,
-			center: myLatLng,
-			scrollwheel: false,
-			navigationControl: false,
-			mapTypeControl: false,
-			scaleControl: false,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		});
+                              	
+                              </div>
+                              <!-- Contenido del mapeo del avion-->
+                                 <div id="fondo-avion">
 
-		markerS = new google.maps.Marker({
-			map: map,
-			draggable: true,
-			animation: google.maps.Animation.DROP,
-			position: {lat: 21.864865607746523, lng: -102.28433265000001},
-			icon: imageMS
-		});
-		markerLl = new google.maps.Marker({
-			map: map,
-			draggable: true,
-			animation: google.maps.Animation.DROP,
-			position:{lat: 21.24719896448074, lng: -105.11636390000001},
-			icon:imageMLl
-		});
-		geocoder = new google.maps.Geocoder;
-		infowindow = new google.maps.InfoWindow;
-		markerLl.addListener('click', toggleBounceLl);
-		markerLl.addListener('dragend', obtenerInfoLl);
-		markerS.addListener('click', toggleBounceS);
-		markerS.addListener('dragend', obtenerInfoS);
-	}
-	//function borrar(){
-  	//	flightPath.setMap(null);
-	//}
-	function toggleBounceS() {
-		if (markerS.getAnimation() !== null) {
-			markerS.setAnimation(null);
-		} else {
-			markerS.setAnimation(google.maps.Animation.BOUNCE);
-		}
-	}
-	function toggleBounceLl() {
-		if (markerLl.getAnimation() !== null) {
-			markerLl.setAnimation(null);
-		} else {
-			markerLl.setAnimation(google.maps.Animation.BOUNCE);
-		}
-	}
-	function obtenerInfoS(){
-		//console.log("Salida:");
-		var lat = this.getPosition().lat();
-		//console.log(lat);
-		var lng = this.getPosition().lng();
-		//console.log(lng);
-		LineS={lat: lat,lng: lng};
-		var latlng = {lat: lat, lng: lng};
-		geocoder.geocode({'location': latlng}, function(results, status) {
-			if (status === google.maps.GeocoderStatus.OK) {
-				if (results[1]) {
-					$.each(results,function(index,element){
-						if(element.types[0]=="administrative_area_level_1"){
-							//console.log(element);
-							$('#text_salida').val(element.address_components[0].long_name);
-							if($('#text_salida').val()!="" && $('#text_llegada').val()!=""){
-								$('#map').hide();
-								$('#btn_mostrar_mapa').show();
-								buscar_aerolineas_origen_destino();
-								buscarHotel_destino();
-							}
-						}
-					});
-				} else {
-					window.alert('No results found');
-				}
-			} else {
-				window.alert('Geocoder failed due to: ' + status);
-			}
-		});
-	}
-	function obtenerInfoLl(){
-		//console.log("Llegada:");
-		var lat = this.getPosition().lat();
-		//console.log(lat);
-		var lng = this.getPosition().lng();
-		//console.log(lng);
-		LineLl={lat: lat,lng: lng};
-		var latlng = {lat: lat, lng: lng};
-		geocoder.geocode({'location': latlng}, function(results, status) {
-			if (status === google.maps.GeocoderStatus.OK) {
-				if (results[1]) {
-					$.each(results,function(index,element){
-						if(element.types[0]=="administrative_area_level_1"){
-							$('#text_llegada').val(element.address_components[0].long_name);
-							if($('#text_salida').val()!="" && $('#text_llegada').val()!=""){
-								$('#map').hide();
-								$('#btn_mostrar_mapa').show();
-								buscar_aerolineas_origen_destino();
-								buscarHotel_destino();
-							}
-						}
-					});
-				} else {
-					window.alert('No results found');
-				}
-			} else {
-				window.alert('Geocoder failed due to: ' + status);
-			}
-		});
-		var LineaVuelo=[LineS,LineLl];
-		//dibujaLinea(LineaVuelo);
-		
-  		
-  	}
-  	function dibujaLinea(LineaVuelo){
-		linea = new google.maps.Polyline({
-    		path: LineaVuelo,
-    		geodesic: true,
-    		strokeColor: '#FF0000',
-    		strokeOpacity: 1.0,
-    		strokeWeight: 2
-  		});
-  	}
-  	function marca(){
-  		linea.setMap(map);
-  	}
-  	function desmarca(){
-  		linea.setMap(null);
-  	}
+                                 </div>
+                              <!-- Formularios -->
+                              <div id="formularios"></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="panel-group" id="accordion2">
+                     <div class="panel_fondo panel panel-default">
+                        <div class="panel-heading">
+                           <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2">Hotel</a>
+                           </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                           <div class="panel-body">
+                              <div class="table-responsive">
+                                 <table class="table table-striped" id="table_hoteles">
+                                    <thead>
+                                       <tr>
+                                          <th></th>
+                                          <th>Nombre</th>
+                                          <th>Ciudad</th>
+                                          <th>Estrellas</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="panel-group" id="accordion3">
+                     <div class="panel_fondo panel panel-default">
+                        <div class="panel-heading">
+                           <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion3" href="#collapse3">Paquetes</a>
+                           </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                           <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="panel-group" id="accordion4">
+                     <div class="panel_fondo panel panel-default">
+                        <div class="panel-heading">
+                           <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion4" href="#collapse4">Comprobante de pago</a>
+                           </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                           <div class="panel-body">
+                              <div class="form-group">
+                                 <label for="palabra_secreta">Palabra secreta</label>
+                                 <input class="form-control" id="palabra_secreta" type="text">
+                              </div>
+                              <div class="form-group">
+                                 <label for="ejemplo_archivo_1">Adjuntar un archivo</label>
+                                 <input type="file" id="archivo_1">
+                                 <p class="help-block">Sube tu archivo</p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+      </div>
+   </body>
+   <script type="text/javascript" src="js/angular.min.js"></script>
+   <script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+   <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="js/index.js"></script>
+   <script>
+      var markerS;
+      var markerLl;
+      var LineS;
+      var LineLl;
+      var linea;
+      var geocoder;
+      var map;
+      var infowindow;
+      var imageMS = 'img/Salida.png';
+      var imageMLl='img/Llegada.png';
+      function initMap() {
+      	var myLatLng = {lat: 23.4598087, lng: -100.3507389};
+      	map = new google.maps.Map(document.getElementById('map'), {
+      		zoom: 5,
+      		center: myLatLng,
+      		scrollwheel: false,
+      		navigationControl: false,
+      		mapTypeControl: false,
+      		scaleControl: false,
+      		mapTypeId: google.maps.MapTypeId.ROADMAP
+      	});
+      
+      	markerS = new google.maps.Marker({
+      		map: map,
+      		draggable: true,
+      		animation: google.maps.Animation.DROP,
+      		position: {lat: 21.864865607746523, lng: -102.28433265000001},
+      		icon: imageMS
+      	});
+      	markerLl = new google.maps.Marker({
+      		map: map,
+      		draggable: true,
+      		animation: google.maps.Animation.DROP,
+      		position:{lat: 21.24719896448074, lng: -105.11636390000001},
+      		icon:imageMLl
+      	});
+      	geocoder = new google.maps.Geocoder;
+      	infowindow = new google.maps.InfoWindow;
+      	markerLl.addListener('click', toggleBounceLl);
+      	markerLl.addListener('dragend', obtenerInfoLl);
+      	markerS.addListener('click', toggleBounceS);
+      	markerS.addListener('dragend', obtenerInfoS);
+      }
+      //function borrar(){
+       	//	flightPath.setMap(null);
+      //}
+      function toggleBounceS() {
+      	if (markerS.getAnimation() !== null) {
+      		markerS.setAnimation(null);
+      	} else {
+      		markerS.setAnimation(google.maps.Animation.BOUNCE);
+      	}
+      }
+      function toggleBounceLl() {
+      	if (markerLl.getAnimation() !== null) {
+      		markerLl.setAnimation(null);
+      	} else {
+      		markerLl.setAnimation(google.maps.Animation.BOUNCE);
+      	}
+      }
+      function obtenerInfoS(){
+      	//console.log("Salida:");
+      	var lat = this.getPosition().lat();
+      	//console.log(lat);
+      	var lng = this.getPosition().lng();
+      	//console.log(lng);
+      	LineS={lat: lat,lng: lng};
+      	var latlng = {lat: lat, lng: lng};
+      	geocoder.geocode({'location': latlng}, function(results, status) {
+      		if (status === google.maps.GeocoderStatus.OK) {
+      			if (results[1]) {
+      				$.each(results,function(index,element){
+      					if(element.types[0]=="administrative_area_level_1"){
+      						//console.log(element);
+      						$('#text_salida').val(element.address_components[0].long_name);
+      						if($('#text_salida').val()!="" && $('#text_llegada').val()!=""){
+      							$('#map').hide();
+      							$('#btn_mostrar_mapa').show();
+      							buscar_aerolineas_origen_destino();
+      							buscarHotel_destino();
+      						}
+      					}
+      				});
+      			} else {
+      				window.alert('No results found');
+      			}
+      		} else {
+      			window.alert('Geocoder failed due to: ' + status);
+      		}
+      	});
+      }
+      function obtenerInfoLl(){
+      	//console.log("Llegada:");
+      	var lat = this.getPosition().lat();
+      	//console.log(lat);
+      	var lng = this.getPosition().lng();
+      	//console.log(lng);
+      	LineLl={lat: lat,lng: lng};
+      	var latlng = {lat: lat, lng: lng};
+      	geocoder.geocode({'location': latlng}, function(results, status) {
+      		if (status === google.maps.GeocoderStatus.OK) {
+      			if (results[1]) {
+      				$.each(results,function(index,element){
+      					if(element.types[0]=="administrative_area_level_1"){
+      						$('#text_llegada').val(element.address_components[0].long_name);
+      						if($('#text_salida').val()!="" && $('#text_llegada').val()!=""){
+      							$('#map').hide();
+      							$('#btn_mostrar_mapa').show();
+      							buscar_aerolineas_origen_destino();
+      							buscarHotel_destino();
+      						}
+      					}
+      				});
+      			} else {
+      				window.alert('No results found');
+      			}
+      		} else {
+      			window.alert('Geocoder failed due to: ' + status);
+      		}
+      	});
+      	var LineaVuelo=[LineS,LineLl];
+      	//dibujaLinea(LineaVuelo);
+      	
+       		
+       	}
+       	function dibujaLinea(LineaVuelo){
+      	linea = new google.maps.Polyline({
+         		path: LineaVuelo,
+         		geodesic: true,
+         		strokeColor: '#FF0000',
+         		strokeOpacity: 1.0,
+         		strokeWeight: 2
+       		});
+       	}
+       	function marca(){
+       		linea.setMap(map);
+       	}
+       	function desmarca(){
+       		linea.setMap(null);
+       	}
+   </script>
+   <script>
+      $(document).ready(function(){
+      	var asientos=0;
+      	var asientos2=0;
+      	var num=0;
+      	
+      	$("#btn1").click(function(){
 
-    </script>
-	<script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7zi0iyv1inGdIwlU5PV4n6S7pVRyKwQA&callback=initMap">
-    </script>
+			$.ajax({
+			    url : 'http://localhost/reservacionesWS/php/getaerolineasdestino.php',
+			    data : {destino: $("#text_llegada").val,fecha_s: $("#fechaS").val,hora_s: $("#horaS").val,asientos: $("#num").val},
+			    method : 'POST',
+			    dataType : 'json',
+			    mimeType: 'application/json'
+			}).done(function(json){
+			    console.log(json);
+			});
+      	});
+      $(document).on("click", ".asiento", function() { 
+      		console.log(asientos);
+      		if(asientos2==0){
+      			alert("Ingresa algun asiento");
+      		}
+      		if(asientos > 0){
+      			$(this).removeClass("desactivo").addClass("activo");
+      			console.log($(".Nasiento"));
+      			$(".Nasiento").eq(num).val($( ".asiento" ).index( this )+1);
+      			console.log( "Index: " + ($( ".asiento" ).index( this )+1) );
+      			asientos--;
+      			num++;
+      		}
 
+      });      
+      	$("#btn2").click(function(){
+      	});	
+      });
+   </script>
+   <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7zi0iyv1inGdIwlU5PV4n6S7pVRyKwQA&callback=initMap"></script>
 </html>
+COPY TO CLIPBOARD	 SEL
