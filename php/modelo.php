@@ -1,16 +1,16 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors','1');
-require 'db_connect.php';
+require 'db_connect/db_connect_aerolineas.php';
 class Modelo{
     function __construct(){
     }
-    public static function getAerolineas(){
-        try {
-            $consulta = "SELECT * FROM aerolinea";
+    public static function getAerolineasDestino($destino, $fecha_s, $hora_s, $asientos_requeridos){
+        try { 
+            $consulta = "SELECT vuelo.id, vuelo.origen, vuelo.destino, vuelo.fecha_s, vuelo.hora_s, vuelo.fecha_ll, vuelo.hora_ll, vuelo.precio, vuelo.asientos_totales, vuelo.asientos_disponibles, aerolinea.nombre AS nombre_aerolinea FROM vuelo, aerolinea WHERE vuelo.id_aerolinea = aerolinea.id and destino = ? AND fecha_s >= ? AND hora_s >= ? AND asientos_disponibles >= ? ORDER BY fecha_s, hora_s ASC";
             $comando = Database::getInstance()->getDb()->prepare($consulta);
             //$comando->execute(array($ruta));
-            $comando->execute();
+            $comando->execute(array($destino,$fecha_s,$hora_s,$asientos_requeridos));
             $rows = $comando->fetchAll(PDO::FETCH_ASSOC);
             if($rows){
                 return $rows;
@@ -22,11 +22,11 @@ class Modelo{
             return false;
         }
     }
-    public static function getAerolineas_origen_destino($origen, $destino){
+    public static function getVueloAsientos($id_vuelo){
         try {
-            $consulta = "SELECT * FROM aerolinea INNER JOIN (select * from vuelo where origen=? and destino=?) as T1 ON aerolinea.id=T1.id_aerolinea";
+            $consulta = "SELECT id,asiento,id_vuelo FROM  pasajero WHERE id_vuelo = ? ORDER BY asiento ASC";
             $comando = Database::getInstance()->getDb()->prepare($consulta);
-            $comando->execute(array($origen,$destino));
+            $comando->execute(array($id_vuelo));
             $rows = $comando->fetchAll(PDO::FETCH_ASSOC);
             if($rows){
                 return $rows;
