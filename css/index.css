@@ -35,3 +35,6 @@ div#collapse1,div#collapse2,div#collapse3,div#collapse4{
 	background-color: white;
 	border-radius: 12px;
 }
+.seleccionar_vuelo{
+	cursor: pointer;
+}

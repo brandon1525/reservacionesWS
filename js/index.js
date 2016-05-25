@@ -3,6 +3,10 @@ $(document).ready(function(){
 	var asientos2=0;
 	var num=0;
 	$("#btn1").click(function(){
+		if($("#text_llegada").val()=="" || $("#fechaS").val()=="" || $("#horaS").val()=="" || $("#num").val()==""){
+			console.log("erro aerta");
+			return false;
+		}
 		$.ajax({
 			url : 'http://localhost/reservacionesWS/php/getaerolineasdestino.php',
 			data : {destino: $("#text_llegada").val(),fecha_s: $("#fechaS").val(),hora_s: $("#horaS").val(),asientos: $("#num").val()},
@@ -10,7 +14,24 @@ $(document).ready(function(){
 			dataType : 'json',
 			mimeType: 'application/json'
 		}).done(function(json){
-			console.log(json);
+			if(json.result){
+				$('#Aerolinea_vuelos tbody').html('');
+				$.each(json.data,function(index,value){
+					console.log(value);
+					$('#Aerolinea_vuelos tbody').append('<tr class="seleccionar_vuelo">'+
+						'<td>'+value.nombre_aerolinea+'</td>'+
+						'<td>'+value.fecha_s+'</td>'+
+						'<td>'+value.hora_s+'</td>'+
+						'<td>'+value.fecha_ll+'</td>'+
+						'<td>'+value.hora_ll+'</td>'+
+						'<td class="tr_id">'+value.id+'</td>'+
+						'<td>'+value.precio+'</td>'+
+						'</tr>');
+				})
+				
+			}else{
+				console.log("error alerta")
+			}
 		});
 	});
 	$(document).on("click", ".asiento", function() { 
@@ -26,6 +47,9 @@ $(document).ready(function(){
 			asientos--;
 			num++;
 		}
+	});
+	$(document).on('click','.seleccionar_vuelo',function(){
+		console.log($(this).find('.tr_id').text());
 	});
 	$("#btn2").click(function(){
 
