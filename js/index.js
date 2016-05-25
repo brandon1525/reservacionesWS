@@ -37,24 +37,6 @@ $(document).ready(function(){
 			zoom: 8
 		});
 	}
-	$.ajax({
-		url: "http://localhost/reservacionesWS/php/getaerolineasdestino.php",
-		method: 'POST',
-		dataType:'json',
-		mimeType: 'application/json'
-	}).done(function(json) {
-		console.log(json);
-		if(json.result=="true"){
-
-			//localStorage.setItem("datos_horario", JSON.stringify(json.horario));
-			//localStorage.setItem("horario_persona",JSON.stringify(json.clases));
-			//console.log(json.clases);
-			//localStorage.setItem("configuracion_persona",JSON.stringify(json.configuracion));
-		}else{
-			console.log("Algo salió mal");
-		}
-	});
-	
 	$(window).resize(function () {
 		var h = $(window).height(),
 		offsetTop = 30; // Calculate the top offset
