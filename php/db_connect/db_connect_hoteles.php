@@ -1,5 +1,5 @@
 <?php
-require_once 'db_config.php';
+require_once 'db_config/db_config_hoteles.php';
 class Database{
     private static $db = null;
     private static $pdo;

@@ -1,10 +1,14 @@
 <?php
-    error_reporting(E_ALL);
+  error_reporting(E_ALL);
     ini_set('display_errors','1');
     header('Content-Type: application/json');
     require 'modelo.php';
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $retorno = Modelo::getAerolineas();
+      $destino = $_POST['destino'];
+      $fecha_s = $_POST['fecha_s'];
+      $hora_s = $_POST['hora_s'];
+      $asientos = $_POST['asientos'];
+      $retorno = Modelo::getAerolineasDestino($destino,$fecha_s,$hora_s,$asientos);
       if ($retorno) {
         $datos["result"] = "true";
         $datos["data"] = $retorno;
