@@ -1,0 +1,141 @@
+SELECT * 
+FROM habitacion
+WHERE habitacion.id NOT 
+IN (
+
+SELECT DISTINCT habitacion_reservacion.id_habitacion
+FROM habitacion_reservacion, reservacion
+WHERE (
+reservacion.fecha_ll <=  '2016-05-26'
+AND reservacion.fecha_ll >  '2016-05-26'
+)
+OR (
+reservacion.fecha_ll <=  '2016-05-29'
+AND reservacion.fecha_s >  '2016-05-29'
+)
+OR (
+reservacion.fecha_ll >  '2016-05-26'
+AND reservacion.fecha_s
+) <  '2016-05-29'
+)
+
+SELECT COUNT( * ) AS habitaciones_disponibles
+FROM (
+
+SELECT * 
+FROM habitacion
+WHERE habitacion.id NOT 
+IN (
+
+SELECT DISTINCT habitacion_reservacion.id_habitacion
+FROM habitacion_reservacion, reservacion
+WHERE (
+reservacion.fecha_ll <=  '2016-05-26'
+AND reservacion.fecha_ll >  '2016-05-26'
+)
+OR (
+reservacion.fecha_ll <=  '2016-05-29'
+AND reservacion.fecha_s >  '2016-05-29'
+)
+OR (
+reservacion.fecha_ll >  '2016-05-26'
+AND reservacion.fecha_s
+) <  '2016-05-29'
+)
+) AS T1
+
+
+SELECT * 
+FROM hotel, (
+SELECT * 
+FROM habitacion
+WHERE habitacion.id NOT 
+IN (
+
+SELECT DISTINCT habitacion_reservacion.id_habitacion
+FROM habitacion_reservacion, reservacion
+WHERE (
+reservacion.fecha_ll <=  '2016-05-26'
+AND reservacion.fecha_ll >  '2016-05-26'
+)
+OR (
+reservacion.fecha_ll <=  '2016-05-29'
+AND reservacion.fecha_s >  '2016-05-29'
+)
+OR (
+reservacion.fecha_ll >  '2016-05-26'
+AND reservacion.fecha_s
+) <  '2016-05-29'
+)
+) AS T1
+WHERE hotel.id = T1.id_hotel
+AND hotel.estado =  'JALISCO'
+LIMIT 0 , 30
+
+
+SELECT COUNT( * ) AS habitaciones_disponibles
+FROM (
+
+SELECT hotel.id AS id_hotel_c, hotel . * 
+FROM hotel, (
+
+SELECT * 
+FROM habitacion
+WHERE habitacion.id NOT 
+IN (
+
+SELECT DISTINCT habitacion_reservacion.id_habitacion
+FROM habitacion_reservacion, reservacion
+WHERE (
+reservacion.fecha_ll <=  '2016-05-26'
+AND reservacion.fecha_ll >  '2016-05-26'
+)
+OR (
+reservacion.fecha_ll <=  '2016-05-29'
+AND reservacion.fecha_s >  '2016-05-29'
+)
+OR (
+reservacion.fecha_ll >  '2016-05-26'
+AND reservacion.fecha_s
+) <  '2016-05-29'
+)
+) AS T1
+WHERE hotel.id = T1.id_hotel
+AND hotel.estado =  'JALISCO'
+LIMIT 0 , 30
+) AS T2
+
+SELECT * FROM hotel , (SELECT COUNT(*) AS habitaciones_disponibles, habitacion.id_hotel FROM habitacion WHERE habitacion.id NOT IN (
+            SELECT DISTINCT habitacion_reservacion.id_habitacion FROM habitacion_reservacion, reservacion WHERE ( reservacion.fecha_ll <=  '2016-05-26'AND reservacion.fecha_ll >  '2016-05-26') OR (reservacion.fecha_ll <=  '2016-05-29' AND reservacion.fecha_s >  '2016-05-29') OR ( reservacion.fecha_ll >  '2016-05-26' AND reservacion.fecha_s) <  '2016-05-29') GROUP BY id_hotel) AS t1 where hotel.id=t1.id_hotel and estado = 'ZACATECAS' and habitaciones_disponibles>=4
+
+
+ Mostrando filas 0 - 2 (total de 3, La consulta tardó 0.0015 seg)
+SELECT * 
+FROM hotel, (
+
+SELECT COUNT( * ) AS habitaciones_disponibles, habitacion.id_hotel
+FROM habitacion
+WHERE habitacion.id NOT 
+IN (
+
+SELECT DISTINCT habitacion_reservacion.id_habitacion
+FROM habitacion_reservacion, reservacion
+WHERE (
+reservacion.fecha_ll
+BETWEEN  '2016-05-26'
+AND  '2016-05-26'
+)
+OR (
+reservacion.fecha_ll <=  '2016-05-29'
+AND reservacion.fecha_s >  '2016-05-29'
+)
+OR (
+reservacion.fecha_ll >  '2016-05-26'
+AND reservacion.fecha_s
+) <  '2016-05-29'
+)
+GROUP BY id_hotel
+) AS t1
+WHERE hotel.id = t1.id_hotel
+AND estado =  'ZACATECAS'
+AND habitaciones_disponibles >=4

@@ -4,8 +4,11 @@
 	header('Content-Type: application/json');
 	require 'modelo.php';
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$id_vuelo = $_POST['id_vuelo'];
-		$retorno = Modelo::getVueloAsientos($id_vuelo);
+		$destino = $_POST['destino'];
+		$habitaciones_requeridas = $_POST['habitaciones_requeridas'];
+		$fecha_ll = $_POST['fecha_ll'];
+		$fecha_s = $_POST['fecha_s'];
+		$retorno = Modelo::getHotelesDestinoHabitaciones($fecha_ll,$fecha_s,$destino,$habitaciones_requeridas);
 		if ($retorno) {
 			$datos["result"] = "true";
 			$datos["data"] = $retorno;
@@ -14,7 +17,7 @@
 			echo json_encode(
 				array(
 					'result' => 'false',
-					'mensaje' => 'No se obtuvo el registro de asientos'
+					'mensaje' => 'No se obtuvo el registro de hoteles para esos parametros'
 				)
 			);
 		}
