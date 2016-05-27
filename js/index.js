@@ -1,4 +1,28 @@
 $(document).ready(function(){
+	$(".button-collapse").sideNav();
+	$('.collapsible').collapsible({
+		accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+	});
+	$('.datepicker').pickadate({
+		selectMonths: true, // Creates a dropdown to control month
+		selectYears: 1,
+		monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+		weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+		weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+		weekdays: 'picker__weekday',
+		today: 'Hoy',
+		clear: 'Limpiar',
+		close: 'Cerrar',
+		format: 'yyyy-mm-dd'
+	});
+	$('.timepicker').clockpicker({
+		placement: 'bottom',
+		align: 'left',
+		twelvehour: true,
+		autoclose: true,
+		donetext: "Cerrar"
+    });
 	var asientos=0;
 	var asientos2=0;
 	var num=0;
@@ -93,8 +117,15 @@ $(document).ready(function(){
 		$('#map').css('height', (h - offsetTop));
 	}).resize();
 	$('#btn_mostrar_mapa').click(function(){
-		$('#map').show();
-		$('#btn_mostrar_mapa').hide();
+		if($('#map').is(":visible")){
+			$(this).html('<i class="material-icons left">place</i> Mostrar mapa');
+			$('#map').hide();
+		}else{
+			$(this).html('<i class="material-icons left">place</i> Ocultar mapa');
+			$('#map').show();
+		}
+		
+		//$('#btn_mostrar_mapa').hide();
 	});
 });
 

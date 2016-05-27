@@ -1,10 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="es">
-<head>
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" type="text/css" href="css/index.css">
-	<style>
+<style>
 	.activo{
 		background-color: #EF6241;	
 	}
@@ -24,63 +21,120 @@
 		background-color: #99D9DC;
 		border-color: #08D4B5;
 		border: 2px solid;
-	}	
-	</style>
-	<meta charset="UTF-8">
+	}
+</style>
+<head>
+	<!--<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css">-->
+	<!--Import Google Icon Font-->
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="css/materialize.clockpicker.css"  media="screen,projection"/>
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<title>Reserva</title>
 </head>
 <body>
-	<video autoplay loop id="bgvid">
+	<!--<video autoplay loop id="bgvid">
 		<source src="video/409020694.mp4" type="video/mp4">
-	</video>
-	<div class="container">
-		<header id="cabecera">
-			<div class="row">
-				<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-4 col-md-4">
-					<img class="img-responsive" src="img/logo.png" style="width: 100%;">
+	</video>-->
+	<header>
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a href="#!" class="brand-logo center">Travel BR</a>
+					<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+					<ul class="left hide-on-med-and-down">
+						<li class="active waves-effect waves-teal"><a href="#"><i class="material-icons left">local_activity</i>Explorar</a></li>
+						<li><a class="waves-effect waves-teal" href="#"><i class="material-icons left">settings</i>Reservaciones</a></li>
+					</ul>
+					<ul class="side-nav" id="mobile-demo">
+						<li class="active"><a href="#"><i class="material-icons left">flight</i>Vuelos</a></li>
+						<li><a href="#"><i class="material-icons left">domain</i>Hoteles</a></li>
+						<li><a href="#"><i class="material-icons left">pool</i>Actividades</a></li>
+						<li><a href="#"><i class="material-icons left">settings</i>Reservaciones</a></li>
+					</ul>
 				</div>
+			</nav>
+		</div>
+	</header>
+	<div class="container" style="width: 90%;">
+		<div class="row">
+			<div class="col hide-on-small-only m4 l3">
+				<ul class="section table-of-contents">
+					<li class="active"><a href="#sec_vuelos"><i class="material-icons left">flight</i>Vuelos</a></li>
+					<li><a href="#sec_hoteles"><i class="material-icons left">domain</i>Hoteles</a></li>
+					<li><a href="#sec_actividades"><i class="material-icons left">pool</i>Actividades</a></li>
+				</ul>
 			</div>
-		</header>
+			<div class="col s12 m8 l9">
+				<ul id="sec_vuelos" class="collapsible popout" data-collapsible="accordion">
+					<li class="section scrollspy">
+						<div class="collapsible-header active waves-effect waves-red"><i class="material-icons">flight</i>Vuelos</div>
+						<div class="collapsible-body">
+							<h3 class="center-align flow-text"><strong>Selecciona tu destino</strong></h3>
+							<blockquote class="flow-text">Arrastra el punto y confirma tu destino.</blockquote>
+							<div class="col s12" id="map" style="margin-bottom: 10px;"></div>
+							<button class="waves-effect waves-red btn red" id="btn_mostrar_mapa" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
+							</button>
+							<div class="row">
+								<div class="input-field col s6">
+									<i class="material-icons prefix">flight_land</i>
+									<input id="text_salida" type="text" class="validate">
+									<label for="text_salida">Lugar de salida</label>
+								</div>
+								<div class="input-field col s6">
+									<i class="material-icons prefix">flight_takeoff</i>
+									<input id="text_llegada" type="text" class="validate">
+									<label for="text_llegada">Lugar de destino</label>
+								</div>
+								<div class="input-field col s6">
+									<i class="material-icons prefix">flight_takeoff</i>
+									<input id="fechaS" type="date" class="datepicker">
+									<label for="fechaS">Fecha salida</label>
+								</div>
+								<div class="input-field col s6">
+									<i class="material-icons prefix">flight_takeoff</i>
+									<input id="horaS" type="text" class="timepicker">
+									<label for="horaS">Hora salida</label>
+								</div>
+							</div>
+							
+
+						</div>
+					</li>
+				</ul>
+				<ul id="sec_hoteles" class="collapsible popout" data-collapsible="accordion">
+					<li class="section scrollspy">
+						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">domain</i>Hoteles</div>
+						<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+					</li>
+				</ul>
+				<ul id="sec_actividades" class="collapsible popout" data-collapsible="accordion">
+					<li class="section scrollspy">
+						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">pool</i>Actividades</div>
+						<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
 		<section>
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="panel-group" id="accordion1">
 						<div class="panel_fondo panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion1" href="#collapse1">Vuelo</a>
-								</h4>
-							</div>
+
 							<div id="collapse1" class="panel-collapse collapse in">
 								<div class="panel-body">
-									<p>
-										<h1>Selecciona tu destino</h1>
-									</p>
-									<p><small>Arrastra el punto y confirma tu destino</small></p>
-									<button type="button" class="btn btn-default btn-block" aria-label="Left Align" id="btn_mostrar_mapa" style="display: none;">
-										<span class="glyphicon glyphicon-map-marker" aria-hidden="true"> Mostrar mapa</span>
-									</button>
-									<div class="col-xs-12" id="map" style="margin-bottom: 10px;"></div>
+
+	
 									<div class="row" style="margin-top: 20px;">
+
 										<div class="col-xs-12 col-md-6 text-center">
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1">Salida</span>
-												<input type="text" class="form-control" placeholder="Salida" aria-describedby="basic-addon1" disabled id="text_salida">
-											</div>
-										</div>
-										<div class="col-xs-12 col-md-6 text-center">
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1">Llegada</span>
-												<input type="text" class="form-control" placeholder="Llegada" aria-describedby="basic-addon1" disabled id="text_llegada">
-											</div>
-										</div>
-										<div class="col-xs-12 col-md-6 text-center">
-											<div class="input-group">
-												<span class="input-group-addon">Fecha de salida</span>
-												<input type="text" class="form-control" placeholder="Fecha salida" aria-describedby="basic-addon1" id="fechaS">
-												<span class="input-group-addon">Hora de salida</span>
-												<input type="text" class="form-control" placeholder="Hora salida" aria-describedby="basic-addon1" id="horaS">
-											</div>
+											
 										</div>
 										<div class="col-xs-12 col-md-6 text-center">
 											<div class="input-group">
@@ -163,8 +217,11 @@
 	</div>
 </body>
 <script type="text/javascript" src="js/angular.min.js"></script>
-<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/materialize.clockpicker.js"></script>
+<!--<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>-->
 <script type="text/javascript" src="js/index.js"></script>
 <script>
 	var markerS;
@@ -180,7 +237,7 @@
 	function initMap() {
 		var myLatLng = {lat: 23.4598087, lng: -100.3507389};
 		map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 5,
+			zoom: 6,
 			center: myLatLng,
 			scrollwheel: false,
 			navigationControl: false,
@@ -238,7 +295,7 @@
 							$('#text_salida').val(element.address_components[0].long_name);
 							if($('#text_salida').val()!="" && $('#text_llegada').val()!=""){
 								$('#map').hide();
-								$('#btn_mostrar_mapa').show();
+								$('#btn_mostrar_mapa').html('<i class="material-icons left">place</i> Mostrar mapa');
 							}
 						}
 					});
@@ -265,7 +322,7 @@
 							$('#text_llegada').val(element.address_components[0].long_name);
 							if($('#text_salida').val()!="" && $('#text_llegada').val()!=""){
 								$('#map').hide();
-								$('#btn_mostrar_mapa').show();
+								$('#btn_mostrar_mapa').html('<i class="material-icons left">place</i> Mostrar mapa');
 							}
 						}
 					});
