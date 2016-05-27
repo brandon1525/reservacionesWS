@@ -21,7 +21,7 @@ class Modelo{
 				return false;
 			}
 		} catch (PDOException $e) {
-			return false;
+			return $e;
 		}
 	}
 	public static function getVueloAsientos($id_vuelo){
@@ -45,6 +45,22 @@ class Modelo{
 			$consulta = "SELECT *,t2.habitaciones_disponibles from travel_hoteles.hotel,(SELECT COUNT( id_hotel ) AS habitaciones_disponibles, habitacion.id_hotel FROM travel_hoteles.habitacion WHERE habitacion.id NOT IN (SELECT id_habitacion FROM travel_hoteles.habitacion_reservacion, (SELECT * FROM travel_hoteles.reservacion WHERE fecha_ll BETWEEN :fecha_ll AND :fecha_s OR fecha_s BETWEEN :fecha_ll AND :fecha_s) AS T1 WHERE habitacion_reservacion.id_reservacion=T1.id) group by id_hotel) AS t2 WHERE hotel.id=t2.id_hotel and hotel.estado=:destino and habitaciones_disponibles>=:habitaciones_requeridas";
 			$comando = Database::getInstance()->getDb()->prepare($consulta);
 			$comando->execute(array(':fecha_ll'=>$fecha_ll,':fecha_s'=>$fecha_s,':destino'=>$destino,':habitaciones_requeridas'=>$habitaciones_requeridas));
+			$rows = $comando->fetchAll(PDO::FETCH_ASSOC);
+			if($rows){
+				return $rows;
+			}else{
+			//echo "Esa persona no existe".mysql_error();
+				return false;
+			}
+		} catch (PDOException $e) {
+			return $e;
+		}
+	}
+	public static function getActividadesDestino($destino){
+		try {
+			$consulta = "SELECT * FROM  travel_actividades.actividad WHERE ciudad =  ?";
+			$comando = Database::getInstance()->getDb()->prepare($consulta);
+			$comando->execute(array($destino));
 			$rows = $comando->fetchAll(PDO::FETCH_ASSOC);
 			if($rows){
 				return $rows;
