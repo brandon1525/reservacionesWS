@@ -106,74 +106,98 @@
 					<li class="section scrollspy">
 						<div class="collapsible-header active waves-effect waves-red"><i class="material-icons">flight</i>Vuelos</div>
 						<div class="collapsible-body">
-							<h3 class="center-align flow-text"><strong>Selecciona tu destino</strong></h3>
-							<blockquote class="flow-text">Arrastra el punto y confirma tu destino.</blockquote>
-							<div class="col s12" id="map" style="margin-bottom: 10px;"></div>
-							<button class="col offset-s1 s10 offset-m3 m6 waves-effect waves-red btn red" id="btn_mostrar_mapa" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
-							</button>
-							<div class="row">
-								<div class="input-field col s12 m6">
-									<i class="material-icons prefix">flight_takeoff</i>
-									<input id="text_salida" type="text" value=" " disabled>
-									<label for="text_salida">Lugar de salida</label>
+							<div class="row tarjeta_inicio">
+								<div class="col s12 offset-m3 m6">
+									<div class="card red lighten-2">
+										<div class="card-content white-text">
+											<span class="card-title">Reservación de vuelos</span>
+											<p class="text-flow">En este apartado pordras reservar un vuelo, ¿Deseas continuar?</p>
+										</div>
+										<div class="card-action">
+											<div class="row">
+												<button class="btn left" id="si_sec_vuelos">Si</button>
+												<button class="btn right" id="no_sec_vuelos">No</button>
+											</div>
+										</div>
+									</div>
 								</div>
+							</div>
+							<section id="sec_vuelos_forms" style="display: none;">
+								<h3 class="center-align flow-text"><strong>Selecciona tu destino</strong></h3>
+								<blockquote class="flow-text">Arrastra el punto y confirma tu destino.</blockquote>
+								<div class="col s12" id="map" style="margin-bottom: 10px;"></div>
+								<button class="col offset-s1 s10 offset-m3 m6 waves-effect waves-red btn red" id="btn_mostrar_mapa" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
+								</button>
+								<div class="row">
+									<div class="input-field col s12 m6">
+										<i class="material-icons prefix">flight_takeoff</i>
+										<input id="text_salida" type="text" value=" " disabled>
+										<label for="text_salida">Lugar de salida</label>
+									</div>
 
-								<div class="input-field col s12 m6">
-									<i class="material-icons prefix">flight_land</i>
-									<input id="text_llegada" type="text" value=" " disabled>
-									<label for="text_llegada">Lugar de destino</label>
+									<div class="input-field col s12 m6">
+										<i class="material-icons prefix">flight_land</i>
+										<input id="text_llegada" type="text" value=" " disabled>
+										<label for="text_llegada">Lugar de destino</label>
+									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s12 m6">
-									<i class="material-icons prefix">date_range</i>
-									<input id="fechaS" type="date" class="datepicker">
-									<label for="fechaS">Fecha salida</label>
+								<div class="row">
+									<div class="input-field col s12 m6">
+										<i class="material-icons prefix">date_range</i>
+										<input id="fechaS" type="date" class="datepicker">
+										<label for="fechaS">Fecha salida</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<i class="material-icons prefix">access_time</i>
+										<input id="horaS" type="text" class="timepicker">
+										<label for="horaS">Hora salida</label>
+									</div>
 								</div>
-								<div class="input-field col s12 m6">
-									<i class="material-icons prefix">access_time</i>
-									<input id="horaS" type="text" class="timepicker">
-									<label for="horaS">Hora salida</label>
+								<div class="row">
+									<div class="input-field col s12 m6">
+										<i class="material-icons prefix">airline_seat_recline_extra</i>
+										<p class="range-field">
+											<input type="range" id="num" min="1" max="72">
+										</p>
+										<label for="num">Número de asientos</label>
+									</div>
+									<div class="col s12 m6 valign-wrapper">
+										<button id="btn_buscar_vuelo" class="valign col s6 offset-s3 waves-effect waves-red btn red">Buscar vuelo</button>
+									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s12 m6">
-									<i class="material-icons prefix">airline_seat_recline_extra</i>
-									<p class="range-field">
-										<input type="range" id="num" min="1" max="72">
-									</p>
-									<label for="num">Número de asientos</label>
+								<div class="row">
+									<div class="col s12">
+										<table id="Aerolinea_vuelos" class="table-striped highlight responsive-table">
+											<thead>
+												<tr>
+													<th>Aerolinea</th>
+													<th>Fecha Salida</th>
+													<th>Hora Salida</th>
+													<th>Fecha Llegada</th>
+													<th>Hora Llegada</th>
+													<th>Numero de Vuelo</th>
+													<th>Precio</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
 								</div>
-								<div class="col s12 m6 valign-wrapper">
-									<button id="btn1" class="valign col s6 offset-s3 waves-effect waves-red btn red">Buscar</button>
+								<div class="row">
+									<div id="contenedor_asientos">
+									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col s12">
-									<table id="Aerolinea_vuelos" class="table-striped highlight responsive-table">
-										<thead>
-											<tr>
-												<th>Aerolinea</th>
-												<th>Fecha Salida</th>
-												<th>Hora Salida</th>
-												<th>Fecha Llegada</th>
-												<th>Hora Llegada</th>
-												<th>Numero de Vuelo</th>
-												<th>Precio</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+								<div class="row">
+									<div id="formularios"></div>
 								</div>
-							</div>
-							<div class="row">
-								<div id="contenedor_asientos">
+								<div class="row">
+									<div class="col s12 offset-m9 m3">
+										<button id="next_hoteles" class="btn" >Siguiente</button>
+									</div>
+									
 								</div>
-							</div>
-							<div class="row">
-								<div id="formularios"></div>
-							</div>
+							</section>
 						</div>
 					</li>
 				</ul>
@@ -181,28 +205,46 @@
 					<li class="section scrollspy">
 						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">domain</i>Hoteles</div>
 						<div class="collapsible-body">
-							<div class="row">
-								<div class="col s12">
-									<table class="table-striped highlight responsive-table" id="table_hoteles">
-										<thead>
-											<tr>
-												<th>Nombre</th>
-												<th>Ciudad</th>
-												<th>Estado</th>
-												<th>Descripcion</th>
-												<th>Precio Por Noche</th>
-												<th>Estrellas</th>
-												<th>Vista al Mar</th>
-												<th>Buffet</th>
-												<th>Barra Libre</th>
-												<th>Show Nocturno</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+							<div class="row tarjeta_inicio">
+								<div class="col s12 offset-m3 m6">
+									<div class="card red lighten-2">
+										<div class="card-content white-text">
+											<span class="card-title">Reservación de vuelos</span>
+											<p class="text-flow">En este apartado pordras reservar un vuelo, ¿Deseas continuar?</p>
+										</div>
+										<div class="card-action">
+											<div class="row">
+												<button id="si_sec_hoteles" class="btn left" >Si</button>
+												<button id="no_sec_hoteles" class="btn right" >No</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
+							<section id="sec_hoteles_forms" style="display: none;">
+								<div class="row">
+									<div class="col s12">
+										<table class="table-striped highlight responsive-table" id="table_hoteles">
+											<thead>
+												<tr>
+													<th>Nombre</th>
+													<th>Ciudad</th>
+													<th>Estado</th>
+													<th>Descripcion</th>
+													<th>Precio Por Noche</th>
+													<th>Estrellas</th>
+													<th>Vista al Mar</th>
+													<th>Buffet</th>
+													<th>Barra Libre</th>
+													<th>Show Nocturno</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</section>
 						</div>
 					</li>
 				</ul>
