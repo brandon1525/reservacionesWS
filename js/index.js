@@ -100,7 +100,6 @@ $(document).ready(function(){
 
 	$(document).on("click","#btn2", function(){
 
-		console.log("Simon");
 		$.ajax({
 		    url : 'http://localhost/reservacionesWS/php/gethotelesdestinohabitacion.php',
 		    data : {fecha_ll: $("#fechaLlHot").val(), fecha_s: $("#fechaSalHot").val(), destino: $("#text_llegada").val(),habitaciones_requeridas: $("#numH").val()},
@@ -224,12 +223,12 @@ $(document).ready(function(){
 											'<input placeholder="Nombres(s)" type="text" class="nombre_pasajero">'+
 											'<label class="active">Nombre(s)</label>'+
 										'</div>'+
-										'<div class="input-field col s6 m3">'+
+										'<div class="input-field col s12 m3">'+
 											'<i class="material-icons prefix">airline_seat_recline_extra</i>'+
 											'<input placeholder="Número de asiento" type="text" class="asiento_pasajero">'+
 											'<label class="active">Número de asiento</label>'+
 										'</div>'+
-										'<div class="input-field col s6 m3">'+
+										'<div class="input-field col s12 m3">'+
 											'<input class="with-gap" name="group1" type="radio" data-label_ref="Femenino"/>'+
 											'<label class="active_radiobutton" style="color: #FF6781;">Femenino</label>'+
 											'<input class="with-gap" name="group1" type="radio" data-label_ref="Masculino" />'+
@@ -259,7 +258,6 @@ $(document).ready(function(){
 	    	});
 	    });
 	    $("#formularios").append('<div class="form-group"><button type="submit" id="btn2" class="btn btn-default" >Reservar hotel</button><button type="submit" id="btn3" class="btn btn-default" >continuar sin hotel</button></div>');
-	    $('html,body').animate({scrollTop: $("#fondo-avion").offset().top}, 2000);
 		$.ajax({
 			url : 'http://localhost/reservacionesWS/php/getvueloasientos.php',
 			data : {id_vuelo: $(this).find('.tr_id').text()},

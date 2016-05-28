@@ -50,40 +50,42 @@
 	<div class="navbar-fixed">
 		<nav>
 			<div class="nav-wrapper">
-				<div class="col s12">
-					<a href="#!" class="brand-logo center">Travel BR</a>
-					<a href="#" data-activates="mobile-demo" class="button-collapse">
-						<i class="material-icons">menu</i>
-					</a>
-					<ul class="left hide-on-med-and-down">
-						<li class="active waves-effect waves-teal">
-							<a href="#">
-								<i class="material-icons left">local_activity</i>Explorar
-							</a>
-						</li>
-						<li class="waves-effect waves-teal">
-							<a href="#">
-								<i class="material-icons left">settings</i>Reservaciones
-							</a>
-						</li>
-					</ul>
-					<ul class="side-nav" id="mobile-demo">
-						<li class="waves-effect waves-teal">
-							<a href="#">
-								<i class="material-icons left">local_activity</i>Explorar
-							</a>
-						</li>
-						<li class="waves-effect waves-teal">
-							<a href="#">
-								<i class="material-icons left">settings</i>Reservaciones
-							</a>
-						</li>
-					</ul>
+				<div class="row">
+					<div class="col s12">
+						<a href="#!" class="brand-logo center">Travel BR</a>
+						<a href="#" data-activates="mobile-demo" class="button-collapse">
+							<i class="material-icons">menu</i>
+						</a>
+						<ul class="left hide-on-med-and-down">
+							<li class="active waves-effect waves-teal">
+								<a href="#">
+									<i class="material-icons left">local_activity</i>Explorar
+								</a>
+							</li>
+							<li class="waves-effect waves-teal">
+								<a href="#">
+									<i class="material-icons left">settings</i>Reservaciones
+								</a>
+							</li>
+						</ul>
+						<ul class="side-nav" id="mobile-demo">
+							<li class="waves-effect waves-teal">
+								<a href="#">
+									<i class="material-icons left">local_activity</i>Explorar
+								</a>
+							</li>
+							<li class="waves-effect waves-teal">
+								<a href="#">
+									<i class="material-icons left">settings</i>Reservaciones
+								</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</nav>
 	</div>
-	<div  style="width: 90%;">
+	<div style="width: 90%;">
 		<div class="row">
 			<div class="col l2 hide-on-med-and-down">
 				<ul class="table-of-contents">
@@ -99,9 +101,9 @@
 					<li><a href="#sec_actividades"><i class="material-icons left">pool</i></a></li>
 				</ul>
 			</div>
-			<div class="col s10 l10">
+			<div class="col s10">
 				<ul id="sec_vuelos" class="collapsible popout" data-collapsible="accordion">
-					<li class="	scrollspy">
+					<li class="section scrollspy">
 						<div class="collapsible-header active waves-effect waves-red"><i class="material-icons">flight</i>Vuelos</div>
 						<div class="collapsible-body">
 							<h3 class="center-align flow-text"><strong>Selecciona tu destino</strong></h3>
@@ -148,7 +150,7 @@
 							</div>
 							<div class="row">
 								<div class="col s12">
-									<table id="Aerolinea_vuelos" class="highlight">
+									<table id="Aerolinea_vuelos" class="table-striped highlight responsive-table">
 										<thead>
 											<tr>
 												<th>Aerolinea</th>
@@ -169,9 +171,8 @@
 								<div id="contenedor_asientos">
 								</div>
 							</div>
-							<!--<div id="fondo-avion"></div>-->
-							<div id="formularios">
-
+							<div class="row">
+								<div id="formularios"></div>
 							</div>
 						</div>
 					</li>
@@ -179,88 +180,59 @@
 				<ul id="sec_hoteles" class="collapsible popout" data-collapsible="accordion">
 					<li class="section scrollspy">
 						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">domain</i>Hoteles</div>
-						<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+						<div class="collapsible-body">
+							<div class="row">
+								<div class="col s12">
+									<table class="table-striped highlight responsive-table" id="table_hoteles">
+										<thead>
+											<tr>
+												<th>Nombre</th>
+												<th>Ciudad</th>
+												<th>Estado</th>
+												<th>Descripcion</th>
+												<th>Precio Por Noche</th>
+												<th>Estrellas</th>
+												<th>Vista al Mar</th>
+												<th>Buffet</th>
+												<th>Barra Libre</th>
+												<th>Show Nocturno</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					</li>
 				</ul>
 				<ul id="sec_actividades" class="collapsible popout" data-collapsible="accordion">
 					<li class="section scrollspy">
 						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">pool</i>Actividades</div>
-						<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+						<div class="collapsible-body">
+							<div class="row">
+								<div class="col s12">
+									<table class="table-striped highlight responsive-table" id="actividades">
+										<thead>
+											<tr>
+												<th>Nombre</th>
+												<th>Ciudad</th>
+												<th>Descripcion</th>
+												<th>Precio por Niño</th>
+												<th>Precio Por Adulto</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
-	<!--	<section>
-			<div class="row">
-				<div class="col-xs-12">
-		
-					<div class="panel-group" id="accordion2">
-						<div class="panel_fondo panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion2" href="#collapse2">Hotel</a>
-								</h4>
-							</div>
-							<div id="collapse2" class="panel-collapse collapse">
-								<div class="panel-body">
-									<div class="table-responsive">
-										<table class="table table-striped" id="table_hoteles">
-											<thead>
-												<tr>
-													<th>Nombre</th>
-													<th>Ciudad</th>
-													<th>Estado</th>
-													<th>Descripcion</th>
-													<th>Precio Por Noche</th>
-													<th>Estrellas</th>
-													<th>Vista al Mar</th>
-													<th>Buffet</th>
-													<th>Barra Libre</th>
-													<th>Show Nocturno</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="panel-group" id="accordion3">
-						<div class="panel_fondo panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion3" href="#collapse3">Paquetes</a>
-								</h4>
-							</div>
-							<div id="collapse3" class="panel-collapse collapse">
-								<div class="panel-body">
-									<div class="table-responsive">
-										<table class="table table-striped" id="actividades">
-											<thead>
-												<tr>
-													<th>Nombre</th>
-													<th>Ciudad</th>
-													<th>Descripcion</th>
-													<th>Precio por Niño</th>
-													<th>Precio Por Adulto</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</div>-->
 </body>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <!--<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>-->
