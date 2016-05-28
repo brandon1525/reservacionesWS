@@ -22,6 +22,12 @@
 		border-color: #08D4B5;
 		border: 2px solid;
 	}
+	.selec_hotel{
+		cursor: pointer;
+	}
+	.selec_actividad{
+		cursor: pointer;
+	}
 </style>
 <head>
 	<!--<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
@@ -126,6 +132,23 @@
 								<tbody>
 								</tbody>
 							</table>
+							<div class="input-field col s4">
+								<i class="material-icons prefix">date_range</i>
+								<input id="fechaLlHot" type="date" class="datepicker">
+								<label for="fechaLlHot">Fecha Llegada</label>
+							</div>	
+							<div class="input-field col s4">
+								<i class="material-icons prefix">date_range</i>
+								<input id="fechaSalHot" type="date" class="datepicker">
+								<label for="fechaSalHot">Fecha Salida</label>
+							</div>
+							<div class="input-field col s4">
+								<i class="material-icons prefix">local_hotel</i>
+								<p class="range-field">
+									<input type="range" id="numH" min="1" max="10" id="numH">
+								</p>
+								<label for="num">Número de Habitaciones</label>
+							</div>												
 						</div>
 					</li>
 				</ul>
@@ -177,6 +200,7 @@
 													<th>Ciudad</th>
 													<th>Estado</th>
 													<th>Descripcion</th>
+													<th>Precio Por Noche</th>
 													<th>Estrellas</th>
 													<th>Vista al Mar</th>
 													<th>Buffet</th>
@@ -200,7 +224,24 @@
 								</h4>
 							</div>
 							<div id="collapse3" class="panel-collapse collapse">
-								<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table class="table table-striped" id="actividades">
+											<thead>
+												<tr>
+													<th>Nombre</th>
+													<th>Ciudad</th>
+													<th>Descripcion</th>
+													<th>Precio por Niño</th>
+													<th>Precio Por Adulto</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
 							</div>
 						</div>
 					</div>
