@@ -58,7 +58,7 @@ $(document).ready(function(){
 			console.log("erro aerta");
 			return false;
 		}
-		$('html,body').animate({scrollTop: $("#Aerolinea_vuelos").offset().top}, 2000);
+		//$('html,body').animate({scrollTop: $("#Aerolinea_vuelos").offset().top}, 2000);
 		$.ajax({
 			url : 'http://localhost/reservacionesWS/php/getaerolineasdestino.php',
 			data : {origen: $("#text_salida").val(), destino: $("#text_llegada").val(),fecha_s: $("#fechaS").val(),hora_s: $("#horaS").val(),asientos: $("#num").val()},
@@ -85,81 +85,8 @@ $(document).ready(function(){
 			}
 		});
 	});
-	$('#next_hoteles').click(function(){
-		$('#sec_vuelos').find('.collapsible-header').click();
-		if(!$('#sec_hoteles').find('.collapsible-header').hasClass('active')){
-			$('#sec_hoteles').find('.collapsible-header').click();
-		}
-		
-	});
-	$("#btn2").click(function(){
-		console.log("Simon");
-		$.ajax({
-			url : 'http://localhost/reservacionesWS/php/gethotelesdestinohabitacion.php',
-			data : {fecha_ll: 2016-05-26, fecha_s: 2016-05-30, destino: $("#text_llegada").val(),habitaciones_requeridas: $("#num").val()},
-			method : 'POST',
-			dataType : 'json',
-			mimeType: 'application/json'
-		}).done(function(json){
-			if(json.result){
-				$("#table_hoteles tbody").html("");
-				$.each(json.data,function(index,value){
-					//console.log(value.nombre);
-					$("#table_hoteles tbody").append(
-						'<tr class="selec_hotel">'+
-						'<td>'+value.nombre+'</td>'+
-						'<td>'+value.ciudad+'</td>'+
-						'<td>'+value.estado+'</td>'+
-						'<td>'+value.descripcion+'</td>'+
-						'<td>'+value.starts+'</td>'+
-						'<td>'+value.vista_mar+'</td>'+
-						'<td>'+value.buffet+'</td>'+
-						'<td>'+value.barralibre+'</td>'+
-						'<td>'+value.shownocturno+'</td>'+
-						'</tr>'
-					);
-				})
-			}else{
-				console.log("error alerta");
-			}
-		});
-	});	
-	$(document).on("click","#btn3",function(){
-		console.log("Simon entre al 3");
-		$.ajax({
-		    url : 'http://localhost/reservacionesWS/php/getactividadesdestino.php',
-		    data : {destino: $("#text_llegada").val()},
-		    method : 'POST',
-		    dataType : 'json',
-		    mimeType: 'application/json'
-		}).done(function(json){
-			if(json.result){
-				$("#actividades tbody").html("");
-				$.each(json.data,function(index,value){
-					$("#actividades tbody").append(
-						'<tr class="selec_actividad" data-id_actividad="'+value.id+'">'+
-						'<td>'+value.nombre+'</td>'+
-						'<td>'+value.ciudad+'</td>'+
-						'<td>'+value.descripcion+'</td>'+
-						'<td>$'+value.precio_nino+'</td>'+
-						'<td>$'+value.precio_adulto+'</td>'+
-						'</tr>'
-					);
-				});
-			}else{
-				console.log("cagaste el palo");
-			}
-		    
-		});
-	});
-
-	$(document).on("click",".selec_actividad",function(){
-		IdAct= $(this).data("id_actividad");
-		console.log(IdAct);
-	});
-
-	$(document).on("click","#btn2", function(){
-		$.ajax({
+	$('#buscaHotel').click(function(){
+			$.ajax({
 		    url : 'http://localhost/reservacionesWS/php/gethotelesdestinohabitacion.php',
 		    data : {fecha_ll: $("#fechaLlHot").val(), fecha_s: $("#fechaSalHot").val(), destino: $("#text_llegada").val(),habitaciones_requeridas: $("#numH").val()},
 		    method : 'POST',
@@ -233,8 +160,53 @@ $(document).ready(function(){
 				console.log("error alerta");
 			}
 		});
-	});
 
+	});
+	$('#next_hoteles').click(function(){
+		//console.log("entre,,,,");
+		$('#sec_vuelos').find('.collapsible-header').click();
+		if(!$('#sec_hoteles').find('.collapsible-header').hasClass('active')){
+			
+			$('#sec_hoteles').find('.collapsible-header').click();
+		}
+		
+	});
+	$('#next_actividades').click(function(){
+		$('#sec_hoteles').find('.collapsible-header').click();
+		if(!$('#sec_actividades').find('.collapsible-header').hasClass('active')){
+			$('#sec_actividades').find('.collapsible-header').click();
+			$.ajax({
+		    url : 'http://localhost/reservacionesWS/php/getactividadesdestino.php',
+		    data : {destino: $("#text_llegada").val()},
+		    method : 'POST',
+		    dataType : 'json',
+		    mimeType: 'application/json'
+		}).done(function(json){
+			if(json.result){
+				$("#actividades tbody").html("");
+				$.each(json.data,function(index,value){
+					$("#actividades tbody").append(
+						'<tr class="selec_actividad" data-id_actividad="'+value.id+'">'+
+						'<td>'+value.nombre+'</td>'+
+						'<td>'+value.ciudad+'</td>'+
+						'<td>'+value.descripcion+'</td>'+
+						'<td>$'+value.precio_nino+'</td>'+
+						'<td>$'+value.precio_adulto+'</td>'+
+						'</tr>'
+					);
+				});
+			}else{
+				console.log("cagaste el palo");
+			}
+		    
+		});
+		}
+		
+	});
+	$(document).on("click",".selec_actividad",function(){
+		IdAct= $(this).data("id_actividad");
+		console.log(IdAct);
+	});
 
 	$(document).on("click", ".asiento", function() { 
 		//console.log(asientos);
