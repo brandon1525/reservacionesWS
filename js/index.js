@@ -27,6 +27,8 @@ $(document).ready(function(){
 	var asientos=0;
 	var asientos2=0;
 	var num=0;
+	var IdHotSelc;
+	var IdAct;
 	$("#btn1").click(function(){
 
 		if($("#text_salida").val()=="" || $("#text_llegada").val()=="" || $("#fechaS").val()=="" || $("#horaS").val()=="" || $("#num").val()==""){
@@ -61,6 +63,121 @@ $(document).ready(function(){
 			}
 		});
 	});
+	$(document).on("click","#btn3",function(){
+		console.log("Simon entre al 3");
+		$.ajax({
+		    url : 'http://localhost/reservacionesWS/php/getactividadesdestino.php',
+		    data : {destino: $("#text_llegada").val()},
+		    method : 'POST',
+		    dataType : 'json',
+		    mimeType: 'application/json'
+		}).done(function(json){
+			if(json.result){
+				$("#actividades tbody").html("");
+				$.each(json.data,function(index,value){
+				$("#actividades tbody").append(
+						'<tr class="selec_actividad" data-id_actividad="'+value.id+'">'+
+						'<td>'+value.nombre+'</td>'+
+						'<td>'+value.ciudad+'</td>'+
+						'<td>'+value.descripcion+'</td>'+
+						'<td>$'+value.precio_nino+'</td>'+
+						'<td>$'+value.precio_adulto+'</td>'+
+						'</tr>'
+						);
+
+				});
+			}else
+			{
+				console.log("cagaste el palo");
+			}
+		    
+		});
+	});
+	$(document).on("click",".selec_actividad",function(){
+				IdAct= $(this).data("id_actividad");
+		console.log(IdAct);
+	});
+
+	$(document).on("click","#btn2", function(){
+
+		console.log("Simon");
+		$.ajax({
+		    url : 'http://localhost/reservacionesWS/php/gethotelesdestinohabitacion.php',
+		    data : {fecha_ll: $("#fechaLlHot").val(), fecha_s: $("#fechaSalHot").val(), destino: $("#text_llegada").val(),habitaciones_requeridas: $("#numH").val()},
+		    method : 'POST',
+		    dataType : 'json',
+		    mimeType: 'application/json'
+		}).done(function(json){
+			if(json.result){
+				$("#table_hoteles tbody").html("");
+				$.each(json.data,function(index,value){
+					var starts;
+					var buffet;
+					var vista_mar;
+					var barralibre;
+					var shownocturno;
+
+					console.log(value.nombre);
+					switch(value.starts){
+						case "1":
+							starts='<i class="material-icons">star</i>'+'<i class="material-icons">star_border</i><i class="material-icons">star_border</i><i class="material-icons">star_border</i><i class="material-icons">star_border</i>';
+						break;
+						case "2":
+							starts='<i class="material-icons">star</i>'+'<i class="material-icons">star</i>'+'<i class="material-icons">star_border</i><i class="material-icons">star_border</i><i class="material-icons">star_border</i>';
+						break;
+						case "3":
+							starts='<i class="material-icons">star</i>'+'<i class="material-icons">star</i>'+'<i class="material-icons">star</i>'+'<i class="material-icons">star_border</i><i class="material-icons">star_border</i>';
+						break;
+						case "4":
+							starts='<i class="material-icons">star</i>'+'<i class="material-icons">star</i>'+'<i class="material-icons">star</i>'+'<i class="material-icons">star</i>'+'<i class="material-icons">star_border</i>';
+						break;
+						case "5":
+							starts='<i class="material-icons">star</i>'+'<i class="material-icons">star</i>'+'<i class="material-icons">star</i>'+'<i class="material-icons">star</i>'+'<i class="material-icons">star</i>';
+						break;
+					}
+					if(value.vista_mar=="1"){
+						vista_mar = '<i class="material-icons">done</i>';
+					}else{
+						vista_mar = '<i class="material-icons">clear</i>';
+					}
+					if(value.buffet=="1"){
+						buffet = '<i class="material-icons">done</i>';
+					}else{
+						buffet = '<i class="material-icons">clear</i>';
+					}
+					if(value.barralibre=="1"){
+						barralibre = '<i class="material-icons">done</i>';
+					}else{
+						barralibre = '<i class="material-icons">clear</i>';
+					}
+					if(value.shownocturno=="1"){
+						shownocturno = '<i class="material-icons">done</i>';
+					}else{
+						shownocturno = '<i class="material-icons">clear</i>';
+					}
+
+					$("#table_hoteles tbody").append(
+						'<tr class="selec_hotel" data-id_hotel="'+value.id+'">'+
+						'<td>'+value.nombre+'</td>'+
+						'<td>'+value.ciudad+'</td>'+
+						'<td>'+value.estado+'</td>'+
+						'<td>'+value.descripcion+'</td>'+
+						'<td>$'+value.precioxnoche+'</td>'+
+						'<td>'+starts+'</td>'+
+						'<td>'+vista_mar+'</td>'+
+						'<td>'+buffet+'</td>'+
+						'<td>'+barralibre+'</td>'+
+						'<td>'+shownocturno+'</td>'+
+						'</tr>'
+						);
+				})
+			}else{
+				console.log("error alerta");
+			}
+    
+		});
+	});
+
 
 	$(document).on("click", ".asiento", function() { 
 		//console.log(asientos);
@@ -190,6 +307,10 @@ $(document).ready(function(){
 			}
 		});
 	});	
+	$(document).on("click",".selec_hotel",function(){
+		IdHotSelc= $(this).data("id_hotel");
+		console.log(IdHotSelc);
+	});
 	var map;
 	function initMap() {
 		map = new google.maps.Map(document.getElementById('map'), {

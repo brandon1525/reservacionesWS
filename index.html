@@ -25,6 +25,12 @@
 		margin: 5px;
 		border: 1px solid #999999;
 	}
+	.selec_hotel{
+		cursor: pointer;
+	}
+	.selec_actividad{
+		cursor: pointer;
+	}
 </style>
 <html lang="es">
 <head>
@@ -206,6 +212,7 @@
 													<th>Ciudad</th>
 													<th>Estado</th>
 													<th>Descripcion</th>
+													<th>Precio Por Noche</th>
 													<th>Estrellas</th>
 													<th>Vista al Mar</th>
 													<th>Buffet</th>
@@ -229,7 +236,24 @@
 								</h4>
 							</div>
 							<div id="collapse3" class="panel-collapse collapse">
-								<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table class="table table-striped" id="actividades">
+											<thead>
+												<tr>
+													<th>Nombre</th>
+													<th>Ciudad</th>
+													<th>Descripcion</th>
+													<th>Precio por Niño</th>
+													<th>Precio Por Adulto</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
 							</div>
 						</div>
 					</div>
