@@ -77,32 +77,55 @@
 							<h3 class="center-align flow-text"><strong>Selecciona tu destino</strong></h3>
 							<blockquote class="flow-text">Arrastra el punto y confirma tu destino.</blockquote>
 							<div class="col s12" id="map" style="margin-bottom: 10px;"></div>
-							<button class="waves-effect waves-red btn red" id="btn_mostrar_mapa" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
-							</button>
-							<div class="row">
-								<div class="input-field col s6">
-									<i class="material-icons prefix">flight_land</i>
-									<input id="text_salida" type="text" class="validate">
-									<label for="text_salida">Lugar de salida</label>
-								</div>
-								<div class="input-field col s6">
-									<i class="material-icons prefix">flight_takeoff</i>
-									<input id="text_llegada" type="text" class="validate">
-									<label for="text_llegada">Lugar de destino</label>
-								</div>
-								<div class="input-field col s6">
-									<i class="material-icons prefix">flight_takeoff</i>
-									<input id="fechaS" type="date" class="datepicker">
-									<label for="fechaS">Fecha salida</label>
-								</div>
-								<div class="input-field col s6">
-									<i class="material-icons prefix">flight_takeoff</i>
-									<input id="horaS" type="text" class="timepicker">
-									<label for="horaS">Hora salida</label>
-								</div>
-							</div>
-							
 
+							<button class="col s12 offset-m3 m6 waves-effect waves-red btn red" id="btn_mostrar_mapa" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
+							</button>
+
+							<div class="input-field col s6">
+								<i class="material-icons prefix">flight_takeoff</i>
+								<input id="text_salida" type="text" value=" " disabled>
+								<label for="text_salida">Lugar de salida</label>
+							</div>
+							<div class="input-field col s6">
+								<i class="material-icons prefix">flight_land</i>
+								<input id="text_llegada" type="text" value=" " disabled>
+								<label for="text_llegada">Lugar de destino</label>
+							</div>
+							<div class="input-field col s6">
+								<i class="material-icons prefix">date_range</i>
+								<input id="fechaS" type="date" class="datepicker">
+								<label for="fechaS">Fecha salida</label>
+							</div>
+							<div class="input-field col s6">
+								<i class="material-icons prefix">access_time</i>
+								<input id="horaS" type="text" class="timepicker">
+								<label for="horaS">Hora salida</label>
+							</div>
+							<div class="input-field col s6">
+								<i class="material-icons prefix">airline_seat_recline_extra</i>
+								<p class="range-field">
+									<input type="range" id="num" min="1" max="72" id="num">
+								</p>
+								<label for="num">Número de asientos</label>
+							</div>
+							<div class="col s6 valign-wrapper">
+								<button id="btn1" class="valign col s6 offset-s3 waves-effect waves-red btn red">Buscar</button>
+							</div>
+							<table id="Aerolinea_vuelos" class="table responsive-table highlight ">
+								<thead>
+									<tr>
+										<th>Aerolinea</th>
+										<th>Fecha Salida</th>
+										<th>Hora Salida</th>
+										<th>Fecha Llegada</th>
+										<th>Hora Llegada</th>
+										<th>Numero de Vuelo</th>
+										<th>Precio</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
 						</div>
 					</li>
 				</ul>
@@ -129,41 +152,6 @@
 
 							<div id="collapse1" class="panel-collapse collapse in">
 								<div class="panel-body">
-
-	
-									<div class="row" style="margin-top: 20px;">
-
-										<div class="col-xs-12 col-md-6 text-center">
-											
-										</div>
-										<div class="col-xs-12 col-md-6 text-center">
-											<div class="input-group">
-												<span class="input-group-addon">Numero de asientos</span>
-												<input type="number" class="form-control " placeholder="Numero de asientos" aria-describedby="basic-addon1" id="num">
-												<button type="submit" id="btn1" class="form-control">Buscar</button>
-											</div>
-										</div>
-									</div>
-									<div class="tabla1 row" id="tabla">
-										<div class="table-responsive">
-											<table id="Aerolinea_vuelos" class="table">
-												<thead>
-													<tr>
-														<th>Aerolinea</th>
-														<th>Fecha Salida</th>
-														<th>Hora Salida</th>
-														<th>Fecha Llegada</th>
-														<th>Hora Llegada</th>
-														<th>Numero de Vuelo</th>
-														<th>Precio</th>
-													</tr>
-												</thead>
-												<tbody>
-													
-												</tbody>
-											</table>
-										</div>
-									</div>
 									<!-- Contenido del mapeo del avion-->
 									<div id="fondo-avion">
 									</div>
@@ -298,7 +286,7 @@
 					$.each(results,function(index,element){
 						if(element.types[0]=="administrative_area_level_1"){
 							$('#text_salida').val(element.address_components[0].long_name);
-							if($('#text_salida').val()!="" && $('#text_llegada').val()!=""){
+							if($('#text_salida').val()!="" && $('#text_llegada').val()!="" && $('#text_salida').val()!=" " && $('#text_llegada').val()!=" "){
 								$('#map').hide();
 								$('#btn_mostrar_mapa').html('<i class="material-icons left">place</i> Mostrar mapa');
 							}
@@ -325,7 +313,7 @@
 					$.each(results,function(index,element){
 						if(element.types[0]=="administrative_area_level_1"){
 							$('#text_llegada').val(element.address_components[0].long_name);
-							if($('#text_salida').val()!="" && $('#text_llegada').val()!=""){
+							if($('#text_salida').val()!="" && $('#text_llegada').val()!="" && $('#text_salida').val()!=" " && $('#text_llegada').val()!=" "){
 								$('#map').hide();
 								$('#btn_mostrar_mapa').html('<i class="material-icons left">place</i> Mostrar mapa');
 							}

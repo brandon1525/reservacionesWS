@@ -7,12 +7,11 @@ class Modelo{
 	function __construct(){
 
 	}
-	public static function getAerolineasDestino($destino, $fecha_s, $hora_s, $asientos_requeridos){
+	public static function getAerolineasDestino($origen, $destino, $fecha_s, $hora_s, $asientos_requeridos){
 		try { 
-			$consulta = "SELECT vuelo.id, vuelo.origen, vuelo.destino, vuelo.fecha_s, vuelo.hora_s, vuelo.fecha_ll, vuelo.hora_ll, vuelo.precio, vuelo.asientos_totales, vuelo.asientos_disponibles, aerolinea.nombre AS nombre_aerolinea FROM vuelo, aerolinea WHERE vuelo.id_aerolinea = aerolinea.id and destino = ? AND fecha_s >= ? AND hora_s >= ? AND asientos_disponibles >= ? ORDER BY fecha_s, hora_s ASC";
+			$consulta = "SELECT vuelo.*, aerolinea.nombre AS nombre_aerolinea FROM vuelo INNER JOIN aerolinea ON vuelo.id_aerolinea = aerolinea.id WHERE destino = :destino and origen=:origen AND fecha_s > :fecha_s OR (fecha_s= :fecha_s AND hora_s >= :hora_s ) AND asientos_disponibles >= :asientos_requeridos ORDER BY fecha_s, hora_s ASC";
 			$comando = Database::getInstance()->getDb()->prepare($consulta);
-			//$comando->execute(array($ruta));
-			$comando->execute(array($destino,$fecha_s,$hora_s,$asientos_requeridos));
+			$comando->execute(array(':origen'=>$origen,':destino'=>$destino,':fecha_s'=>$fecha_s,':hora_s'=>$hora_s,':asientos_requeridos'=>$asientos_requeridos));
 			$rows = $comando->fetchAll(PDO::FETCH_ASSOC);
 			if($rows){
 				return $rows;
