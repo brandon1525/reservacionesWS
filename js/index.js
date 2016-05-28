@@ -23,18 +23,20 @@ $(document).ready(function(){
 		autoclose: true,
 		donetext: "Cerrar"
     });
+
 	var asientos=0;
 	var asientos2=0;
 	var num=0;
 	$("#btn1").click(function(){
-		if($("#text_llegada").val()=="" || $("#fechaS").val()=="" || $("#horaS").val()=="" || $("#num").val()==""){
+
+		if($("#text_salida").val()=="" || $("#text_llegada").val()=="" || $("#fechaS").val()=="" || $("#horaS").val()=="" || $("#num").val()==""){
 			console.log("erro aerta");
 			return false;
 		}
-		$('html,body').animate({scrollTop: $("#tabla").offset().top}, 2000);
+		$('html,body').animate({scrollTop: $("#Aerolinea_vuelos").offset().top}, 2000);
 		$.ajax({
 			url : 'http://localhost/reservacionesWS/php/getaerolineasdestino.php',
-			data : {destino: $("#text_llegada").val(),fecha_s: $("#fechaS").val(),hora_s: $("#horaS").val(),asientos: $("#num").val()},
+			data : {origen: $("#text_salida").val(), destino: $("#text_llegada").val(),fecha_s: $("#fechaS").val(),hora_s: $("#horaS").val(),asientos: $("#num").val()},
 			method : 'POST',
 			dataType : 'json',
 			mimeType: 'application/json'
@@ -42,7 +44,7 @@ $(document).ready(function(){
 			if(json.result){
 				$('#Aerolinea_vuelos tbody').html('');
 				$.each(json.data,function(index,value){
-					//console.log(value);
+					console.log(value);
 					$('#Aerolinea_vuelos tbody').append('<tr class="seleccionar_vuelo">'+
 						'<td>'+value.nombre_aerolinea+'</td>'+
 						'<td>'+value.fecha_s+'</td>'+
