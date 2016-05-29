@@ -22,11 +22,7 @@ $(document).ready(function(){
 		twelvehour: true,
 		autoclose: true,
 		donetext: "Cerrar"
-    });
-
-	var asientos=0;
-	var asientos2=0;
-	var num=0;
+	});
 	var IdHotSelc;
 	var IdAct;
 	//Botones para las secciones 
@@ -36,11 +32,15 @@ $(document).ready(function(){
 		initMap();
 	});
 	$('#no_sec_vuelos').click(function(){
-		//$('#sec_vuelos_forms').hide();
 		$('#sec_vuelos').find('.collapsible-header').click();
 		$('#sec_vuelos_forms').show();
 		initMap();
 		$(this).closest('.tarjeta_inicio').hide();
+		if(!$('#sec_hoteles').find('.collapsible-header').hasClass('active')){
+			
+			$('#sec_hoteles').find('.collapsible-header').click();
+		}
+		
 	});
 
 	$('#si_sec_hoteles').click(function(){
@@ -48,14 +48,30 @@ $(document).ready(function(){
 		$(this).closest('.tarjeta_inicio').hide();
 	});
 	$('#no_sec_hoteles').click(function(){
-		$('#sec_hoteles_forms').hide();
+		$('#sec_hoteles').find('.collapsible-header').click();
+		$('#sec_hoteles_forms').show();
+		$(this).closest('.tarjeta_inicio').hide();
+		if(!$('#sec_actividades').find('.collapsible-header').hasClass('active')){
+			
+			$('#sec_actividades').find('.collapsible-header').click();
+		}
+		
+	});
+	$('#si_sec_actividades').click(function(){
+		$('#sec_actividades_forms').show();
 		$(this).closest('.tarjeta_inicio').hide();
 	});
-	
-	
+
+	$('#no_sec_actividades').click(function(){
+		$('#sec_actividades').find('.collapsible-header').click();
+		$('#sec_actividades_forms').show();
+		$(this).closest('.tarjeta_inicio').hide();
+	});
+
 	$("#btn_buscar_vuelo").click(function(){
 		if($("#text_salida").val()=="" || $("#text_llegada").val()=="" || $("#fechaS").val()=="" || $("#horaS").val()=="" || $("#num").val()==""){
-			console.log("erro aerta");
+			//console.log("erro aerta");
+			Materialize.toast('Por favor llena todos los campos', 3000, 'rounded red');
 			return false;
 		}
 		//$('html,body').animate({scrollTop: $("#Aerolinea_vuelos").offset().top}, 2000);
@@ -68,8 +84,9 @@ $(document).ready(function(){
 		}).done(function(json){
 			if(json.result){
 				$('#Aerolinea_vuelos tbody').html('');
+				$('#Aerolinea_vuelos').show();
 				$.each(json.data,function(index,value){
-					console.log(value);
+					// console.log(value);
 					$('#Aerolinea_vuelos tbody').append('<tr class="seleccionar_vuelo">'+
 						'<td>'+value.nombre_aerolinea+'</td>'+
 						'<td>'+value.fecha_s+'</td>'+
@@ -82,6 +99,7 @@ $(document).ready(function(){
 				});
 			}else{
 				console.log("error alerta");
+				Materialize.toast('Error en el WS', 3000, 'rounded red');
 			}
 		});
 	});
@@ -95,6 +113,7 @@ $(document).ready(function(){
 		}).done(function(json){
 			if(json.result){
 				$("#table_hoteles tbody").html("");
+				$("#table_hoteles tbody").show();
 				$.each(json.data,function(index,value){
 					var starts;
 					var buffet;
@@ -208,101 +227,8 @@ $(document).ready(function(){
 		console.log(IdAct);
 	});
 
-	$(document).on("click", ".asiento", function() { 
-		//console.log(asientos);
-		if(asientos2==0){
-			alert("Ingresa algun asiento");
-		}
-		if(asientos > 0){
-			$(this).removeClass("desactivo").addClass("activo");
-			//console.log(num);
-			$(".Nasiento").eq(num).val($( ".asiento" ).index( this )+1);
-			//console.log( "Index: " + ($( ".asiento" ).index( this )+1) );
-			asientos--;
-			num++;
-		}
-	});
-	$(document).on('click','.seleccionar_vuelo',function(){
-		var nuevo_id_vuelo;
-		$('#contenedor_asientos').html('');
-		var contenido = '<div class="col s12 m6">';
-		for(var i =1; i<=72;i++){
-			contenido+='<div class="col s1 asiento_disponible"><i class="tiny material-icons">airline_seat_recline_normal</i><span>'+i+'</span></div>';
-			if(i==12 || i==24 || i==36 || i==48 || i==60 || i==72){
-				contenido+='</div>';
-				if(i!=72){
-					contenido+='<div class="col s12 m6">';
-				}
-				
-				
-			}
-		}
-		$('#contenedor_asientos').append(contenido);
-
-		//$(".asiento").removeClass("activo").addClass("desactivo");
-	    $("#formularios").html('');
-
-	    asientos = $("#num").val();
-	    asientos2 = $("#num").val();
-	    for (var i = 0; i <asientos; i++) {
-	      	$("#formularios").append('<div class="persona_asiento">'+
-									'<div class="row">'+
-										'<h5 class="col s12 text-fluid">Persona '+(i+1)+'</h5>'+
-										'<div class="input-field col s12 m6">'+
-											'<i class="material-icons prefix">perm_identity</i>'+
-											'<input placeholder="Nombres(s)" type="text" class="nombre_pasajero">'+
-											'<label class="active">Nombre(s)</label>'+
-										'</div>'+
-										'<div class="input-field col s12 m3">'+
-											'<i class="material-icons prefix">airline_seat_recline_extra</i>'+
-											'<input placeholder="Número de asiento" type="text" class="asiento_pasajero">'+
-											'<label class="active">Número de asiento</label>'+
-										'</div>'+
-										'<div class="input-field col s12 m3">'+
-											'<input class="with-gap" name="group1" type="radio" data-label_ref="Femenino"/>'+
-											'<label class="active_radiobutton" style="color: #FF6781;">Femenino</label>'+
-											'<input class="with-gap" name="group1" type="radio" data-label_ref="Masculino" />'+
-											'<label class="active_radiobutton" style="color: #039be5;">Masculino</label>'+
-										'</div>'+
-									'</div>'+
-									'<div class="row">'+
-										'<div class="input-field col s12 m6">'+
-											'<i class="material-icons prefix">perm_identity</i>'+
-											'<input placeholder="Apellido paterno" type="text" class="apellidoP_pasajero">'+
-											'<label class="active">Apellido paterno</label>'+
-										'</div>'+
-										'<div class="input-field col s12 m6">'+
-											'<i class="material-icons prefix">perm_identity</i>'+
-											'<input placeholder="Apellido materno" type="text" class="apellidoM_pasajero">'+
-											'<label class="active">Apellido materno</label>'+
-										'</div>'+
-									'</div>'+
-								'</div>');
-	    }
-	    $(document).on('click','.active_radiobutton',function(){
-	    	var element_click=$(this);
-	    	$(this).closest('.input-field').find('input').each(function(index,value){
-	    		if($(value).data('label_ref')==$(element_click).text()){
-	    			$(value).click();
-	    		}
-	    	});
-	    });
-	    
-		$.ajax({
-			url : 'http://localhost/reservacionesWS/php/getvueloasientos.php',
-			data : {id_vuelo: $(this).find('.tr_id').text()},
-			method : 'POST',
-			dataType : 'json',
-			mimeType: 'application/json'
-		}).done(function(json){
-				$.each(json.data,function(index,value){
-					$(".asiento").eq((value.asiento) - 1).removeClass("desactivo").addClass("activo");
-					//console.log(value.asiento);
-				})
-
-		});
-		//console.log($(this).find('.tr_id').text());
-	});
+	
+	
 	
 	$(document).on("click",".selec_hotel",function(){
 		IdHotSelc= $(this).data("id_hotel");
@@ -359,5 +285,93 @@ $(document).ready(function(){
 		//$('#btn_mostrar_mapa').hide();
 	});
 });
+$(document).on('click','.seleccionar_vuelo',function(){
+	var nuevo_id_vuelo;
+	$('#contenedor_asientos').html('');
+	var contenido = '<div class="col s12 m6">';
+	for(var i =1; i<=72;i++){
+		contenido+='<div class="col s1 asiento_disponible"><i class="tiny material-icons">airline_seat_recline_normal</i><span>'+i+'</span></div>';
+		if(i==12 || i==24 || i==36 || i==48 || i==60 || i==72){
+			contenido+='</div>';
+			if(i!=72){
+				contenido+='<div class="col s12 m6">';
+			}
+		}
+	}
+	$('#contenedor_asientos').append(contenido);
+	//$(".asiento").removeClass("activo").addClass("desactivo");
+	$("#formularios").html('');
 
+	asientos2 = $("#num").val();
+	for (var i = 0; i <$("#num").val(); i++) {
+		$("#formularios").append('<div class="persona_asiento">'+
+			'<div class="row">'+
+				'<h5 class="col s12 text-fluid">Persona '+(i+1)+'</h5>'+
+				'<div class="input-field col s12 m6">'+
+					'<i class="material-icons prefix">perm_identity</i>'+
+					'<input placeholder="Nombres(s)" type="text" class="nombre_pasajero">'+
+					'<label class="active">Nombre(s)</label>'+
+				'</div>'+
+				'<div class="input-field col s12 m3">'+
+					'<i class="material-icons prefix">airline_seat_recline_extra</i>'+
+					'<input placeholder="Número de asiento" type="text" class="asiento_pasajero">'+
+					'<label class="active">Número de asiento</label>'+
+				'</div>'+
+				'<div class="input-field col s12 m3">'+
+					'<input class="with-gap" name="group1" type="radio" data-label_ref="Femenino"/>'+
+					'<label class="active_radiobutton" style="color: #FF6781;">Femenino</label>'+
+					'<input class="with-gap" name="group1" type="radio" data-label_ref="Masculino" />'+
+					'<label class="active_radiobutton" style="color: #039be5;">Masculino</label>'+
+				'</div>'+
+			'</div>'+
+			'<div class="row">'+
+				'<div class="input-field col s12 m6">'+
+					'<i class="material-icons prefix">perm_identity</i>'+
+					'<input placeholder="Apellido paterno" type="text" class="apellidoP_pasajero">'+
+					'<label class="active">Apellido paterno</label>'+
+				'</div>'+
+				'<div class="input-field col s12 m6">'+
+					'<i class="material-icons prefix">perm_identity</i>'+
+					'<input placeholder="Apellido materno" type="text" class="apellidoM_pasajero">'+
+					'<label class="active">Apellido materno</label>'+
+				'</div>'+
+			'</div>'+
+		'</div>');
+	}
+	$.ajax({
+		url : 'http://localhost/reservacionesWS/php/getvueloasientos.php',
+		data : {id_vuelo: $(this).find('.tr_id').text()},
+		method : 'POST',
+		dataType : 'json',
+		mimeType: 'application/json'
+	}).done(function(json){
+		$.each(json.data,function(index,value){
+			$(".asiento").eq((value.asiento) - 1).removeClass("asiento_disponible").addClass("asiento_ocupado");
+			//console.log(value.asiento);
+		})
+	});
+		//console.log($(this).find('.tr_id').text());
+});
+$(document).on('click','.active_radiobutton',function(){
+	var element_click=$(this);
+	$(this).closest('.input-field').find('input').each(function(index,value){
+		if($(value).data('label_ref')==$(element_click).text()){
+			$(value).click();
+		}
+	});
+});
+$(document).on("click", ".asiento_disponible", function() {
+	//console.log(asientos);
+	if(asientos2==0){
+		alert("Ingresa algun asiento");
+	}
+	if(asientos > 0){
+		$(this).removeClass("desactivo").addClass("activo");
+		//console.log(num);
+		$(".Nasiento").eq(num).val($( ".asiento" ).index( this )+1);
+		//console.log( "Index: " + ($( ".asiento" ).index( this )+1) );
+		asientos--;
+		num++;
+	}
+});
 

@@ -85,7 +85,7 @@
 			</div>
 		</nav>
 	</div>
-	<div style="width: 90%;">
+	<div style="width: 90%; margin: auto;">
 		<div class="row">
 			<div class="col l2 hide-on-med-and-down">
 				<ul class="table-of-contents">
@@ -110,8 +110,8 @@
 								<div class="col s12 offset-m3 m6">
 									<div class="card red lighten-2">
 										<div class="card-content white-text">
-											<span class="card-title">Reservación de vuelos</span>
-											<p class="text-flow">En este apartado pordras reservar un vuelo, ¿Deseas continuar?</p>
+											<span class="card-title">Reservación de vuelo</span>
+											<p class="text-flow">En este apartado pordras reservar un vuelo con la aerolínea que desees, ¿Deseas continuar?</p>
 										</div>
 										<div class="card-action">
 											<div class="row">
@@ -162,12 +162,12 @@
 										<label for="num">Número de asientos</label>
 									</div>
 									<div class="col s12 m6 valign-wrapper">
-										<button id="btn_buscar_vuelo" class="valign col s6 offset-s3 waves-effect waves-red btn red">Buscar vuelo</button>
+										<button id="btn_buscar_vuelo" class="valign col s6 offset-s3 waves-effect waves-yellow btn red accent-2">Buscar vuelo</button>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col s12">
-										<table id="Aerolinea_vuelos" class="table-striped highlight responsive-table">
+										<table id="Aerolinea_vuelos" class="table-striped highlight responsive-table" style="display: none;">
 											<thead>
 												<tr>
 													<th>Aerolinea</th>
@@ -209,8 +209,8 @@
 								<div class="col s12 offset-m3 m6">
 									<div class="card red lighten-2">
 										<div class="card-content white-text">
-											<span class="card-title">Reservación de vuelos</span>
-											<p class="text-flow">En este apartado pordras reservar un vuelo, ¿Deseas continuar?</p>
+											<span class="card-title">Reservación de hotel</span>
+											<p class="text-flow">En este apartado pordras reservar un hotel para que tu estancia sea con el confort que te mereces, ¿Deseas continuar?</p>
 										</div>
 										<div class="card-action">
 											<div class="row">
@@ -243,7 +243,7 @@
 								</div>
 								<div class="row">
 									<div class="col s12 offset-m9 m3">
-										<button id="buscaHotel" class="btn" >Buscar</button>
+										<button id="buscaHotel" class="valign col s6 offset-s3 waves-effect waves-yellow btn red" >Buscar</button>
 									</div>
 									
 								</div>
@@ -283,23 +283,41 @@
 					<li class="section scrollspy">
 						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">pool</i>Actividades</div>
 						<div class="collapsible-body">
-							<div class="row">
-								<div class="col s12">
-									<table class="table-striped highlight responsive-table" id="actividades">
-										<thead>
-											<tr>
-												<th>Nombre</th>
-												<th>Ciudad</th>
-												<th>Descripcion</th>
-												<th>Precio por Niño</th>
-												<th>Precio Por Adulto</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+							<div class="row tarjeta_inicio">
+								<div class="col s12 offset-m3 m6">
+									<div class="card red lighten-2">
+										<div class="card-content white-text">
+											<span class="card-title">Reservación de actividades</span>
+											<p class="text-flow">En este apartado pordras reservar un esas actividades que siempre haz soñado en el lugar mas divertido, ¿Deseas continuar?</p>
+										</div>
+										<div class="card-action">
+											<div class="row">
+												<button class="btn left" id="si_sec_actividades">Si</button>
+												<button class="btn right" id="no_sec_actividades">No</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
+							<section id="sec_actividades_forms" style="display: none;">
+								<div class="row">
+									<div class="col s12">
+										<table class="table-striped highlight responsive-table" id="actividades">
+											<thead>
+												<tr>
+													<th>Nombre</th>
+													<th>Ciudad</th>
+													<th>Descripcion</th>
+													<th>Precio por Niño</th>
+													<th>Precio Por Adulto</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</section>
 						</div>
 					</li>
 				</ul>
