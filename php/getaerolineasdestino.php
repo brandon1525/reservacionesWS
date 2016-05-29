@@ -11,15 +11,30 @@
 		$hora_s = date( "H:i:s", strtotime( $hora_s ) );
 		$asientos = $_POST['asientos'];
 		$retorno = Modelo::getAerolineasDestino($origen,$destino,$fecha_s,$hora_s,$asientos);
-		if ($retorno) {
-			$datos["result"] = "true";
-			$datos["data"] = $retorno;
-			echo json_encode($datos);
-		} else {
+		//echo json_encode($retorno);
+		if(array_key_exists('errorInfo',$retorno)){
 			echo json_encode(
 				array(
-					'result' => 'false',
-					'mensaje' => 'No se obtuvo el registro de aerolienas para esos parametros'
+					'result' => false,
+					'mensaje' => 'Error en la base de datos'
+				)
+			);
+		}else if ($retorno) {
+			$datos["result"] = true;
+			$datos["data"] = $retorno;
+			echo json_encode($datos);
+		} else if(empty($retorno)){
+			echo json_encode(
+				array(
+					'result' => true,
+					'mensaje' => 'No hay vuelos disponibles con esos parámetros'
+				)
+			);
+		}else{
+			echo json_encode(
+				array(
+					'result' => false,
+					'mensaje' => 'Neta no se que paso'
 				)
 			);
 		}

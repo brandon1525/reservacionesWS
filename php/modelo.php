@@ -9,16 +9,11 @@ class Modelo{
 	}
 	public static function getAerolineasDestino($origen, $destino, $fecha_s, $hora_s, $asientos_requeridos){
 		try { 
-			$consulta = "SELECT vuelo.*, aerolinea.nombre AS nombre_aerolinea FROM vuelo INNER JOIN aerolinea ON vuelo.id_aerolinea = aerolinea.id WHERE destino = :destino and origen=:origen AND fecha_s > :fecha_s OR (fecha_s= :fecha_s AND hora_s >= :hora_s ) AND asientos_disponibles >= :asientos_requeridos ORDER BY fecha_s, hora_s ASC";
+			$consulta = "SELECT vuelo.*, aerolinea.nombre AS nombre_aerolinea FROM vuelo INNER JOIN aerolinea ON vuelo.id_aerolinea = aerolinea.id WHERE vuelo.destino = :destino and vuelo.origen=:origen AND vuelo.fecha_s > :fecha_s OR (vuelo.fecha_s= :fecha_s AND vuelo.hora_s >= :hora_s ) AND vuelo.asientos_disponibles >= :asientos_requeridos ORDER BY vuelo.fecha_s, vuelo.hora_s ASC";
 			$comando = Database::getInstance()->getDb()->prepare($consulta);
 			$comando->execute(array(':origen'=>$origen,':destino'=>$destino,':fecha_s'=>$fecha_s,':hora_s'=>$hora_s,':asientos_requeridos'=>$asientos_requeridos));
 			$rows = $comando->fetchAll(PDO::FETCH_ASSOC);
-			if($rows){
-				return $rows;
-			}else{
-			//echo "Esa persona no existe".mysql_error();
-				return false;
-			}
+			return $rows;
 		} catch (PDOException $e) {
 			return $e;
 		}
@@ -29,12 +24,7 @@ class Modelo{
 			$comando = Database::getInstance()->getDb()->prepare($consulta);
 			$comando->execute(array($id_vuelo));
 			$rows = $comando->fetchAll(PDO::FETCH_ASSOC);
-			if($rows){
-				return $rows;
-			}else{
-			//echo "Esa persona no existe".mysql_error();
-				return false;
-			}
+			return $rows;
 		} catch (PDOException $e) {
 			return $e;
 		}
@@ -45,12 +35,7 @@ class Modelo{
 			$comando = Database::getInstance()->getDb()->prepare($consulta);
 			$comando->execute(array(':fecha_ll'=>$fecha_ll,':fecha_s'=>$fecha_s,':destino'=>$destino,':habitaciones_requeridas'=>$habitaciones_requeridas));
 			$rows = $comando->fetchAll(PDO::FETCH_ASSOC);
-			if($rows){
-				return $rows;
-			}else{
-			//echo "Esa persona no existe".mysql_error();
-				return false;
-			}
+			return $rows;
 		} catch (PDOException $e) {
 			return $e;
 		}
@@ -61,12 +46,8 @@ class Modelo{
 			$comando = Database::getInstance()->getDb()->prepare($consulta);
 			$comando->execute(array($destino));
 			$rows = $comando->fetchAll(PDO::FETCH_ASSOC);
-			if($rows){
-				return $rows;
-			}else{
-			//echo "Esa persona no existe".mysql_error();
-				return false;
-			}
+			return $rows;
+		
 		} catch (PDOException $e) {
 			return $e;
 		}
