@@ -68,9 +68,10 @@ $(document).ready(function(){
 		$(this).closest('.tarjeta_inicio').hide();
 	});
 
+	//Aqui acaban lo de las tarjetas 
+
 	$("#btn_buscar_vuelo").click(function(){
 		if($("#text_salida").val()==" " || $("#text_llegada").val()==" " || $("#fechaS").val()=="" || $("#horaS").val()=="" || $("#num").val()==""){
-			//console.log("erro aerta");
 			Materialize.toast('Por favor llena todos los campos', 3000, 'rounded red');
 			return false;
 		}
@@ -336,11 +337,14 @@ $(document).ready(function(){
 	});
 });
 $(document).on('click','.seleccionar_vuelo',function(){
-	var nuevo_id_vuelo;
+	$('.seleccionar_vuelo').each(function(index,value){
+		$(value).removeClass('red lighten-4');
+	});
+	$(this).addClass('red lighten-4');
 	$('#contenedor_asientos').html('');
 	var contenido = '<div class="col s12 m6">';
 	for(var i =1; i<=72;i++){
-		contenido+='<div class="col s1 asiento_disponible"><i class="tiny material-icons">airline_seat_recline_normal</i><span>'+i+'</span></div>';
+		contenido+='<div class="col s1 asiento asiento_disponible"><i class="tiny material-icons">airline_seat_recline_normal</i><span>'+i+'</span></div>';
 		if(i==12 || i==24 || i==36 || i==48 || i==60 || i==72){
 			contenido+='</div>';
 			if(i!=72){
@@ -432,7 +436,6 @@ $(document).on("click", ".asiento_disponible", function() {
 			}
 		});
 	}
-	//persona_asiento asiento_pasajero
 });
 $(document).on('click','.asiento_seleccionado',function(){
 	var asiento_click=$(this);

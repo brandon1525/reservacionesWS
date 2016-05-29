@@ -212,6 +212,8 @@
 								</div>
 							</div>
 							<section id="sec_hoteles_forms" style="display: none;">
+								<h3 class="center-align flow-text"><strong>Selecciona tu hotel</strong></h3>
+								<blockquote class="flow-text">Ingresa la fecha de llegada y de salida que deseas y selecciona de la lista el hotel de tu preferencia.</blockquote>
 								<div class="row">
 									<div class="input-field col s12 m4">
 										<i class="material-icons prefix">date_range</i>
@@ -223,24 +225,23 @@
 										<input id="fechaSalHot" type="date" class="datepicker">
 										<label for="fechaSalHot">Fecha de salida del hotel</label>
 									</div>
-									<div class="input-field col s12 m6">
+									<div class="input-field col s12 m4">
 										<i class="material-icons prefix">hotel</i>
 										<p class="range-field">
 											<input type="range" id="numH" min="1" max="10">
 										</p>
 										<label for="num">Número de Habitaciones</label>
 									</div>
+									<!--<i class="material-icons">location_city</i>-->
 								</div>
 								<div class="row">
-									<div class="col s12 offset-m9 m3">
-										<button id="buscaHotel" class="valign col s6 offset-s3 waves-effect waves-yellow btn red" >Buscar</button>
+									<div class="col s12 offset-m6 m3">
+										<button id="buscaHotel" class="valign col s6 offset-s3 m12 waves-effect waves-yellow btn red accent-2" >Buscar hotel</button>
 									</div>
-									
 								</div>
-
 								<div class="row">
 									<div class="col s12">
-										<table class="table-striped highlight responsive-table" id="table_hoteles">
+										<table class="table-striped highlight responsive-table" id="table_hoteles" style="display: none;">
 											<thead>
 												<tr>
 													<th>Nombre</th>
