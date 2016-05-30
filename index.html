@@ -60,6 +60,7 @@
 					<li class="active"><a href="#sec_vuelos"><i class="material-icons left">flight</i>Vuelos</a></li>
 					<li><a href="#sec_hoteles"><i class="material-icons left">domain</i>Hoteles</a></li>
 					<li><a href="#sec_actividades"><i class="material-icons left">pool</i>Actividades</a></li>
+					<li><a href="#sec_pedido"><i class="material-icons left">shopping_cart</i>Pedido</a></li>
 				</ul>
 			</div>
 			<div class="col s2 hide-on-large-only">
@@ -67,6 +68,7 @@
 					<li class="active"><a href="#sec_vuelos"><i class="material-icons left">flight</i></a></li>
 					<li><a href="#sec_hoteles"><i class="material-icons left">domain</i></a></li>
 					<li><a href="#sec_actividades"><i class="material-icons left">pool</i></a></li>
+					<li><a href="#sec_pedido"><i class="material-icons left">shopping_cart</i></a></li>
 				</ul>
 			</div>
 			<div class="col s10">
@@ -135,7 +137,7 @@
 								</div>
 								<div class="row">
 									<div class="col s12">
-										<table id="Aerolinea_vuelos" class="table-striped highlight responsive-table" style="display: none;">
+										<table id="Aerolinea_vuelos" class="bordered highlight responsive-table" style="display: none;">
 											<thead>
 												<tr>
 													<th>Aerolinea</th>
@@ -160,8 +162,11 @@
 									<div id="formularios"></div>
 								</div>
 								<div class="row">
-									<div class="col s12 offset-m9 m3">
-										<button id="next_hoteles" class="btn" >Siguiente</button>
+									<div class="col s12 offset-m5 m3" style="margin-bottom: 10px;">
+										<button id="add_cart_vuelo" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
+									</div>
+									<div class="col s12 offset-m1 m3">
+										<button id="next_hoteles" class="waves-effect waves-light btn" >Siguiente</button>
 									</div>
 								</div>
 							</section>
@@ -229,7 +234,7 @@
 								</div>
 								<div class="row">
 									<div class="col s12">
-										<table class="table-striped highlight responsive-table" id="table_hoteles" style="display: none;">
+										<table class="bordered highlight responsive-table" id="table_hoteles" style="display: none;">
 											<thead>
 												<tr>
 													<th>Nombre</th>
@@ -248,12 +253,19 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="row">
-										<div class="col s12 offset-m9 m3">
-											<button id="next_actividades" class="btn" >Siguiente</button>
-										</div>
+								</div>
+								<div id="persona_responsable_hotel" style="display: none;">
+									
+								</div>
+								<div class="row">
+									<div class="col s12 offset-m5 m3" style="margin-bottom: 10px;">
+										<button id="add_cart_hotel" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
+									</div>
+									<div class="col s12 offset-m1 m3">
+										<button id="next_actividades" class="btn" >Siguiente</button>
 									</div>
 								</div>
+								
 							</section>
 						</div>
 					</li>
@@ -296,16 +308,71 @@
 										<button id="buscaActividad" class="valign col s6 offset-s3 m12 waves-effect waves-yellow btn red accent-2" >Buscar actividades</button>
 									</div>
 								</div>
+								<div id="mostrar_buscar_actividades" style="display: none;">
+									<div class="row">
+										<div class="col s12">
+											<table class="bordered highlight responsive-table" id="table_actividades">
+												<thead>
+													<tr>
+														<th>Nombre</th>
+														<th>Ciudad</th>
+														<th>Descripcion</th>
+														<th>Precio por Niño</th>
+														<th>Precio Por Adulto</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s12 m6">
+											<i class="material-icons prefix">child_care</i>
+											<input id="ninos_actividad" type="number" min="0">
+											<label for="ninos_actividad">Nº de niños</label>
+										</div>
+										<div class="input-field col s12 m6">
+											<i class="material-icons prefix">face</i>
+											<input id="adultos_actividad" type="number" min="0">
+											<label for="adultos_actividad">Nº de adultos</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s12 m6">
+											<i class="material-icons prefix">date_range</i>
+											<input id="fecha_ll_actividad" type="date" class="datepicker">
+											<label for="fecha_ll_actividad">Fecha salida</label>
+										</div>
+										<div class="input-field col s12 m6">
+											<i class="material-icons prefix">access_time</i>
+											<input id="hora_ll_actividad" type="text" class="timepicker">
+											<label for="hora_ll_actividad">Hora salida</label>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col s12 offset-m9 m3" style="margin-bottom: 10px;">
+										<button id="add_cart_actividades" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
+									</div>
+								</div>
+							</section>
+						</div>
+					</li>
+				</ul>
+				<ul id="sec_pedidos" class="collapsible popout" data-collapsible="accordion">
+					<li class="section scrollspy">
+						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">shopping_cart</i>Pedido</div>
+						<div class="collapsible-body">
+							<section id="sec_pedidos_forms">
 								<div class="row">
 									<div class="col s12">
-										<table class="table-striped highlight responsive-table" id="actividades">
+										<table class="highlight bordered responsive-table" id="tabla_pedidos">
 											<thead>
 												<tr>
-													<th>Nombre</th>
-													<th>Ciudad</th>
-													<th>Descripcion</th>
-													<th>Precio por Niño</th>
-													<th>Precio Por Adulto</th>
+													<th>Descripción</th>
+													<th>Sub total</th>
+													<th></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -314,27 +381,11 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">child_care</i>
-										<input id="ninos_actividad" type="number" min="1">
-										<label for="ninos_actividad">Nº de niños</label>
-									</div>
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">face</i>
-										<input id="adultos_actividad" type="number" min="1">
-										<label for="adultos_actividad">Nº de adultos</label>
-									</div>
+									<h3 class="col s12 offset-m4 m4" id="total_total_pedido"></h3>
 								</div>
 								<div class="row">
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">date_range</i>
-										<input id="fecha_ll_actividad" type="date" class="datepicker">
-										<label for="fecha_ll_actividad">Fecha salida</label>
-									</div>
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">access_time</i>
-										<input id="hora_ll_actividad" type="text" class="timepicker">
-										<label for="hora_ll_actividad">Hora salida</label>
+									<div class="col s12 offset-m4 m4" style="margin-bottom: 10px;">
+										<button id="create_pedido" class="col s12 waves-effect waves-light btn" ><i class="material-icons left">credit_card</i>Crear pedido</button>
 									</div>
 								</div>
 							</section>

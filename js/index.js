@@ -32,11 +32,13 @@ $(document).ready(function(){
 		$('#sec_vuelos_forms').show();
 		$(this).closest('.tarjeta_inicio').hide();
 		initMap();
+		resiser();
 	});
 	$('#no_sec_vuelos').click(function(){
 		$('#sec_vuelos').find('.collapsible-header').click();
 		$('#sec_vuelos_forms').show();
 		initMap();
+		resiser();
 		$(this).closest('.tarjeta_inicio').hide();
 		if(!$('#sec_hoteles').find('.collapsible-header').hasClass('active')){
 			$('#sec_hoteles').find('.collapsible-header').click();
@@ -47,6 +49,7 @@ $(document).ready(function(){
 		$('#sec_hoteles_forms').show();
 		$(this).closest('.tarjeta_inicio').hide();
 		initMap2();
+		resiser();
 		if($('#text_llegada').val()==" "){
 			$('#map2').show();
 		}else{
@@ -61,6 +64,7 @@ $(document).ready(function(){
 		$('#sec_hoteles').find('.collapsible-header').click();
 		$('#sec_hoteles_forms').show();
 		initMap2();
+		resiser();
 		$(this).closest('.tarjeta_inicio').hide();
 		if(!$('#sec_actividades').find('.collapsible-header').hasClass('active')){
 			
@@ -72,12 +76,14 @@ $(document).ready(function(){
 	$('#si_sec_actividades').click(function(){
 		$('#sec_actividades_forms').show();
 		initMap3();
+		resiser();
 		$(this).closest('.tarjeta_inicio').hide();
 	});
 	$('#no_sec_actividades').click(function(){
 		$('#sec_actividades').find('.collapsible-header').click();
 		$('#sec_actividades_forms').show();
 		initMap3();
+		resiser();
 		$(this).closest('.tarjeta_inicio').hide();
 	});
 
@@ -124,60 +130,12 @@ $(document).ready(function(){
 		});
 	});
 	
-	$('#next_hoteles').click(function(){
-		var validate=true;
-		if($("#text_salida").val()==" " || $("#text_llegada").val()==" " || $("#fechaS").val()=="" || $("#horaS").val()=="" || $("#num").val()==""){
-			//console.log("erro aerta");
-			Materialize.toast('Por favor llena todos los campos', 3000, 'rounded red');
-			validate=false;
-			return false;
-		}
-		$('.persona_asiento').each(function(index,value){
-			if(!$(value).find('.nombre_pasajero').val()==""){
-				if(!$(value).find('.apellidoP_pasajero').val()==""){
-					if(!$(value).find('.apellidoM_pasajero').val()==""){
-						if(!$(value).find('.asiento_pasajero').val()==""){
-							if($(value).find('.radio_feme').is(':checked') || $(value).find('.radio_masc').is(':checked')){
-								
-							}else{
-								Materialize.toast("Selecciona el sexo para la persona "+(index+1), 3000, 'rounded red');
-								validate=false;
-								return false;
-							}
-						}else{
-							$(value).find('.asiento_pasajero').focus();
-							Materialize.toast("Selecciona un asiento para la persona "+(index+1), 3000, 'rounded red');
-							validate=false;
-							return false;
-						}
-					}else{
-						$(value).find('.apellidoM_pasajero').focus();
-						Materialize.toast("Ingresa el apellido materno de la persona "+(index+1), 3000, 'rounded red');
-						validate=false;
-						return false;
-					}
-				}else{
-					$(value).find('.apellidoP_pasajero').focus();
-					Materialize.toast("Ingresa el apellido paterno de la persona "+(index+1), 3000, 'rounded red');
-					validate=false;
-					return false;
-				}
-			}else{
-				$(value).find('.nombre_pasajero').focus();
-				Materialize.toast("Ingresa el nombre de la persona "+(index+1), 3000, 'rounded red');
-				validate=false;
-				return false;
-			}
-		});
-		if(validate){
-			$('#sec_vuelos').find('.collapsible-header').click();
-			if(!$('#sec_hoteles').find('.collapsible-header').hasClass('active')){
-				$('#sec_hoteles').find('.collapsible-header').click();
-			}
-		}
-	});
 
 	$('#buscaHotel').click(function(){
+		if($("#fechaLlHot").val()=="" || $("#fechaSalHot").val()=="" || $("#destino_hotel").val()=="" || $("#numH").val()==""){
+			Materialize.toast('Por favor llena todos los campos', 3000, 'rounded red');
+			return false;
+		}
 		$.ajax({
 		    url : 'http://localhost/reservacionesWS/php/gethotelesdestinohabitacion.php',
 		    data : {fecha_ll: $("#fechaLlHot").val(), fecha_s: $("#fechaSalHot").val(), destino: $("#destino_hotel").val(),habitaciones_requeridas: $("#numH").val()},
@@ -251,12 +209,45 @@ $(document).ready(function(){
 						'</tr>'
 					);
 				});
+				$('#persona_responsable_hotel').show();
+				$('#persona_responsable_hotel').html('<div class="row">'+
+					'<h5 class="col s12 text-fluid">Persona responsable</h5>'+
+					'<div class="input-field col s12 m8">'+
+						'<i class="material-icons prefix">perm_identity</i>'+
+						'<input placeholder="Nombres(s)" type="text" id="nombre_responsable_hotel">'+
+						'<label class="active">Nombre(s)</label>'+
+					'</div>'+
+					'<div class="input-field col s12 m4">'+
+						'<input class="with-gap radio_feme" name="group_persona_responsable" type="radio" data-label_ref="Femenino">'+
+						'<label class="active_radiobutton" style="color: #FF6781;">Femenino</label>'+
+						'<input class="with-gap radio_masc" name="group_persona_responsable" type="radio" data-label_ref="Masculino">'+
+						'<label class="active_radiobutton" style="color: #039be5;">Masculino</label>'+
+					'</div>'+
+					'</div>'+
+					'<div class="row">'+
+						'<div class="input-field col s12 m6">'+
+							'<i class="material-icons prefix">perm_identity</i>'+
+							'<input placeholder="Apellido paterno" type="text" class="apellidoP_persona_responsable">'+
+							'<label class="active">Apellido paterno</label>'+
+						'</div>'+
+						'<div class="input-field col s12 m6">'+
+							'<i class="material-icons prefix">perm_identity</i>'+
+							'<input placeholder="Apellido materno" type="text" class="apellidoM_persona_responsable">'+
+							'<label class="active">Apellido materno</label>'+
+						'</div>'+
+					'</div>');
+
 			}else{
 				Materialize.toast('Error en el WS', 3000, 'rounded red');
 			}
 		});
 	});
+
 	$('#buscaActividad').click(function(){
+		if($("#destino_actividad").val()==" "){
+			Materialize.toast('Por favor llena todos los campos', 3000, 'rounded red');
+			return false;
+		}
 		$.ajax({
 			url : 'http://localhost/reservacionesWS/php/getactividadesdestino.php',
 			data : {destino: $("#destino_actividad").val()},
@@ -269,9 +260,10 @@ $(document).ready(function(){
 					Materialize.toast(json.mensaje, 3000, 'rounded red');
 					return false;
 				}
-				$("#actividades tbody").html("");
+				$('#mostrar_buscar_actividades').show();
+				$("#table_actividades tbody").html("");
 				$.each(json.data,function(index,value){
-					$("#actividades tbody").append(
+					$("#table_actividades tbody").append(
 						'<tr class="selec_actividad" data-id_actividad="'+value.id+'">'+
 							'<td>'+value.nombre+'</td>'+
 							'<td>'+value.ciudad+'</td>'+
@@ -286,35 +278,18 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
+
+
+	$('#next_hoteles').click(function(){
+		$('#sec_vuelos').find('.collapsible-header').click();
+		if(!$('#sec_hoteles').find('.collapsible-header').hasClass('active')){
+			$('#sec_hoteles').find('.collapsible-header').click();
+		}
+	});
 	$('#next_actividades').click(function(){
 		$('#sec_hoteles').find('.collapsible-header').click();
 		if(!$('#sec_actividades').find('.collapsible-header').hasClass('active')){
 			$('#sec_actividades').find('.collapsible-header').click();
-			$.ajax({
-				url : 'http://localhost/reservacionesWS/php/getactividadesdestino.php',
-				data : {destino: $("#text_llegada").val()},
-				method : 'POST',
-				dataType : 'json',
-				mimeType: 'application/json'
-			}).done(function(json){
-				if(json.result){
-					$("#actividades tbody").html("");
-					$.each(json.data,function(index,value){
-						$("#actividades tbody").append(
-							'<tr class="selec_actividad" data-id_actividad="'+value.id+'">'+
-							'<td>'+value.nombre+'</td>'+
-							'<td>'+value.ciudad+'</td>'+
-							'<td>'+value.descripcion+'</td>'+
-							'<td>$'+value.precio_nino+'</td>'+
-							'<td>$'+value.precio_adulto+'</td>'+
-							'</tr>'
-						);
-					});
-				}else{
-					console.log("cagaste el palo");
-				}
-			});
 		}
 	});
 	
@@ -343,6 +318,85 @@ $(document).ready(function(){
 		}else{
 			$(this).html('<i class="material-icons left">place</i> Ocultar mapa');
 			$('#map3').show();
+		}
+	});
+
+	$('#add_cart_vuelo').click(function(){
+		var validate=validar_vuelo();
+		if(validate){
+			$('#sec_vuelos').find('.collapsible-header').click();
+			if(!$('#sec_hoteles').find('.collapsible-header').hasClass('active')){
+				$('#sec_hoteles').find('.collapsible-header').click();
+			}
+			var vuelo_seleccionado=$('#Aerolinea_vuelos').find('tr.seleccionar_vuelo.red.lighten-4');
+			$('#tabla_pedidos tbody').append('<tr>'+
+				'<td>'+$(vuelo_seleccionado).find('td:nth-child(1)').text()+', numero de vuelo '+
+				$(vuelo_seleccionado).find('td:nth-child(6)').text()+', '+$('#num').val()+' personas</td>'+
+				'<td>'+(parseInt($(vuelo_seleccionado).find('td:nth-child(7)').text())*parseInt($('#num').val()))+'</td>'+
+				'<td><i class="remove_cart_element material-icons">remove_circle_outline</i></td>'+
+			'</tr>');
+
+			var total=0;
+			$('#tabla_pedidos tbody').find('tr').each(function(index,value){
+				total+=parseInt($(value).find('td:nth-child(2)').text());
+			});
+			$('#total_total_pedido').html('Total = '+total);
+		}
+	});
+	$('#add_cart_hotel').click(function(){
+		var validate=validar_hotel();
+		if(validate){
+			$('#sec_hoteles').find('.collapsible-header').click();
+			if(!$('#sec_actividades').find('.collapsible-header').hasClass('active')){
+				$('#sec_actividades').find('.collapsible-header').click();
+			}
+			var hotel_seleccionado=$('#table_hoteles').find('tr.selec_hotel.red.lighten-4');
+			var xi = $('#fechaLlHot').val().split('-');
+			var xf = $('#fechaSalHot').val().split('-');
+			xi=xi[0]+'/'+(xi[1]-1)+'/'+xi[2];
+			xf=xf[0]+'/'+(xf[1]-1)+'/'+xf[2];
+			var date1 = new Date(xi);
+			var date2 = new Date(xf);
+			var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+			var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+			$('#tabla_pedidos tbody').append('<tr>'+
+				'<td>'+$(hotel_seleccionado).find('td:nth-child(1)').text()+', '+
+				$(hotel_seleccionado).find('td:nth-child(3)').text()+', '+$('#numH').val()+' habitaciones, por '+diffDays+' días</td>'+
+				'<td>'+(parseInt($(hotel_seleccionado).find('td:nth-child(5)').text().replace("$", ""))*parseInt($('#numH').val())*parseInt(diffDays))+'</td>'+
+				'<td><i class="remove_cart_element material-icons">remove_circle_outline</i></td>'+
+			'</tr>');
+			var total=0;
+			$('#tabla_pedidos tbody').find('tr').each(function(index,value){
+				total+=parseInt($(value).find('td:nth-child(2)').text());
+			});
+			$('#total_total_pedido').html('Total = '+total);
+		}
+	});
+
+	$('#add_cart_actividades').click(function(){
+		var validate=validar_actividad();
+		if(validate){
+			$('#sec_actividades').find('.collapsible-header').click();
+			if(!$('#sec_pedidos').find('.collapsible-header').hasClass('active')){
+				$('#sec_pedidos').find('.collapsible-header').click();
+			}
+			$('#table_actividades').find('tr.selec_actividad.red.lighten-4').each(function(index,actividad_seleccionada){
+				/*console.log(index);
+				console.log(actividad_seleccionada);*/
+				$('#tabla_pedidos tbody').append('<tr>'+
+				'<td>'+$(actividad_seleccionada).find('td:nth-child(1)').text()+', estado '+
+				$(actividad_seleccionada).find('td:nth-child(2)').text()+'</td>'+
+				'<td>'+
+				(parseInt($(actividad_seleccionada).find('td:nth-child(4)').text().replace("$", ""))*parseInt($('#ninos_actividad').val())+
+				(parseInt($(actividad_seleccionada).find('td:nth-child(5)').text().replace("$", ""))*parseInt($('#adultos_actividad').val())))+'</td>'+
+				'<td><i class="remove_cart_element material-icons">remove_circle_outline</i></td>'+
+			'</tr>');
+			});
+			var total=0;
+			$('#tabla_pedidos tbody').find('tr').each(function(index,value){
+				total+=parseInt($(value).find('td:nth-child(2)').text());
+			});
+			$('#total_total_pedido').html('Total = '+total);
 		}
 	});
 });
@@ -710,8 +764,160 @@ function obtenerInfoADestino(){
 		}
 	});
 }
+function validar_vuelo(){
+	var validate=true;
+	if($("#text_salida").val()==" " || $("#text_llegada").val()==" " || $("#fechaS").val()=="" || $("#horaS").val()=="" || $("#num").val()==""){
+		Materialize.toast('Por favor llena todos los campos', 3000, 'rounded red');
+		validate=false;
+		return false;
+	}
+	var vuelo_seleccionado=false;
+	$('#Aerolinea_vuelos tbody').find('tr').each(function(index, value){
+		if($(value).hasClass('lighten-4')){
+			vuelo_seleccionado=true;
+			return false;
+		}
+	});
+	if(!vuelo_seleccionado){
+		Materialize.toast('Selecciona un vuelo', 3000, 'rounded red');
+		validate=false;
+		return validate;
+	}
+	$('.persona_asiento').each(function(index,value){
+		if(!$(value).find('.nombre_pasajero').val()==""){
+			if(!$(value).find('.apellidoP_pasajero').val()==""){
+				if(!$(value).find('.apellidoM_pasajero').val()==""){
+					if(!$(value).find('.asiento_pasajero').val()==""){
+						if($(value).find('.radio_feme').is(':checked') || $(value).find('.radio_masc').is(':checked')){
+						}else{
+							Materialize.toast("Selecciona el sexo para la persona "+(index+1), 3000, 'rounded red');
+							validate=false;
+							return false;
+						}
+					}else{
+						$(value).find('.asiento_pasajero').focus();
+						Materialize.toast("Selecciona un asiento para la persona "+(index+1), 3000, 'rounded red');
+						validate=false;
+						return false;
+					}
+				}else{
+					$(value).find('.apellidoM_pasajero').focus();
+					Materialize.toast("Ingresa el apellido materno de la persona "+(index+1), 3000, 'rounded red');
+					validate=false;
+					return false;
+				}
+			}else{
+				$(value).find('.apellidoP_pasajero').focus();
+				Materialize.toast("Ingresa el apellido paterno de la persona "+(index+1), 3000, 'rounded red');
+				validate=false;
+				return false;
+			}
+		}else{
+			$(value).find('.nombre_pasajero').focus();
+			Materialize.toast("Ingresa el nombre de la persona "+(index+1), 3000, 'rounded red');
+			validate=false;
+			return false;
+		}
+	});
+	return validate;
+}
+function validar_hotel(){
+	var validate=true;
+	if($("#fechaLlHot").val()=="" || $("#fechaSalHot").val()=="" || $("#destino_hotel").val()=="" || $("#numH").val()==""){
+		Materialize.toast('Por favor llena todos los campos', 3000, 'rounded red');
+		validate=false;
+		return false;
+	}
+	var hotel_seleccionado=false;
+	$('#table_hoteles tbody').find('tr').each(function(index, value){
+		if($(value).hasClass('lighten-4')){
+			hotel_seleccionado=true;
+			return false;
+		}
+	});
+	if(!hotel_seleccionado){
+		Materialize.toast('Selecciona un hotel', 3000, 'rounded red');
+		validate=false;
+		return validate;
+	}
+	if($('#nombre_responsable_hotel').val()==""){
+		Materialize.toast('Ingresa el nombre el responsable', 3000, 'rounded red');
+		$('#nombre_responsable_hotel').focus();
+		validate=false;
+		return validate;
+	}
+	if($('#persona_responsable_hotel').find('.radio_feme').is(':checked') || $('#persona_responsable_hotel').find('.radio_masc').is(':checked')){
 
+	}else{
+		Materialize.toast("Selecciona el sexo para la persona responsable", 3000, 'rounded red');
+		validate=false;
+		return false;
+	}
+	if($('#persona_responsable_hotel').find('.apellidoP_persona_responsable').val()==""){
+		Materialize.toast('Ingresa el apellido paterno el responsable', 3000, 'rounded red');
+		$('#persona_responsable_hotel').find('.apellidoP_persona_responsable').focus();
+		validate=false;
+		return validate;
+	}
+	if($('#persona_responsable_hotel').find('.apellidoM_persona_responsable').val()==""){
+		Materialize.toast('Ingresa el apellido materno el responsable', 3000, 'rounded red');
+		$('#persona_responsable_hotel').find('.apellidoM_persona_responsable').focus();
+		validate=false;
+		return validate;
+	}
+	return validate;
+}
+function validar_actividad(){
+	var validate=true;
+	if($('#destino_actividad').val()==" "){
+		Materialize.toast('Por favor llena todos los campos', 3000, 'rounded red');
+		validate=false;
+		return false;
+	}
+	var actividad_seleccionada=false;
+	$('#table_actividades tbody').find('tr').each(function(index, value){
+		if($(value).hasClass('lighten-4')){
+			actividad_seleccionada=true;
+			return false;
+		}
+	});
+	if(!actividad_seleccionada){
+		Materialize.toast('Selecciona una actividad', 3000, 'rounded red');
+		validate=false;
+		return false;
+	}
+	if($('#ninos_actividad').val()==""){
+		Materialize.toast('Ingresa la cantidad de niños', 3000, 'rounded red');
+		validate=false;
+		return false;
 
+	}
+	if($('#adultos_actividad').val()==""){
+		Materialize.toast('Ingresa la cantidad de adultos', 3000, 'rounded red');
+		validate=false;
+		return false;
+
+	}
+	if($('#fecha_ll_actividad').val()==""){
+		Materialize.toast('Ingresa la fecha de llegada', 3000, 'rounded red');
+		validate=false;
+		return false;
+
+	}
+	if($('#hora_ll_actividad').val()==""){
+		Materialize.toast('Ingresa la hora de llegada', 3000, 'rounded red');
+		validate=false;
+		return false;
+	}
+	return validate;
+}
+function resiser(){
+	var h = $(window).height(),
+	offsetTop = 30; // Calculate the top offset
+	$('#map').css('height', (h - offsetTop));
+	$('#map2').css('height', (h - offsetTop));
+	$('#map3').css('height', (h - offsetTop));
+}
 $(window).resize(function () {
 	var h = $(window).height(),
 	offsetTop = 30; // Calculate the top offset
@@ -719,4 +925,3 @@ $(window).resize(function () {
 	$('#map2').css('height', (h - offsetTop));
 	$('#map3').css('height', (h - offsetTop));
 }).resize();
-
