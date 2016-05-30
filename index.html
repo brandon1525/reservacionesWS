@@ -1,27 +1,5 @@
 <!DOCTYPE html>
-<style>
-	.asiento_disponible{
-		color: #26a69a;
-		cursor: pointer;
-	}
-	.asiento_ocupado{
-		color: #ef6241;	
-	}
-	.asiento_seleccionado{
-		color: #ff9800;
-	}
-	.persona_asiento{
-		border-radius: 12px;
-		margin: 5px;
-		border: 1px solid #999999;
-	}
-	.selec_hotel{
-		cursor: pointer;
-	}
-	.selec_actividad{
-		cursor: pointer;
-	}
-</style>
+
 <html lang="es">
 <head>
 	<!--<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
@@ -82,6 +60,7 @@
 					<li class="active"><a href="#sec_vuelos"><i class="material-icons left">flight</i>Vuelos</a></li>
 					<li><a href="#sec_hoteles"><i class="material-icons left">domain</i>Hoteles</a></li>
 					<li><a href="#sec_actividades"><i class="material-icons left">pool</i>Actividades</a></li>
+					<li><a href="#sec_pedido"><i class="material-icons left">shopping_cart</i>Pedido</a></li>
 				</ul>
 			</div>
 			<div class="col s2 hide-on-large-only">
@@ -89,6 +68,7 @@
 					<li class="active"><a href="#sec_vuelos"><i class="material-icons left">flight</i></a></li>
 					<li><a href="#sec_hoteles"><i class="material-icons left">domain</i></a></li>
 					<li><a href="#sec_actividades"><i class="material-icons left">pool</i></a></li>
+					<li><a href="#sec_pedido"><i class="material-icons left">shopping_cart</i></a></li>
 				</ul>
 			</div>
 			<div class="col s10">
@@ -157,7 +137,7 @@
 								</div>
 								<div class="row">
 									<div class="col s12">
-										<table id="Aerolinea_vuelos" class="table-striped highlight responsive-table" style="display: none;">
+										<table id="Aerolinea_vuelos" class="bordered highlight responsive-table" style="display: none;">
 											<thead>
 												<tr>
 													<th>Aerolinea</th>
@@ -182,10 +162,12 @@
 									<div id="formularios"></div>
 								</div>
 								<div class="row">
-									<div class="col s12 offset-m9 m3">
-										<button id="next_hoteles" class="btn" >Siguiente</button>
+									<div class="col s12 offset-m5 m3" style="margin-bottom: 10px;">
+										<button id="add_cart_vuelo" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
 									</div>
-									
+									<div class="col s12 offset-m1 m3">
+										<button id="next_hoteles" class="waves-effect waves-light btn" >Siguiente</button>
+									</div>
 								</div>
 							</section>
 						</div>
@@ -212,16 +194,18 @@
 								</div>
 							</div>
 							<section id="sec_hoteles_forms" style="display: none;">
+								<h3 class="center-align flow-text"><strong>Selecciona tu hotel</strong></h3>
+								<blockquote class="flow-text">Ingresa la fecha de llegada y de salida que deseas y selecciona de la lista el hotel de tu preferencia.</blockquote>
+								<div class="col s12" id="map2" style="margin-bottom: 10px;"></div>
 								<div class="row">
-									<div class="input-field col s12 m4">
-										<i class="material-icons prefix">date_range</i>
-										<input id="fechaLlHot" type="date" class="datepicker">
-										<label for="fechaLlHot">Fecha Llegada al hotel</label>
-									</div>
-									<div class="input-field col s12 m4">
-										<i class="material-icons prefix">date_range</i>
-										<input id="fechaSalHot" type="date" class="datepicker">
-										<label for="fechaSalHot">Fecha de salida del hotel</label>
+									<button class="col offset-s1 s10 offset-m3 m6 waves-effect waves-red btn red" id="btn_mostrar_mapa2" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
+									</button>
+								</div>
+								<div class="row">
+									<div class="input-field col s12 m6">
+										<i class="material-icons prefix">location_city</i>
+										<input id="destino_hotel" type="text" value=" " disabled>
+										<label for="destino_hotel">Lugar de destino</label>
 									</div>
 									<div class="input-field col s12 m6">
 										<i class="material-icons prefix">hotel</i>
@@ -232,15 +216,25 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col s12 offset-m9 m3">
-										<button id="buscaHotel" class="valign col s6 offset-s3 waves-effect waves-yellow btn red" >Buscar</button>
+									<div class="input-field col s12 m6">
+										<i class="material-icons prefix">date_range</i>
+										<input id="fechaLlHot" type="date" class="datepicker">
+										<label for="fechaLlHot">Fecha Llegada al hotel</label>
 									</div>
-									
+									<div class="input-field col s12 m6">
+										<i class="material-icons prefix">date_range</i>
+										<input id="fechaSalHot" type="date" class="datepicker">
+										<label for="fechaSalHot">Fecha de salida del hotel</label>
+									</div>
 								</div>
-
+								<div class="row">
+									<div class="col s12 offset-m6 m3">
+										<button id="buscaHotel" class="valign col s6 offset-s3 m12 waves-effect waves-yellow btn red accent-2" >Buscar hotel</button>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col s12">
-										<table class="table-striped highlight responsive-table" id="table_hoteles">
+										<table class="bordered highlight responsive-table" id="table_hoteles" style="display: none;">
 											<thead>
 												<tr>
 													<th>Nombre</th>
@@ -259,12 +253,19 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="row">
-										<div class="col s12 offset-m9 m3">
-											<button id="next_actividades" class="btn" >Siguiente</button>
-										</div>
+								</div>
+								<div id="persona_responsable_hotel" style="display: none;">
+									
+								</div>
+								<div class="row">
+									<div class="col s12 offset-m5 m3" style="margin-bottom: 10px;">
+										<button id="add_cart_hotel" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
+									</div>
+									<div class="col s12 offset-m1 m3">
+										<button id="next_actividades" class="btn" >Siguiente</button>
 									</div>
 								</div>
+								
 							</section>
 						</div>
 					</li>
@@ -290,21 +291,101 @@
 								</div>
 							</div>
 							<section id="sec_actividades_forms" style="display: none;">
+								<h3 class="center-align flow-text"><strong>Selecciona tus actividades</strong></h3>
+								<blockquote class="flow-text">Ingresa el destino, puedes checar los precios y así podras elegir la mejor opción para ti o tu familia.</blockquote>
+								<div class="col s12" id="map3" style="margin-bottom: 10px;"></div>
+								<div class="row">
+									<button class="col offset-s1 s10 offset-m3 m6 waves-effect waves-red btn red" id="btn_mostrar_mapa3" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
+										</button>
+								</div>
+								<div class="row">
+									<div class="input-field  col s12 m4">
+										<i class="material-icons prefix">location_city</i>
+										<input id="destino_actividad" type="text" value=" " disabled>
+										<label for="destino_actividad">Lugar de destino</label>
+									</div>
+									<div class="col s12 offset-m2 m3">
+										<button id="buscaActividad" class="valign col s6 offset-s3 m12 waves-effect waves-yellow btn red accent-2" >Buscar actividades</button>
+									</div>
+								</div>
+								<div id="mostrar_buscar_actividades" style="display: none;">
+									<div class="row">
+										<div class="col s12">
+											<table class="bordered highlight responsive-table" id="table_actividades">
+												<thead>
+													<tr>
+														<th>Nombre</th>
+														<th>Ciudad</th>
+														<th>Descripcion</th>
+														<th>Precio por Niño</th>
+														<th>Precio Por Adulto</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s12 m6">
+											<i class="material-icons prefix">child_care</i>
+											<input id="ninos_actividad" type="number" min="0">
+											<label for="ninos_actividad">Nº de niños</label>
+										</div>
+										<div class="input-field col s12 m6">
+											<i class="material-icons prefix">face</i>
+											<input id="adultos_actividad" type="number" min="0">
+											<label for="adultos_actividad">Nº de adultos</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s12 m6">
+											<i class="material-icons prefix">date_range</i>
+											<input id="fecha_ll_actividad" type="date" class="datepicker">
+											<label for="fecha_ll_actividad">Fecha salida</label>
+										</div>
+										<div class="input-field col s12 m6">
+											<i class="material-icons prefix">access_time</i>
+											<input id="hora_ll_actividad" type="text" class="timepicker">
+											<label for="hora_ll_actividad">Hora salida</label>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col s12 offset-m9 m3" style="margin-bottom: 10px;">
+										<button id="add_cart_actividades" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
+									</div>
+								</div>
+							</section>
+						</div>
+					</li>
+				</ul>
+				<ul id="sec_pedidos" class="collapsible popout" data-collapsible="accordion">
+					<li class="section scrollspy">
+						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">shopping_cart</i>Pedido</div>
+						<div class="collapsible-body">
+							<section id="sec_pedidos_forms">
 								<div class="row">
 									<div class="col s12">
-										<table class="table-striped highlight responsive-table" id="actividades">
+										<table class="highlight bordered responsive-table" id="tabla_pedidos">
 											<thead>
 												<tr>
-													<th>Nombre</th>
-													<th>Ciudad</th>
-													<th>Descripcion</th>
-													<th>Precio por Niño</th>
-													<th>Precio Por Adulto</th>
+													<th>Descripción</th>
+													<th>Sub total</th>
+													<th></th>
 												</tr>
 											</thead>
 											<tbody>
 											</tbody>
 										</table>
+									</div>
+								</div>
+								<div class="row">
+									<h3 class="col s12 offset-m4 m4" id="total_total_pedido"></h3>
+								</div>
+								<div class="row">
+									<div class="col s12 offset-m4 m4" style="margin-bottom: 10px;">
+										<button id="create_pedido" class="col s12 waves-effect waves-light btn" ><i class="material-icons left">credit_card</i>Crear pedido</button>
 									</div>
 								</div>
 							</section>
@@ -321,135 +402,8 @@
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/materialize.clockpicker.js"></script>
 <!--<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>-->
-<script type="text/javascript" src="js/index.js"></script>
-<script>
-	var markerS;
-	var markerLl;
-	var LineS;
-	var LineLl;
-	var linea;
-	var geocoder;
-	var map;
-	var infowindow;
-	var imageMS = 'img/Salida.png';
-	var imageMLl='img/Llegada.png';
-	function initMap() {
-		var myLatLng = {lat: 23.4598087, lng: -100.3507389};
-		map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 6,
-			center: myLatLng,
-			scrollwheel: false,
-			navigationControl: false,
-			mapTypeControl: false,
-			scaleControl: false,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		});
-		markerS = new google.maps.Marker({
-			map: map,
-			draggable: true,
-			animation: google.maps.Animation.DROP,
-			position: {lat: 21.864865607746523, lng: -102.28433265000001},
-			icon: imageMS
-		});
-		markerLl = new google.maps.Marker({
-			map: map,
-			draggable: true,
-			animation: google.maps.Animation.DROP,
-			position:{lat: 21.24719896448074, lng: -105.11636390000001},
-			icon:imageMLl
-		});
-		geocoder = new google.maps.Geocoder;
-		infowindow = new google.maps.InfoWindow;
-		markerLl.addListener('click', toggleBounceLl);
-		markerLl.addListener('dragend', obtenerInfoLl);
-		markerS.addListener('click', toggleBounceS);
-		markerS.addListener('dragend', obtenerInfoS);
-	}
-	function toggleBounceS() {
-		if (markerS.getAnimation() !== null) {
-			markerS.setAnimation(null);
-		} else {
-			markerS.setAnimation(google.maps.Animation.BOUNCE);
-		}
-	}
-	function toggleBounceLl() {
-		if (markerLl.getAnimation() !== null) {
-			markerLl.setAnimation(null);
-		} else {
-			markerLl.setAnimation(google.maps.Animation.BOUNCE);
-		}
-	}
-	function obtenerInfoS(){
-		var lat = this.getPosition().lat();
-		//console.log(lat);
-		var lng = this.getPosition().lng();
-		//console.log(lng);
-		LineS={lat: lat,lng: lng};
-		var latlng = {lat: lat, lng: lng}
-		geocoder.geocode({'location': latlng}, function(results, status) {
-			if (status === google.maps.GeocoderStatus.OK) {
-				if (results[1]) {
-					$.each(results,function(index,element){
-						if(element.types[0]=="administrative_area_level_1"){
-							$('#text_salida').val(element.address_components[0].long_name);
-							if($('#text_salida').val()!="" && $('#text_llegada').val()!="" && $('#text_salida').val()!=" " && $('#text_llegada').val()!=" "){
-								$('#map').hide();
-								$('#btn_mostrar_mapa').html('<i class="material-icons left">place</i> Mostrar mapa');
-							}
-						}
-					});
-				} else {
-					window.alert('No results found');
-				}
-			} else {
-				window.alert('Geocoder failed due to: ' + status);
-			}
-		});
-	}
-	function obtenerInfoLl(){
-		var lat = this.getPosition().lat();
-		//console.log(lat);
-		var lng = this.getPosition().lng();
-		//console.log(lng);
-		LineLl={lat: lat,lng: lng};
-		var latlng = {lat: lat, lng: lng};
-		geocoder.geocode({'location': latlng}, function(results, status) {
-			if (status === google.maps.GeocoderStatus.OK) {
-				if (results[1]) {
-					$.each(results,function(index,element){
-						if(element.types[0]=="administrative_area_level_1"){
-							$('#text_llegada').val(element.address_components[0].long_name);
-							if($('#text_salida').val()!="" && $('#text_llegada').val()!="" && $('#text_salida').val()!=" " && $('#text_llegada').val()!=" "){
-								$('#map').hide();
-								$('#btn_mostrar_mapa').html('<i class="material-icons left">place</i> Mostrar mapa');
-							}
-						}
-					});
-				} else {
-					window.alert('No results found');
-				}
-			} else {
-				window.alert('Geocoder failed due to: ' + status);
-			}
-		});
-		var LineaVuelo=[LineS,LineLl];
-	}
-	function dibujaLinea(LineaVuelo){
-		linea = new google.maps.Polyline({
-			path: LineaVuelo,
-			geodesic: true,
-			strokeColor: '#FF0000',
-			strokeOpacity: 1.0,
-			strokeWeight: 2
-		});
-	}
-	function marca(){
-		linea.setMap(map);
-	}
-	function desmarca(){
-		linea.setMap(null);
-	}
-</script>
-<script async defer
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7zi0iyv1inGdIwlU5PV4n6S7pVRyKwQA&callback=initMap"></script>
+<script defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7zi0iyv1inGdIwlU5PV4n6S7pVRyKwQA"></script>
 </html>
+<script type="text/javascript" src="js/index.js"></script>
+
