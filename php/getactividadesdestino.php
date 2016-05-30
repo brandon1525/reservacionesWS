@@ -21,7 +21,7 @@
 			echo json_encode(
 				array(
 					'result' => true,
-					'mensaje' => 'No hay actividades disponibles con esos parámetros'
+					'mensaje' => 'No hay actividades disponibles para ese destino'
 				)
 			);
 		}else{
