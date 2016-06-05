@@ -9,7 +9,7 @@ class Modelo{
 	}
 	public static function getAerolineasDestino($origen, $destino, $fecha_s, $hora_s, $asientos_requeridos){
 		try { 
-			$consulta = "SELECT vuelo.*, aerolinea.nombre AS nombre_aerolinea FROM vuelo INNER JOIN aerolinea ON vuelo.id_aerolinea = aerolinea.id WHERE vuelo.destino = :destino and vuelo.origen=:origen AND vuelo.fecha_s > :fecha_s OR (vuelo.fecha_s= :fecha_s AND vuelo.hora_s >= :hora_s ) AND vuelo.asientos_disponibles >= :asientos_requeridos ORDER BY vuelo.fecha_s, vuelo.hora_s ASC";
+			$consulta = "SELECT t2.*,aerolinea.nombre as nombre_aerolinea FROM aerolinea,(SELECT vuelo.*, IFNULL(t1.asientos_disponibles,'72') as asientos_disponibles FROM vuelo LEFT JOIN (SELECT id_vuelo, (72-COUNT( id_vuelo )) AS asientos_disponibles FROM pasajero GROUP BY id_vuelo) as t1 ON id = t1.id_vuelo WHERE vuelo.destino = :destino and vuelo.origen = :origen AND vuelo.fecha_s > :fecha_s OR (vuelo.fecha_s= :fecha_s AND vuelo.hora_s >= :hora_s ) and t1.asientos_disponibles>=:asientos_requeridos ORDER BY vuelo.fecha_s, vuelo.hora_s ASC) as t2 where t2.id_aerolinea=aerolinea.id";
 			$comando = Database::getInstance()->getDb()->prepare($consulta);
 			$comando->execute(array(':origen'=>$origen,':destino'=>$destino,':fecha_s'=>$fecha_s,':hora_s'=>$hora_s,':asientos_requeridos'=>$asientos_requeridos));
 			$rows = $comando->fetchAll(PDO::FETCH_ASSOC);
@@ -52,5 +52,42 @@ class Modelo{
 			return $e;
 		}
 	}
+	public static function getHabitacionesHotel($fecha_ll,$fecha_s,$id_hotel){
+		try {
+			$consulta = "SELECT * FROM travel_hoteles.habitacion WHERE habitacion.id NOT IN (SELECT id_habitacion FROM travel_hoteles.habitacion_reservacion, (SELECT * FROM travel_hoteles.reservacion WHERE fecha_ll BETWEEN :fecha_ll AND :fecha_s OR fecha_s BETWEEN :fecha_ll AND :fecha_s) AS T1 WHERE habitacion_reservacion.id_reservacion=T1.id) and id_hotel=:id_hotel";
+			$comando = Database::getInstance()->getDb()->prepare($consulta);
+			$comando->execute(array(':fecha_ll'=>$fecha_ll,':fecha_s'=>$fecha_s,':id_hotel'=>$id_hotel));
+			$rows = $comando->fetchAll(PDO::FETCH_ASSOC);
+			return $rows;
+		
+		} catch (PDOException $e) {
+			return $e;
+		}
+	}
+	public static function insert_actividad($nombre,$precio_adulto,$precio_nino,$descripcion,$ciudad)
+    {
+        // Sentencia INSERT
+        $comando = "INSERT INTO travel_actividades.actividad ( " .
+            "nombre," .
+            " precio_adulto," .
+            " precio_nino," .
+            " descripcion," .
+            " ciudad)" .
+            " VALUES( ?,?,?,?,?)";
+
+        // Preparar la sentencia
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        $sentencia->execute(
+            array(
+                $nombre,
+                $precio_adulto,
+                $precio_nino,
+                $descripcion,
+                $ciudad
+            )
+        );
+        $lastId = Database::getInstance()->getDb()->lastInsertId();
+        return $lastId;
+    }
 }
 ?>

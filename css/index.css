@@ -25,3 +25,6 @@
 .seleccionar_vuelo{
 	cursor: pointer;
 }
+.remove_cart_element{
+	cursor: pointer;
+}

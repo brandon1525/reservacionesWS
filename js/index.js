@@ -1,6 +1,6 @@
+var pedido=[];
 $(document).ready(function(){
-	var IdHotSelc;
-	var IdAct;
+	
 	$(".button-collapse").sideNav();
 	$('.collapsible').collapsible({
 		accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
@@ -16,8 +16,10 @@ $(document).ready(function(){
 		today: 'Hoy',
 		clear: 'Limpiar',
 		close: 'Cerrar',
-		format: 'yyyy-mm-dd'
+		format: 'yyyy-mm-dd'/*,
+		min: -1*/
 	});
+
 
 	$('.timepicker').clockpicker({
 		placement: 'bottom',
@@ -335,12 +337,7 @@ $(document).ready(function(){
 				'<td>'+(parseInt($(vuelo_seleccionado).find('td:nth-child(7)').text())*parseInt($('#num').val()))+'</td>'+
 				'<td><i class="remove_cart_element material-icons">remove_circle_outline</i></td>'+
 			'</tr>');
-
-			var total=0;
-			$('#tabla_pedidos tbody').find('tr').each(function(index,value){
-				total+=parseInt($(value).find('td:nth-child(2)').text());
-			});
-			$('#total_total_pedido').html('Total = '+total);
+			calcular_precio_pedido();
 		}
 	});
 	$('#add_cart_hotel').click(function(){
@@ -365,11 +362,7 @@ $(document).ready(function(){
 				'<td>'+(parseInt($(hotel_seleccionado).find('td:nth-child(5)').text().replace("$", ""))*parseInt($('#numH').val())*parseInt(diffDays))+'</td>'+
 				'<td><i class="remove_cart_element material-icons">remove_circle_outline</i></td>'+
 			'</tr>');
-			var total=0;
-			$('#tabla_pedidos tbody').find('tr').each(function(index,value){
-				total+=parseInt($(value).find('td:nth-child(2)').text());
-			});
-			$('#total_total_pedido').html('Total = '+total);
+			calcular_precio_pedido();
 		}
 	});
 
@@ -392,11 +385,7 @@ $(document).ready(function(){
 				'<td><i class="remove_cart_element material-icons">remove_circle_outline</i></td>'+
 			'</tr>');
 			});
-			var total=0;
-			$('#tabla_pedidos tbody').find('tr').each(function(index,value){
-				total+=parseInt($(value).find('td:nth-child(2)').text());
-			});
-			$('#total_total_pedido').html('Total = '+total);
+			calcular_precio_pedido();
 		}
 	});
 });
@@ -480,7 +469,6 @@ $(document).on('click','.seleccionar_vuelo',function(){
 	});
 });
 $(document).on("click",".selec_hotel",function(){
-	IdHotSelc= $(this).data("id_hotel");
 	$('.selec_hotel').each(function(index,value){
 		$(value).removeClass('red lighten-4');
 	});
@@ -524,7 +512,10 @@ $(document).on('click','.asiento_seleccionado',function(){
 		}
 	});
 });
-
+$(document).on('click','.remove_cart_element',function(){
+	$(this).closest('tr').remove();
+	calcular_precio_pedido();
+});
 
 var map;
 var markerS;
@@ -771,9 +762,11 @@ function validar_vuelo(){
 		validate=false;
 		return false;
 	}
+	var id_vuelo;
 	var vuelo_seleccionado=false;
 	$('#Aerolinea_vuelos tbody').find('tr').each(function(index, value){
 		if($(value).hasClass('lighten-4')){
+			id_vuelo=$(value).find('.tr_id').text();
 			vuelo_seleccionado=true;
 			return false;
 		}
@@ -783,12 +776,27 @@ function validar_vuelo(){
 		validate=false;
 		return validate;
 	}
+	var pasajeros=[];
 	$('.persona_asiento').each(function(index,value){
+		var pasajero;
 		if(!$(value).find('.nombre_pasajero').val()==""){
 			if(!$(value).find('.apellidoP_pasajero').val()==""){
 				if(!$(value).find('.apellidoM_pasajero').val()==""){
 					if(!$(value).find('.asiento_pasajero').val()==""){
 						if($(value).find('.radio_feme').is(':checked') || $(value).find('.radio_masc').is(':checked')){
+							var sexo="Masculino";
+							if($(value).find('.radio_feme').is(':checked')){
+								sexo="Femenino";
+							}
+							pasajero={
+								nombre: $(value).find('.nombre_pasajero').val(),
+								apellidop: $(value).find('.apellidoP_pasajero').val(),
+								apellidom: $(value).find('.apellidoM_pasajero').val(),
+								asiento: $(value).find('.asiento_pasajero').val(),
+								sexo: sexo,
+								id_vuelo: id_vuelo
+							};
+							pasajeros.push(pasajero);
 						}else{
 							Materialize.toast("Selecciona el sexo para la persona "+(index+1), 3000, 'rounded red');
 							validate=false;
@@ -819,15 +827,24 @@ function validar_vuelo(){
 			return false;
 		}
 	});
+	pedido.push(pasajeros);
+	//console.log(pedido);
 	return validate;
 }
 function validar_hotel(){
+
 	var validate=true;
 	if($("#fechaLlHot").val()=="" || $("#fechaSalHot").val()=="" || $("#destino_hotel").val()=="" || $("#numH").val()==""){
 		Materialize.toast('Por favor llena todos los campos', 3000, 'rounded red');
 		validate=false;
 		return false;
 	}
+	var pedido_hotel={
+		fecha_ll: $("#fechaLlHot").val(),
+		fecha_s: $("#fechaSalHot").val(),
+		destino: $("#destino_hotel").val(),
+		numero_habitaciones: $("#numH").val()
+	};
 	var hotel_seleccionado=false;
 	$('#table_hoteles tbody').find('tr').each(function(index, value){
 		if($(value).hasClass('lighten-4')){
@@ -840,14 +857,18 @@ function validar_hotel(){
 		validate=false;
 		return validate;
 	}
+	
 	if($('#nombre_responsable_hotel').val()==""){
 		Materialize.toast('Ingresa el nombre el responsable', 3000, 'rounded red');
 		$('#nombre_responsable_hotel').focus();
 		validate=false;
 		return validate;
 	}
+	var sexo="Masculino";
 	if($('#persona_responsable_hotel').find('.radio_feme').is(':checked') || $('#persona_responsable_hotel').find('.radio_masc').is(':checked')){
-
+		if($('#persona_responsable_hotel').find('.radio_feme').is(':checked')){
+			sexo="Femenino";
+		}
 	}else{
 		Materialize.toast("Selecciona el sexo para la persona responsable", 3000, 'rounded red');
 		validate=false;
@@ -865,6 +886,16 @@ function validar_hotel(){
 		validate=false;
 		return validate;
 	}
+	var persona_responsable={
+		nombre: $('#nombre_responsable_hotel').val(),
+		apellidop: $('#persona_responsable_hotel').find('.apellidoP_persona_responsable').val(),
+		apellidom: $('#persona_responsable_hotel').find('.apellidoM_persona_responsable').val(),
+		sexo: sexo
+	};
+	pedido_hotel["persona_responsable"]=persona_responsable;
+	pedido.push(pedido_hotel);
+	//console.log(pedido);
+
 	return validate;
 }
 function validar_actividad(){
@@ -925,3 +956,11 @@ $(window).resize(function () {
 	$('#map2').css('height', (h - offsetTop));
 	$('#map3').css('height', (h - offsetTop));
 }).resize();
+
+function calcular_precio_pedido(){
+	var total=0;
+	$('#tabla_pedidos tbody').find('tr').each(function(index,value){
+		total+=parseInt($(value).find('td:nth-child(2)').text());
+	});
+	$('#total_total_pedido').html('Total = '+total);
+}
