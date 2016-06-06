@@ -11,7 +11,7 @@
 .asiento_seleccionado{
 	color: #ff9800;
 }
-.persona_asiento,#persona_responsable_hotel{
+.persona_asiento,#persona_responsable_hotel,#persona_responsable_actividad{
 	border-radius: 12px;
 	margin: 5px;
 	border: 1px solid #999999;
@@ -27,4 +27,5 @@
 }
 .remove_cart_element{
 	cursor: pointer;
+	color: red;
 }

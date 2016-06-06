@@ -65,29 +65,73 @@ class Modelo{
 		}
 	}
 	public static function insert_actividad($nombre,$precio_adulto,$precio_nino,$descripcion,$ciudad)
-    {
-        // Sentencia INSERT
-        $comando = "INSERT INTO travel_actividades.actividad ( " .
-            "nombre," .
-            " precio_adulto," .
-            " precio_nino," .
-            " descripcion," .
-            " ciudad)" .
-            " VALUES( ?,?,?,?,?)";
-
-        // Preparar la sentencia
-        $sentencia = Database::getInstance()->getDb()->prepare($comando);
-        $sentencia->execute(
-            array(
-                $nombre,
-                $precio_adulto,
-                $precio_nino,
-                $descripcion,
-                $ciudad
-            )
-        );
-        $lastId = Database::getInstance()->getDb()->lastInsertId();
-        return $lastId;
-    }
+	{
+	// Sentencia INSERT
+		$comando = "INSERT INTO travel_actividades.actividad ( " .
+			"nombre," .
+			" precio_adulto," .
+			" precio_nino," .
+			" descripcion," .
+			" ciudad)" .
+			" VALUES( ?,?,?,?,?)";
+	// Preparar la sentencia
+		$sentencia = Database::getInstance()->getDb()->prepare($comando);
+		$sentencia->execute(
+			array(
+				$nombre,
+				$precio_adulto,
+				$precio_nino,
+				$descripcion,
+				$ciudad
+				)
+			);
+		$lastId = Database::getInstance()->getDb()->lastInsertId();
+		return $lastId;
+	}
+	public static function crear_pedido_vuelo($nombre,$apellidop,$apellidom,$sexo,$asiento,$id_vuelo)
+	{
+	// Sentencia INSERT
+		$comando = "INSERT INTO travel_aerolineas.pasajero ( " .
+			"nombre," .
+			" apellidop," .
+			" apellidom," .
+			" sexo," .
+			" asiento,".
+			" id_vuelo)" .
+			" VALUES(?,?,?,?,?,?)";
+	// Preparar la sentencia
+		$sentencia = Database::getInstance()->getDb()->prepare($comando);
+		$sentencia->execute(array($nombre,$apellidop,$apellidom,$sexo,$asiento,$id_vuelo));
+		$lastId = Database::getInstance()->getDb()->lastInsertId();
+		return $lastId;
+	}
+	public static function crear_pedido_hotel_reservacion($fecha_ll,$fecha_s)
+	{
+	// Sentencia INSERT
+		$comando = "INSERT INTO travel_hoteles.reservacion ( " .
+			"fecha_ll," .
+			" fecha_s)" .
+			" VALUES(?,?)";
+	// Preparar la sentencia
+		$sentencia = Database::getInstance()->getDb()->prepare($comando);
+		$sentencia->execute(array($fecha_ll,$fecha_s));
+		$lastId = Database::getInstance()->getDb()->lastInsertId();
+		return $lastId;
+	}
+	public static function crear_pedido_hotel_responsable($nombre,$apellidop,$apellidom,$sexo)
+	{
+	// Sentencia INSERT
+		$comando = "INSERT INTO travel_hoteles.responsable ( " .
+			"nombre," .
+			" apellidop," .
+			" apellidom," .
+			" sexo)" .
+			" VALUES(?,?,?,?)";
+	// Preparar la sentencia
+		$sentencia = Database::getInstance()->getDb()->prepare($comando);
+		$sentencia->execute(array($nombre,$apellidop,$apellidom,$sexo,$asiento,$id_vuelo));
+		$lastId = Database::getInstance()->getDb()->lastInsertId();
+		return $lastId;
+	}
 }
 ?>
