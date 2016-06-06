@@ -5,7 +5,12 @@ var pedido_actividades_g=[];
 
 $(document).ready(function(){
 	
-	$(".button-collapse").sideNav();
+	/*$(".button-collapse").sideNav({
+		menuWidth: 300, // Default is 240
+		edge: 'left', // Choose the horizontal origin
+		closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+	});*/
+	$('.scrollspy').scrollSpy();
 	$('.collapsible').collapsible({
 		accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
 	});
@@ -106,7 +111,7 @@ $(document).ready(function(){
 		$('#Aerolinea_vuelos').hide();
 		//$('html,body').animate({scrollTop: $("#Aerolinea_vuelos").offset().top}, 2000);
 		$.ajax({
-			url : 'http://localhost/reservacionesWS/php/getaerolineasdestino.php',
+			url : 'http://brbusiness.xyz/php/getaerolineasdestino.php',
 			data : {origen: $("#text_salida").val(), destino: $("#text_llegada").val(),fecha_s: $("#fechaS").val(),hora_s: $("#horaS").val(),asientos: $("#num").val()},
 			method : 'POST',
 			dataType : 'json',
@@ -143,7 +148,7 @@ $(document).ready(function(){
 			return false;
 		}
 		$.ajax({
-		    url : 'http://localhost/reservacionesWS/php/gethotelesdestinohabitacion.php',
+		    url : 'http://brbusiness.xyz/php/gethotelesdestinohabitacion.php',
 		    data : {fecha_ll: $("#fechaLlHot").val(), fecha_s: $("#fechaSalHot").val(), destino: $("#destino_hotel").val(),habitaciones_requeridas: $("#numH").val()},
 		    method : 'POST',
 		    dataType : 'json',
@@ -255,7 +260,7 @@ $(document).ready(function(){
 			return false;
 		}
 		$.ajax({
-			url : 'http://localhost/reservacionesWS/php/getactividadesdestino.php',
+			url : 'http://brbusiness.xyz/php/getactividadesdestino.php',
 			data : {destino: $("#destino_actividad").val()},
 			method : 'POST',
 			dataType : 'json',
@@ -398,7 +403,13 @@ $(document).ready(function(){
 		pedido['pedidos_actividades']=pedido_actividades_g;
 		crear_pedido_vuelo();
 		crear_pedido_hotel();
-		console.log(pedido);
+		crear_pedido_actividad();
+		Materialize.toast(json.mensaje, 3000, 'rounded  teal accent-4');
+		setTimeout(function(){
+			window.location.href = "http://brbusiness.xyz";
+		}, 3000);
+		
+		//console.log(pedido);
 	});
 });
 $(document).on('click','.seleccionar_vuelo',function(){
@@ -456,7 +467,7 @@ $(document).on('click','.seleccionar_vuelo',function(){
 		'</div>');
 	}
 	$.ajax({
-		url : 'http://localhost/reservacionesWS/php/getvueloasientos.php',
+		url : 'http://brbusiness.xyz/php/getvueloasientos.php',
 		data : {id_vuelo: $(this).find('.tr_id').text()},
 		method : 'POST',
 		dataType : 'json',
@@ -1024,7 +1035,7 @@ function calcular_precio_pedido(){
 }
 function crear_pedido_vuelo(){
 	$.ajax({
-		url : 'http://localhost/reservacionesWS/php/crear_pedido_vuelo.php',
+		url : 'http://brbusiness.xyz/php/crear_pedido_vuelo.php',
 		data : {pedido_vuelo: pedido['pedidos_vuelo']},
 		method : 'POST',
 		dataType : 'json',
@@ -1040,8 +1051,24 @@ function crear_pedido_vuelo(){
 }
 function crear_pedido_hotel(){
 	$.ajax({
-		url : 'http://localhost/reservacionesWS/php/crear_pedido_hotel.php',
+		url : 'http://brbusiness.xyz/php/crear_pedido_hotel.php',
 		data : {pedido_hotel: pedido['pedidos_hotel']},
+		method : 'POST',
+		dataType : 'json',
+		mimeType: 'application/json'
+	}).done(function(json){
+		console.log(json);
+		if(json.result){
+			console.log(json.data);
+		}else{
+			Materialize.toast('No se pudo hacer el registro del vuelo', 3000, 'rounded red');
+		}
+	});
+}
+function crear_pedido_actividad(){
+	$.ajax({
+		url : 'http://brbusiness.xyz/php/crear_pedido_actividad.php',
+		data : {pedidos_actividades: pedido['pedidos_actividades']},
 		method : 'POST',
 		dataType : 'json',
 		mimeType: 'application/json'

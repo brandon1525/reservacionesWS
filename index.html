@@ -17,37 +17,37 @@
 <body>
 	<div class="navbar-fixed">
 		<nav>
-			<div class="nav-wrapper">
+			<div class="nav-wrapper cyan darken-2">
 				<div class="row">
 					<div class="col s12">
 						<a href="#!" class="brand-logo center">Travel BR</a>
-						<a href="#" data-activates="mobile-demo" class="button-collapse">
+						<!--<a href="#" data-activates="mobile-demo" class="button-collapse">
 							<i class="material-icons">menu</i>
-						</a>
-						<ul class="left hide-on-med-and-down">
-							<li class="active waves-effect waves-teal">
-								<a href="#">
+						</a>-->
+						<!--<ul class="left hide-on-med-and-down">
+							<li class="active waves-effect waves-light">
+								<a href="index.html">
 									<i class="material-icons left">local_activity</i>Explorar
 								</a>
 							</li>
-							<li class="waves-effect waves-teal">
+							<li class="waves-effect waves-light">
 								<a href="#">
 									<i class="material-icons left">settings</i>Reservaciones
 								</a>
 							</li>
 						</ul>
 						<ul class="side-nav" id="mobile-demo">
-							<li class="waves-effect waves-teal">
-								<a href="#">
+							<li class="waves-effect waves-light">
+								<a href="index.html">
 									<i class="material-icons left">local_activity</i>Explorar
 								</a>
 							</li>
-							<li class="waves-effect waves-teal">
+							<li class="waves-effect waves-light">
 								<a href="#">
 									<i class="material-icons left">settings</i>Reservaciones
 								</a>
 							</li>
-						</ul>
+						</ul>-->
 					</div>
 				</div>
 			</div>
@@ -56,269 +56,98 @@
 	<div style="width: 90%; margin: auto;">
 		<div class="row">
 			<div class="col l2 hide-on-med-and-down">
-				<ul class="table-of-contents">
-					<li class="active"><a href="#sec_vuelos"><i class="material-icons left">flight</i>Vuelos</a></li>
+				<ul class="section table-of-contents">
+					<li><a class="active" href="#sec_vuelos"><i class="material-icons left ">flight</i>Vuelos</a></li>
 					<li><a href="#sec_hoteles"><i class="material-icons left">domain</i>Hoteles</a></li>
 					<li><a href="#sec_actividades"><i class="material-icons left">pool</i>Actividades</a></li>
-					<li><a href="#sec_pedido"><i class="material-icons left">shopping_cart</i>Pedido</a></li>
+					<li><a href="#sec_pedidos"><i class="material-icons left">shopping_cart</i>Pedido</a></li>
 				</ul>
 			</div>
 			<div class="col s2 hide-on-large-only">
-				<ul class="table-of-contents">
-					<li class="active"><a href="#sec_vuelos"><i class="material-icons left">flight</i></a></li>
+				<ul class="section table-of-contents">
+					<li><a class="active" href="#sec_vuelos"><i class="material-icons left">flight</i></a></li>
 					<li><a href="#sec_hoteles"><i class="material-icons left">domain</i></a></li>
 					<li><a href="#sec_actividades"><i class="material-icons left">pool</i></a></li>
-					<li><a href="#sec_pedido"><i class="material-icons left">shopping_cart</i></a></li>
+					<li><a href="#sec_pedidos"><i class="material-icons left">shopping_cart</i></a></li>
 				</ul>
 			</div>
 			<div class="col s10">
-				<ul id="sec_vuelos" class="collapsible popout" data-collapsible="accordion">
-					<li class="section scrollspy">
-						<div class="collapsible-header active waves-effect waves-red"><i class="material-icons">flight</i>Vuelos</div>
-						<div class="collapsible-body">
-							<div class="row tarjeta_inicio">
-								<div class="col s12 offset-m3 m6">
-									<div class="card red lighten-2">
-										<div class="card-content white-text">
-											<span class="card-title">Reservación de vuelo</span>
-											<p class="text-flow">En este apartado pordras reservar un vuelo con la aerolínea que desees, ¿Deseas continuar?</p>
-										</div>
-										<div class="card-action">
-											<div class="row">
-												<button class="btn left" id="si_sec_vuelos">Si</button>
-												<button class="btn right" id="no_sec_vuelos">No</button>
+				<div id="sec_vuelos" class="scrollspy">
+					<ul class="collapsible popout" data-collapsible="accordion">
+						<li>
+							<div class="collapsible-header active waves-effect waves-yellow grey-text text-darken-4"><i class="material-icons">flight</i>Vuelos</div>
+							<div class="collapsible-body">
+								<div class="row tarjeta_inicio">
+									<div class="col s12 offset-m3 m6">
+										<div class="card cyan">
+											<div class="card-content white-text">
+												<span class="card-title">Reservación de vuelo</span>
+												<p class="text-flow grey-text text-darken-4">En este apartado pordras reservar un vuelo con la aerolínea que desees, ¿Deseas continuar?</p>
+											</div>
+											<div class="card-action">
+												<div class="row">
+													<button class="btn left amber grey-text text-darken-4" id="si_sec_vuelos">Si</button>
+													<button class="btn right amber grey-text text-darken-4" id="no_sec_vuelos">No</button>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<section id="sec_vuelos_forms" style="display: none;">
-								<h3 class="center-align flow-text"><strong>Selecciona tu destino</strong></h3>
-								<blockquote class="flow-text">Arrastra el punto y confirma tu destino.</blockquote>
-								<div class="col s12" id="map" style="margin-bottom: 10px;"></div>
-								<button class="col offset-s1 s10 offset-m3 m6 waves-effect waves-red btn red" id="btn_mostrar_mapa" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
-								</button>
-								<div class="row">
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">flight_takeoff</i>
-										<input id="text_salida" type="text" value=" " disabled>
-										<label for="text_salida">Lugar de salida</label>
-									</div>
-
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">flight_land</i>
-										<input id="text_llegada" type="text" value=" " disabled>
-										<label for="text_llegada">Lugar de destino</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">date_range</i>
-										<input id="fechaS" type="date" class="datepicker">
-										<label for="fechaS">Fecha salida</label>
-									</div>
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">access_time</i>
-										<input id="horaS" type="text" class="timepicker">
-										<label for="horaS">Hora salida</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">airline_seat_recline_extra</i>
-										<p class="range-field">
-											<input type="range" id="num" min="1" max="72">
-										</p>
-										<label for="num">Número de asientos</label>
-									</div>
-									<div class="col s12 m6 valign-wrapper">
-										<button id="btn_buscar_vuelo" class="valign col s6 offset-s3 waves-effect waves-yellow btn red accent-2">Buscar vuelo</button>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col s12">
-										<table id="Aerolinea_vuelos" class="bordered highlight responsive-table" style="display: none;">
-											<thead>
-												<tr>
-													<th>Aerolinea</th>
-													<th>Fecha Salida</th>
-													<th>Hora Salida</th>
-													<th>Fecha Llegada</th>
-													<th>Hora Llegada</th>
-													<th>Numero de Vuelo</th>
-													<th>Precio</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="row">
-									<div id="contenedor_asientos">
-									</div>
-								</div>
-								<div class="row">
-									<div id="formularios"></div>
-								</div>
-								<div class="row">
-									<div class="col s12 offset-m5 m3" style="margin-bottom: 10px;">
-										<button id="add_cart_vuelo" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
-									</div>
-									<div class="col s12 offset-m1 m3">
-										<button id="next_hoteles" class="waves-effect waves-light btn" >Siguiente</button>
-									</div>
-								</div>
-							</section>
-						</div>
-					</li>
-				</ul>
-				<ul id="sec_hoteles" class="collapsible popout" data-collapsible="accordion">
-					<li class="section scrollspy">
-						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">domain</i>Hoteles</div>
-						<div class="collapsible-body">
-							<div class="row tarjeta_inicio">
-								<div class="col s12 offset-m3 m6">
-									<div class="card red lighten-2">
-										<div class="card-content white-text">
-											<span class="card-title">Reservación de hotel</span>
-											<p class="text-flow">En este apartado pordras reservar un hotel para que tu estancia sea con el confort que te mereces, ¿Deseas continuar?</p>
-										</div>
-										<div class="card-action">
-											<div class="row">
-												<button id="si_sec_hoteles" class="btn left" >Si</button>
-												<button id="no_sec_hoteles" class="btn right" >No</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<section id="sec_hoteles_forms" style="display: none;">
-								<h3 class="center-align flow-text"><strong>Selecciona tu hotel</strong></h3>
-								<blockquote class="flow-text">Ingresa la fecha de llegada y de salida que deseas y selecciona de la lista el hotel de tu preferencia.</blockquote>
-								<div class="col s12" id="map2" style="margin-bottom: 10px;"></div>
-								<div class="row">
-									<button class="col offset-s1 s10 offset-m3 m6 waves-effect waves-red btn red" id="btn_mostrar_mapa2" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
+								<section id="sec_vuelos_forms" style="display: none;">
+									<h3 class="center-align flow-text"><strong>Selecciona tu destino</strong></h3>
+									<blockquote class="flow-text">Arrastra el punto y confirma tu destino.</blockquote>
+									<div class="col s12" id="map" style="margin-bottom: 10px;"></div>
+									<button class="col offset-s1 s10 offset-m3 m6 waves-effect waves-light btn cyan lighten-2" id="btn_mostrar_mapa" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
 									</button>
-								</div>
-								<div class="row">
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">location_city</i>
-										<input id="destino_hotel" type="text" value=" " disabled>
-										<label for="destino_hotel">Lugar de destino</label>
-									</div>
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">hotel</i>
-										<p class="range-field">
-											<input type="range" id="numH" min="1" max="10">
-										</p>
-										<label for="num">Número de Habitaciones</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">date_range</i>
-										<input id="fechaLlHot" type="date" class="datepicker">
-										<label for="fechaLlHot">Fecha Llegada al hotel</label>
-									</div>
-									<div class="input-field col s12 m6">
-										<i class="material-icons prefix">date_range</i>
-										<input id="fechaSalHot" type="date" class="datepicker">
-										<label for="fechaSalHot">Fecha de salida del hotel</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col s12 offset-m6 m3">
-										<button id="buscaHotel" class="valign col s6 offset-s3 m12 waves-effect waves-yellow btn red accent-2" >Buscar hotel</button>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col s12">
-										<table class="bordered highlight responsive-table" id="table_hoteles" style="display: none;">
-											<thead>
-												<tr>
-													<th>Nombre</th>
-													<th>Ciudad</th>
-													<th>Estado</th>
-													<th>Descripcion</th>
-													<th>Precio Por Noche</th>
-													<th>Estrellas</th>
-													<th>Vista al Mar</th>
-													<th>Buffet</th>
-													<th>Barra Libre</th>
-													<th>Show Nocturno</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div id="persona_responsable_hotel" style="display: none;">
-									
-								</div>
-								<div class="row">
-									<div class="col s12 offset-m5 m3" style="margin-bottom: 10px;">
-										<button id="add_cart_hotel" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
-									</div>
-									<div class="col s12 offset-m1 m3">
-										<button id="next_actividades" class="btn" >Siguiente</button>
-									</div>
-								</div>
-								
-							</section>
-						</div>
-					</li>
-				</ul>
-				<ul id="sec_actividades" class="collapsible popout" data-collapsible="accordion">
-					<li class="section scrollspy">
-						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">pool</i>Actividades</div>
-						<div class="collapsible-body">
-							<div class="row tarjeta_inicio">
-								<div class="col s12 offset-m3 m6">
-									<div class="card red lighten-2">
-										<div class="card-content white-text">
-											<span class="card-title">Reservación de actividades</span>
-											<p class="text-flow">En este apartado pordras reservar un esas actividades que siempre haz soñado en el lugar mas divertido, ¿Deseas continuar?</p>
+									<div class="row">
+										<div class="input-field col s12 m6">
+											<i class="material-icons cyan-text text-darken-4 prefix">flight_takeoff</i>
+											<input id="text_salida" type="text" value=" " disabled>
+											<label for="text_salida">Lugar de salida</label>
 										</div>
-										<div class="card-action">
-											<div class="row">
-												<button class="btn left" id="si_sec_actividades">Si</button>
-												<button class="btn right" id="no_sec_actividades">No</button>
-											</div>
+
+										<div class="input-field col s12 m6">
+											<i class="material-icons cyan-text text-darken-4 prefix">flight_land</i>
+											<input id="text_llegada" type="text" value=" " disabled>
+											<label for="text_llegada">Lugar de destino</label>
 										</div>
 									</div>
-								</div>
-							</div>
-							<section id="sec_actividades_forms" style="display: none;">
-								<h3 class="center-align flow-text"><strong>Selecciona tus actividades</strong></h3>
-								<blockquote class="flow-text">Ingresa el destino, puedes checar los precios y así podras elegir la mejor opción para ti o tu familia.</blockquote>
-								<div class="col s12" id="map3" style="margin-bottom: 10px;"></div>
-								<div class="row">
-									<button class="col offset-s1 s10 offset-m3 m6 waves-effect waves-red btn red" id="btn_mostrar_mapa3" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
-										</button>
-								</div>
-								<div class="row">
-									<div class="input-field  col s12 m4">
-										<i class="material-icons prefix">location_city</i>
-										<input id="destino_actividad" type="text" value=" " disabled>
-										<label for="destino_actividad">Lugar de destino</label>
+									<div class="row">
+										<div class="input-field col s12 m6">
+											<i class="material-icons cyan-text text-darken-4 prefix">date_range</i>
+											<input id="fechaS" type="date" class="datepicker">
+											<label for="fechaS">Fecha salida</label>
+										</div>
+										<div class="input-field col s12 m6">
+											<i class="material-icons cyan-text text-darken-4 prefix">access_time</i>
+											<input id="horaS" type="text" class="timepicker">
+											<label for="horaS">Hora salida</label>
+										</div>
 									</div>
-									<div class="col s12 offset-m2 m3">
-										<button id="buscaActividad" class="valign col s6 offset-s3 m12 waves-effect waves-yellow btn red accent-2" >Buscar actividades</button>
+									<div class="row">
+										<div class="input-field col s12 m6">
+											<i class="material-icons cyan-text text-darken-4 prefix">airline_seat_recline_extra</i>
+											<p class="range-field">
+												<input type="range" id="num" min="1" max="72">
+											</p>
+											<label for="num">Número de asientos</label>
+										</div>
+										<div class="col s12 m6 valign-wrapper">
+											<button id="btn_buscar_vuelo" class="valign col s6 offset-s3 waves-effect waves-yellow btn amber">Buscar vuelo</button>
+										</div>
 									</div>
-								</div>
-								<div id="mostrar_buscar_actividades" style="display: none;">
 									<div class="row">
 										<div class="col s12">
-											<table class="bordered highlight responsive-table" id="table_actividades">
+											<table id="Aerolinea_vuelos" class="bordered highlight responsive-table" style="display: none;">
 												<thead>
 													<tr>
-														<th>Nombre</th>
-														<th>Ciudad</th>
-														<th>Descripcion</th>
-														<th>Precio por Niño</th>
-														<th>Precio Por Adulto</th>
+														<th>Aerolinea</th>
+														<th>Fecha Salida</th>
+														<th>Hora Salida</th>
+														<th>Fecha Llegada</th>
+														<th>Hora Llegada</th>
+														<th>Numero de Vuelo</th>
+														<th>Precio</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -327,99 +156,278 @@
 										</div>
 									</div>
 									<div class="row">
+										<div id="contenedor_asientos">
+										</div>
+									</div>
+									<div class="row">
+										<div id="formularios"></div>
+									</div>
+									<div class="row">
+										<div class="col s12 offset-m5 m3" style="margin-bottom: 10px;">
+											<button id="add_cart_vuelo" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
+										</div>
+										<div class="col s12 offset-m1 m3">
+											<button id="next_hoteles" class="waves-effect waves-light btn" >Siguiente</button>
+										</div>
+									</div>
+								</section>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div id="sec_hoteles" class="scrollspy">
+					<ul class="collapsible popout" data-collapsible="accordion">
+						<li>
+							<div class="collapsible-header waves-effect waves-yellow grey-text text-darken-4"><i class="material-icons">domain</i>Hoteles</div>
+							<div class="collapsible-body">
+								<div class="row tarjeta_inicio">
+									<div class="col s12 offset-m3 m6">
+										<div class="card cyan">
+											<div class="card-content white-text">
+												<span class="card-title">Reservación de hotel</span>
+												<p class="text-flow grey-text text-darken-4">En este apartado pordras reservar un hotel para que tu estancia sea con el confort que te mereces, ¿Deseas continuar?</p>
+											</div>
+											<div class="card-action">
+												<div class="row">
+													<button id="si_sec_hoteles" class="btn left amber grey-text text-darken-4" >Si</button>
+													<button id="no_sec_hoteles" class="btn right amber grey-text text-darken-4" >No</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<section id="sec_hoteles_forms" style="display: none;">
+									<h3 class="center-align flow-text"><strong>Selecciona tu hotel</strong></h3>
+									<blockquote class="flow-text">Ingresa la fecha de llegada y de salida que deseas y selecciona de la lista el hotel de tu preferencia.</blockquote>
+									<div class="col s12" id="map2" style="margin-bottom: 10px;"></div>
+									<div class="row">
+										<button class="col offset-s1 s10 offset-m3 m6 waves-effect waves-light btn cyan lighten-2" id="btn_mostrar_mapa2" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
+										</button>
+									</div>
+									<div class="row">
 										<div class="input-field col s12 m6">
-											<i class="material-icons prefix">child_care</i>
-											<input id="ninos_actividad" type="number" min="0">
-											<label for="ninos_actividad">Nº de niños</label>
+											<i class="material-icons cyan-text text-darken-4 prefix">location_city</i>
+											<input id="destino_hotel" type="text" value=" " disabled>
+											<label for="destino_hotel">Lugar de destino</label>
 										</div>
 										<div class="input-field col s12 m6">
-											<i class="material-icons prefix">face</i>
-											<input id="adultos_actividad" type="number" min="0">
-											<label for="adultos_actividad">Nº de adultos</label>
+											<i class="material-icons cyan-text text-darken-4 prefix">hotel</i>
+											<p class="range-field">
+												<input type="range" id="numH" min="1" max="10">
+											</p>
+											<label for="num">Número de Habitaciones</label>
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12 m6">
-											<i class="material-icons prefix">date_range</i>
-											<input id="fecha_ll_actividad" type="date" class="datepicker">
-											<label for="fecha_ll_actividad">Fecha salida</label>
+											<i class="material-icons cyan-text text-darken-4 prefix">date_range</i>
+											<input id="fechaLlHot" type="date" class="datepicker">
+											<label for="fechaLlHot">Fecha Llegada al hotel</label>
 										</div>
 										<div class="input-field col s12 m6">
-											<i class="material-icons prefix">access_time</i>
-											<input id="hora_ll_actividad" type="text" class="timepicker">
-											<label for="hora_ll_actividad">Hora salida</label>
+											<i class="material-icons cyan-text text-darken-4 prefix">date_range</i>
+											<input id="fechaSalHot" type="date" class="datepicker">
+											<label for="fechaSalHot">Fecha de salida del hotel</label>
 										</div>
 									</div>
-									<div id="persona_responsable_actividad">
-										<div class="row">
-											<h5 class="col s12 text-fluid">Persona responsable</h5>
-											<div class="input-field col s12 m8">
-												<i class="material-icons prefix active">perm_identity</i>
-												<input placeholder="Nombres(s)" type="text" id="nombre_responsable_actividad">
-												<label class="active">Nombre(s)</label>
+									<div class="row">
+										<div class="col s12 offset-m6 m3">
+											<button id="buscaHotel" class="valign col s6 offset-s3 m12 waves-effect waves-yellow btn amber" >Buscar hotel</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col s12">
+											<table class="bordered highlight responsive-table" id="table_hoteles" style="display: none;">
+												<thead>
+													<tr>
+														<th>Nombre</th>
+														<th>Ciudad</th>
+														<th>Estado</th>
+														<th>Descripcion</th>
+														<th>Precio Por Noche</th>
+														<th>Estrellas</th>
+														<th>Vista al Mar</th>
+														<th>Buffet</th>
+														<th>Barra Libre</th>
+														<th>Show Nocturno</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div id="persona_responsable_hotel" style="display: none;">
+										
+									</div>
+									<div class="row">
+										<div class="col s12 offset-m5 m3" style="margin-bottom: 10px;">
+											<button id="add_cart_hotel" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
+										</div>
+										<div class="col s12 offset-m1 m3">
+											<button id="next_actividades" class="btn" >Siguiente</button>
+										</div>
+									</div>
+								</section>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div id="sec_actividades" class="scrollspy">
+					<ul class="collapsible popout" data-collapsible="accordion">
+						<li>
+							<div class="collapsible-header waves-effect waves-yellow"><i class="material-icons">pool</i>Actividades</div>
+							<div class="collapsible-body">
+								<div class="row tarjeta_inicio">
+									<div class="col s12 offset-m3 m6">
+										<div class="card cyan">
+											<div class="card-content white-text">
+												<span class="card-title">Reservación de actividades</span>
+												<p class="text-flow grey-text text-darken-4">En este apartado pordras reservar un esas actividades que siempre haz soñado en el lugar mas divertido, ¿Deseas continuar?</p>
 											</div>
-											<div class="input-field col s12 m4">
-												<input class="with-gap radio_feme" name="group_persona_responsable_actividad" type="radio" data-label_ref="Femenino">
-												<label class="active_radiobutton" style="color: #FF6781;">Femenino</label>
-												<input class="with-gap radio_masc" name="group_persona_responsable_actividad" type="radio" data-label_ref="Masculino">
-												<label class="active_radiobutton" style="color: #039be5;">Masculino</label>
+											<div class="card-action">
+												<div class="row">
+													<button class="btn left amber grey-text text-darken-4" id="si_sec_actividades">Si</button>
+													<button class="btn right amber grey-text text-darken-4" id="no_sec_actividades">No</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<section id="sec_actividades_forms" style="display: none;">
+									<h3 class="center-align flow-text"><strong>Selecciona tus actividades</strong></h3>
+									<blockquote class="flow-text">Ingresa el destino, puedes checar los precios y así podras elegir la mejor opción para ti o tu familia.</blockquote>
+									<div class="col s12" id="map3" style="margin-bottom: 10px;"></div>
+									<div class="row">
+										<button class="col offset-s1 s10 offset-m3 m6 waves-effect waves-light btn cyan lighten-2" id="btn_mostrar_mapa3" style="margin-bottom: 10px;"><i class="material-icons left">place</i> Ocultar mapa
+											</button>
+									</div>
+									<div class="row">
+										<div class="input-field  col s12 m4">
+											<i class="material-icons cyan-text text-darken-4 prefix">location_city</i>
+											<input id="destino_actividad" type="text" value=" " disabled>
+											<label for="destino_actividad">Lugar de destino</label>
+										</div>
+										<div class="col s12 offset-m2 m3">
+											<button id="buscaActividad" class="valign col s6 offset-s3 m12 waves-effect waves-yellow btn amber" >Buscar actividades</button>
+										</div>
+									</div>
+									<div id="mostrar_buscar_actividades" style="display: none;">
+										<div class="row">
+											<div class="col s12">
+												<table class="bordered highlight responsive-table" id="table_actividades">
+													<thead>
+														<tr>
+															<th>Nombre</th>
+															<th>Ciudad</th>
+															<th>Descripcion</th>
+															<th>Precio por Niño</th>
+															<th>Precio Por Adulto</th>
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
 											</div>
 										</div>
 										<div class="row">
 											<div class="input-field col s12 m6">
-												<i class="material-icons prefix active">perm_identity</i>
-												<input placeholder="Apellido paterno" type="text" class="apellidoP_persona_responsable">
-												<label class="active">Apellido paterno</label>
+												<i class="material-icons prefix">child_care</i>
+												<input id="ninos_actividad" type="number" min="0">
+												<label for="ninos_actividad">Nº de niños</label>
 											</div>
 											<div class="input-field col s12 m6">
-												<i class="material-icons prefix active">perm_identity</i>
-												<input placeholder="Apellido materno" type="text" class="apellidoM_persona_responsable">
-												<label class="active">Apellido materno</label>
+												<i class="material-icons prefix">face</i>
+												<input id="adultos_actividad" type="number" min="0">
+												<label for="adultos_actividad">Nº de adultos</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12 m6">
+												<i class="material-icons prefix">date_range</i>
+												<input id="fecha_ll_actividad" type="date" class="datepicker">
+												<label for="fecha_ll_actividad">Fecha salida</label>
+											</div>
+											<div class="input-field col s12 m6">
+												<i class="material-icons prefix">access_time</i>
+												<input id="hora_ll_actividad" type="text" class="timepicker">
+												<label for="hora_ll_actividad">Hora salida</label>
+											</div>
+										</div>
+										<div id="persona_responsable_actividad">
+											<div class="row">
+												<h5 class="col s12 text-fluid">Persona responsable</h5>
+												<div class="input-field col s12 m8">
+													<i class="material-icons prefix active">perm_identity</i>
+													<input placeholder="Nombres(s)" type="text" id="nombre_responsable_actividad">
+													<label class="active">Nombre(s)</label>
+												</div>
+												<div class="input-field col s12 m4">
+													<input class="with-gap radio_feme" name="group_persona_responsable_actividad" type="radio" data-label_ref="Femenino">
+													<label class="active_radiobutton" style="color: #FF6781;">Femenino</label>
+													<input class="with-gap radio_masc" name="group_persona_responsable_actividad" type="radio" data-label_ref="Masculino">
+													<label class="active_radiobutton" style="color: #039be5;">Masculino</label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="input-field col s12 m6">
+													<i class="material-icons prefix active">perm_identity</i>
+													<input placeholder="Apellido paterno" type="text" class="apellidoP_persona_responsable">
+													<label class="active">Apellido paterno</label>
+												</div>
+												<div class="input-field col s12 m6">
+													<i class="material-icons prefix active">perm_identity</i>
+													<input placeholder="Apellido materno" type="text" class="apellidoM_persona_responsable">
+													<label class="active">Apellido materno</label>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-									<div class="col s12 offset-m9 m3" style="margin-bottom: 10px;">
-										<button id="add_cart_actividades" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
+									<div class="row">
+										<div class="col s12 offset-m9 m3" style="margin-bottom: 10px;">
+											<button id="add_cart_actividades" class="waves-effect waves-light btn" ><i class="material-icons left">add_shopping_cart</i>Agregar</button>
+										</div>
 									</div>
-								</div>
-							</section>
-						</div>
-					</li>
-				</ul>
-				<ul id="sec_pedidos" class="collapsible popout" data-collapsible="accordion">
-					<li class="section scrollspy">
-						<div class="collapsible-header waves-effect waves-red"><i class="material-icons">shopping_cart</i>Pedido</div>
-						<div class="collapsible-body">
-							<section id="sec_pedidos_forms">
-								<div class="row">
-									<div class="col s12">
-										<table class="highlight bordered responsive-table" id="tabla_pedidos">
-											<thead>
-												<tr>
-													<th>Descripción</th>
-													<th>Sub total</th>
-													<th></th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
+								</section>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div id="sec_pedidos" class="scrollspy">
+				
+					<ul class="collapsible popout" data-collapsible="accordion">
+						<li>
+							<div class="collapsible-header waves-effect waves-yellow"><i class="material-icons">shopping_cart</i>Pedido</div>
+							<div class="collapsible-body">
+								<section id="sec_pedidos_forms">
+									<div class="row">
+										<div class="col s12">
+											<table class="highlight bordered responsive-table" id="tabla_pedidos">
+												<thead>
+													<tr>
+														<th>Descripción</th>
+														<th>Sub total</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
 									</div>
-								</div>
-								<div class="row">
-									<h3 class="col s12 offset-m4 m4" id="total_total_pedido"></h3>
-								</div>
-								<div class="row">
-									<div class="col s12 offset-m4 m4" style="margin-bottom: 10px;">
-										<button id="create_pedido" class="col s12 waves-effect waves-light btn" ><i class="material-icons left">credit_card</i>Crear pedido</button>
+									<div class="row">
+										<h3 class="col s12 offset-m4 m4" id="total_total_pedido"></h3>
 									</div>
-								</div>
-							</section>
-						</div>
-					</li>
-				</ul>
+									<div class="row">
+										<div class="col s12 offset-m4 m4" style="margin-bottom: 10px;">
+											<button id="create_pedido" class="col s12 waves-effect waves-light btn" ><i class="material-icons left">credit_card</i>Crear pedido</button>
+										</div>
+									</div>
+								</section>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>

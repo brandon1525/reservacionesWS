@@ -148,5 +148,37 @@ class Modelo{
 		$lastId = Database::getInstance()->getDb()->lastInsertId();
 		return $lastId;
 	}
+	public static function crear_pedido_actividad_responsable($nombre,$apellidop,$apellidom,$sexo)
+	{
+	// Sentencia INSERT
+		$comando = "INSERT INTO travel_actividades.persona ( " .
+			"nombre," .
+			" apellidop," .
+			" apellidom," .
+			" sexo)" .
+			" VALUES(?,?,?,?)";
+	// Preparar la sentencia
+		$sentencia = Database::getInstance()->getDb()->prepare($comando);
+		$sentencia->execute(array($nombre,$apellidop,$apellidom,$sexo));
+		$lastId = Database::getInstance()->getDb()->lastInsertId();
+		return $lastId;
+	}
+	public static function crear_pedido_actividad_actividad_persona($id_persona,$id_actividad,$no_ninos,$no_adultos,$fecha,$hora)
+	{
+	// Sentencia INSERT
+		$comando = "INSERT INTO travel_actividades.persona_actividad ( " .
+			"id_persona," .
+			" id_actividad," .
+			" no_ninos," .
+			" no_adultos," .
+			" fecha," .
+			" hora)" .
+			" VALUES(?,?,?,?,?,?)";
+	// Preparar la sentencia
+		$sentencia = Database::getInstance()->getDb()->prepare($comando);
+		$sentencia->execute(array($id_persona,$id_actividad,$no_ninos,$no_adultos,$fecha,$hora));
+		$lastId = Database::getInstance()->getDb()->lastInsertId();
+		return $lastId;
+	}
 }
 ?>
