@@ -10,9 +10,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		//print_r($pedido_vuelo);
 		$actualizados=[];
 		foreach ($pedido_hotel as $pedido) {
-			print_r($pedido);
+			//print_r($pedido);
 			$id_reservacion=Modelo::crear_pedido_hotel_reservacion($pedido['fecha_ll'],$pedido['fecha_s']);
-			$id_responsable=Modelo::
+			$id_responsable=Modelo::crear_pedido_hotel_responsable($pedido['persona_responsable']['nombre'],
+				$pedido['persona_responsable']['apellidop'],$pedido['persona_responsable']['apellidom'],
+				$pedido['persona_responsable']['sexo']);
+			$habitaciones_disponibles=Modelo::getHabitacionesHotel($pedido['fecha_ll'],$pedido['fecha_s'],$pedido['id_hotel']);
+			for ($i=0; $i < $pedido['numero_habitaciones']; $i++) {
+				/*echo "le corresponde la habitacion: ".$habitaciones_disponibles[$i]['numero_fisico_habitacion']." con el id ".
+				$habitaciones_disponibles[$i]['id']."\n";*/
+				$registro = Modelo::crear_pedido_hotel_habitacion_reservacion($habitaciones_disponibles[$i]['id'],$pedido['id_hotel'],$id_reservacion,$id_responsable);
+				if($registro){
+					array_push($actualizados,$registro);
+				}else {
+					unset($actualizados);
+					$actualizados = array();
+				}
+			}
 		}
 		//$retorno = Modelo::crear_pedido_vuelo();
 		if (count($actualizados)>0) {

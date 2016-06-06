@@ -16,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				if($retorno){
 					array_push($actualizados,$retorno);
 				}else {
-					$actualizados=0;
+					unset($actualizados);
+					$actualizados = array();
 				}
 			}
 		}

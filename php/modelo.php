@@ -129,7 +129,22 @@ class Modelo{
 			" VALUES(?,?,?,?)";
 	// Preparar la sentencia
 		$sentencia = Database::getInstance()->getDb()->prepare($comando);
-		$sentencia->execute(array($nombre,$apellidop,$apellidom,$sexo,$asiento,$id_vuelo));
+		$sentencia->execute(array($nombre,$apellidop,$apellidom,$sexo));
+		$lastId = Database::getInstance()->getDb()->lastInsertId();
+		return $lastId;
+	}
+	public static function crear_pedido_hotel_habitacion_reservacion($id_habitacion,$id_hotel,$id_reservacion,$id_responsable)
+	{
+	// Sentencia INSERT
+		$comando = "INSERT INTO travel_hoteles.habitacion_reservacion ( " .
+			"id_habitacion," .
+			" id_hotel," .
+			" id_reservacion," .
+			" id_responsable)" .
+			" VALUES(?,?,?,?)";
+	// Preparar la sentencia
+		$sentencia = Database::getInstance()->getDb()->prepare($comando);
+		$sentencia->execute(array($id_habitacion,$id_hotel,$id_reservacion,$id_responsable));
 		$lastId = Database::getInstance()->getDb()->lastInsertId();
 		return $lastId;
 	}
