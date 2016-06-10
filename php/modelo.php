@@ -88,6 +88,18 @@ class Modelo{
 		$lastId = Database::getInstance()->getDb()->lastInsertId();
 		return $lastId;
 	}
+
+	public static function crear_pedido()
+	{
+	// Sentencia INSERT
+		$comando = "INSERT INTO `travel_pedidos`.`pedido` (`id`, `date_pedido`) VALUES (NULL, CURRENT_TIMESTAMP)";
+	// Preparar la sentencia
+		$sentencia = Database::getInstance()->getDb()->prepare($comando);
+		$sentencia->execute();
+		$lastId = Database::getInstance()->getDb()->lastInsertId();
+		return $lastId;
+	}
+
 	public static function crear_pedido_vuelo($nombre,$apellidop,$apellidom,$sexo,$asiento,$id_vuelo)
 	{
 	// Sentencia INSERT

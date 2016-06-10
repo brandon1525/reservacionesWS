@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// Código de falla
 			print json_encode(
 				array(
-					'estado' => '2',
+					'result' => false,
 					'mensaje' => 'Creación fallida'
 				)
 			);
