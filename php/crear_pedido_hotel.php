@@ -7,6 +7,7 @@ require 'modelo.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST["pedido_hotel"])){
 		$pedido_hotel = $_POST['pedido_hotel'];
+		$id_pedido = $_POST['id_pedido'];
 		//print_r($pedido_vuelo);
 		$actualizados=[];
 		foreach ($pedido_hotel as $pedido) {
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			for ($i=0; $i < $pedido['numero_habitaciones']; $i++) {
 				/*echo "le corresponde la habitacion: ".$habitaciones_disponibles[$i]['numero_fisico_habitacion']." con el id ".
 				$habitaciones_disponibles[$i]['id']."\n";*/
-				$registro = Modelo::crear_pedido_hotel_habitacion_reservacion($habitaciones_disponibles[$i]['id'],$pedido['id_hotel'],$id_reservacion,$id_responsable);
+				$registro = Modelo::crear_pedido_hotel_habitacion_reservacion($habitaciones_disponibles[$i]['id'],$pedido['id_hotel'],$id_reservacion,$id_responsable,$id_pedido);
 				if($registro){
 					array_push($actualizados,$registro);
 				}else {

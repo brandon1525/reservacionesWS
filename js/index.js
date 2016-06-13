@@ -4,12 +4,14 @@ var pedido_hotel_g=[];
 var pedido_actividades_g=[];
 
 $(document).ready(function(){
-	
-	/*$(".button-collapse").sideNav({
+	//var numero=0;
+	//crear_pedido();
+	//console.log(numero);
+	$(".button-collapse").sideNav({
 		menuWidth: 300, // Default is 240
 		edge: 'left', // Choose the horizontal origin
 		closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-	});*/
+	});
 	$('.scrollspy').scrollSpy();
 	$('.collapsible').collapsible({
 		accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
@@ -25,10 +27,30 @@ $(document).ready(function(){
 		today: 'Hoy',
 		clear: 'Limpiar',
 		close: 'Cerrar',
-		format: 'yyyy-mm-dd'/*,
-		min: -1*/
+		format: 'yyyy-mm-dd',
+		//min: new Date(2016,5,12)
+		min: true
 	});
-
+	$('.datepicker').change(function(){
+		var $input = $(this);
+		// Use the picker object directly.
+		var picker = $input.pickadate('picker');
+		picker.close();
+		console.log($(this).val());
+		if($(this).attr("id") == 'fechaLlHot'){
+			var fecha_l_h = $(this).val().split('-');
+			//xi=xi[0]+'/'+(xi[1]-1)+'/'+xi[2];
+			$('#fechaSalHot').prop( "disabled", false );
+			$('#fechaSalHot').pickadate('picker').set('min', new Date(fecha_l_h[0],(fecha_l_h[1]-1),fecha_l_h[2]));
+		}
+		// If a “click” is involved, prevent the event bubbling.
+		event.stopPropagation();
+		// If we want to maintain focus on the input,
+		// prevent the default action on “mousedown”.
+		event.preventDefault();
+		
+	});
+	
 
 	$('.timepicker').clockpicker({
 		placement: 'bottom',
@@ -401,30 +423,9 @@ $(document).ready(function(){
 		pedido['pedidos_vuelo']=pedido_vuelo_g;
 		pedido['pedidos_hotel']=pedido_hotel_g;
 		pedido['pedidos_actividades']=pedido_actividades_g
-		var numero_pedido
-		$.ajax({
-			url : 'http://localhost/reservacionesWS/php/crear_pedido.php',
-			data : {id_vuelo: $(this).find('.tr_id').text()},
-			method : 'POST',
-			dataType : 'json',
-			mimeType: 'application/json'
-		}).done(function(json){
-			if(json.result){
-				if(json.hasOwnProperty('mensaje')){
-					return false;
-				}
-			}else{
-				Materialize.toast(json.mensaje, 3000, 'rounded red');
-			}
+		crear_pedido();
+		Materialize.toast("Pedido realizado exitosamente", 5000, 'rounded teal');
 		
-	});
-		crear_pedido_vuelo();
-		crear_pedido_hotel();
-		crear_pedido_actividad();
-		Materialize.toast("Pedido realizado exitosamente", 3000, 'rounded  teal accent-4');
-		setTimeout(function(){
-			window.location.href = "http://localhost/reservacionesWS";
-		}, 3000);
 		
 		//console.log(pedido);
 	});
@@ -556,6 +557,7 @@ $(document).on('click','.remove_cart_element',function(){
 	$(this).closest('tr').remove();
 	calcular_precio_pedido();
 });
+
 
 var map;
 var markerS;
@@ -1048,12 +1050,37 @@ function calcular_precio_pedido(){
 	$('#tabla_pedidos tbody').find('tr').each(function(index,value){
 		total+=parseInt($(value).find('td:nth-child(2)').text());
 	});
-	$('#total_total_pedido').html('Total = '+total);
+	$('#total_total_pedido').html('Total = $'+total);
 }
-function crear_pedido_vuelo(){
+
+function crear_pedido(){
+	var numero_pedido;
+	$.ajax({
+		url : 'http://localhost/reservacionesWS/php/crear_pedido.php',
+		data : {id_vuelo: $(this).find('.tr_id').text()},
+		method : 'POST',
+		dataType : 'json',
+		mimeType: 'application/json'
+	}).done(function(json){
+		if(json.result){
+			numero_pedido=json.data;
+			//console.log(numero_pedido);
+			//return numero_pedido;
+			$('#numero_del_pedido').html('Su numero de pedido es '+'<span class="red-text text-darken-4">'+numero_pedido+'</span>');
+			crear_pedido_vuelo(numero_pedido);
+			crear_pedido_hotel(numero_pedido);
+			crear_pedido_actividad(numero_pedido);
+		}else{
+			Materialize.toast(json.mensaje, 3000, 'rounded red');
+		}
+	});
+	
+}
+function crear_pedido_vuelo(numero_pedido){
+	console.log(pedido['pedidos_vuelo']);
 	$.ajax({
 		url : 'http://localhost/reservacionesWS/php/crear_pedido_vuelo.php',
-		data : {pedido_vuelo: pedido['pedidos_vuelo']},
+		data : {pedido_vuelo: pedido['pedidos_vuelo'], id_pedido: numero_pedido},
 		method : 'POST',
 		dataType : 'json',
 		mimeType: 'application/json'
@@ -1066,10 +1093,10 @@ function crear_pedido_vuelo(){
 		}
 	});
 }
-function crear_pedido_hotel(){
+function crear_pedido_hotel(numero_pedido){
 	$.ajax({
 		url : 'http://localhost/reservacionesWS/php/crear_pedido_hotel.php',
-		data : {pedido_hotel: pedido['pedidos_hotel']},
+		data : {pedido_hotel: pedido['pedidos_hotel'], id_pedido: numero_pedido},
 		method : 'POST',
 		dataType : 'json',
 		mimeType: 'application/json'
@@ -1082,10 +1109,10 @@ function crear_pedido_hotel(){
 		}
 	});
 }
-function crear_pedido_actividad(){
+function crear_pedido_actividad(numero_pedido){
 	$.ajax({
 		url : 'http://localhost/reservacionesWS/php/crear_pedido_actividad.php',
-		data : {pedidos_actividades: pedido['pedidos_actividades']},
+		data : {pedidos_actividades: pedido['pedidos_actividades'], id_pedido: numero_pedido},
 		method : 'POST',
 		dataType : 'json',
 		mimeType: 'application/json'

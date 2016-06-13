@@ -100,7 +100,7 @@ class Modelo{
 		return $lastId;
 	}
 
-	public static function crear_pedido_vuelo($nombre,$apellidop,$apellidom,$sexo,$asiento,$id_vuelo)
+	public static function crear_pedido_vuelo($nombre,$apellidop,$apellidom,$sexo,$asiento,$id_vuelo,$id_pedido)
 	{
 	// Sentencia INSERT
 		$comando = "INSERT INTO travel_aerolineas.pasajero ( " .
@@ -109,11 +109,12 @@ class Modelo{
 			" apellidom," .
 			" sexo," .
 			" asiento,".
-			" id_vuelo)" .
-			" VALUES(?,?,?,?,?,?)";
+			" id_vuelo,".
+			" id_pedido)" .
+			" VALUES(?,?,?,?,?,?,?)";
 	// Preparar la sentencia
 		$sentencia = Database::getInstance()->getDb()->prepare($comando);
-		$sentencia->execute(array($nombre,$apellidop,$apellidom,$sexo,$asiento,$id_vuelo));
+		$sentencia->execute(array($nombre,$apellidop,$apellidom,$sexo,$asiento,$id_vuelo,$id_pedido));
 		$lastId = Database::getInstance()->getDb()->lastInsertId();
 		return $lastId;
 	}
@@ -145,18 +146,19 @@ class Modelo{
 		$lastId = Database::getInstance()->getDb()->lastInsertId();
 		return $lastId;
 	}
-	public static function crear_pedido_hotel_habitacion_reservacion($id_habitacion,$id_hotel,$id_reservacion,$id_responsable)
+	public static function crear_pedido_hotel_habitacion_reservacion($id_habitacion,$id_hotel,$id_reservacion,$id_responsable,$id_pedido)
 	{
 	// Sentencia INSERT
 		$comando = "INSERT INTO travel_hoteles.habitacion_reservacion ( " .
 			"id_habitacion," .
 			" id_hotel," .
 			" id_reservacion," .
-			" id_responsable)" .
-			" VALUES(?,?,?,?)";
+			" id_responsable," .
+			" id_pedido)" .
+			" VALUES(?,?,?,?,?)";
 	// Preparar la sentencia
 		$sentencia = Database::getInstance()->getDb()->prepare($comando);
-		$sentencia->execute(array($id_habitacion,$id_hotel,$id_reservacion,$id_responsable));
+		$sentencia->execute(array($id_habitacion,$id_hotel,$id_reservacion,$id_responsable,$id_pedido));
 		$lastId = Database::getInstance()->getDb()->lastInsertId();
 		return $lastId;
 	}
@@ -175,7 +177,7 @@ class Modelo{
 		$lastId = Database::getInstance()->getDb()->lastInsertId();
 		return $lastId;
 	}
-	public static function crear_pedido_actividad_actividad_persona($id_persona,$id_actividad,$no_ninos,$no_adultos,$fecha,$hora)
+	public static function crear_pedido_actividad_actividad_persona($id_persona,$id_actividad,$no_ninos,$no_adultos,$fecha,$hora,$id_pedido)
 	{
 	// Sentencia INSERT
 		$comando = "INSERT INTO travel_actividades.persona_actividad ( " .
@@ -184,11 +186,12 @@ class Modelo{
 			" no_ninos," .
 			" no_adultos," .
 			" fecha," .
-			" hora)" .
-			" VALUES(?,?,?,?,?,?)";
+			" hora,".
+			" id_pedido)" .
+			" VALUES(?,?,?,?,?,?,?)";
 	// Preparar la sentencia
 		$sentencia = Database::getInstance()->getDb()->prepare($comando);
-		$sentencia->execute(array($id_persona,$id_actividad,$no_ninos,$no_adultos,$fecha,$hora));
+		$sentencia->execute(array($id_persona,$id_actividad,$no_ninos,$no_adultos,$fecha,$hora,$id_pedido));
 		$lastId = Database::getInstance()->getDb()->lastInsertId();
 		return $lastId;
 	}

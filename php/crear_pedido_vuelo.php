@@ -7,12 +7,14 @@ require 'modelo.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST["pedido_vuelo"])){
 		$pedido_vuelo = $_POST['pedido_vuelo'];
+		$id_pedido = $_POST['id_pedido'];
+		//echo $id_pedido;
 		//print_r($pedido_vuelo);
 		$actualizados=[];
 		foreach ($pedido_vuelo as $pedido) {
 			foreach ($pedido as $pasajero) {
 				//print_r($pasajero);
-				$retorno = Modelo::crear_pedido_vuelo($pasajero['nombre'],$pasajero['apellidop'],$pasajero['apellidom'],$pasajero['sexo'],$pasajero['asiento'],$pasajero['id_vuelo']);
+				$retorno = Modelo::crear_pedido_vuelo($pasajero['nombre'],$pasajero['apellidop'],$pasajero['apellidom'],$pasajero['sexo'],$pasajero['asiento'],$pasajero['id_vuelo'],$id_pedido);
 				if($retorno){
 					array_push($actualizados,$retorno);
 				}else {

@@ -7,6 +7,7 @@ require 'modelo.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST["pedidos_actividades"])){
 		$pedidos_actividades = $_POST['pedidos_actividades'];
+		$id_pedido= $_POST['id_pedido'];
 		//print_r($pedidos_actividades);
 		$actualizados=[];
 		foreach ($pedidos_actividades as $pedido) {
@@ -17,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$hora = $pedido['hora_ll_actividad'];
 			$hora = date( "H:i:s", strtotime( $hora ) );
 			foreach ($pedido['actividades_seleccionadas'] as $actividad) {
-				$registro = Modelo::crear_pedido_actividad_actividad_persona($id_persona,$actividad,$pedido['no_ninos'],$pedido['no_adultos'],$pedido['fecha_ll_actividad'],$hora);
+				$registro = Modelo::crear_pedido_actividad_actividad_persona($id_persona,$actividad,$pedido['no_ninos'],$pedido['no_adultos'],$pedido['fecha_ll_actividad'],$hora,$id_pedido);
 				print_r($registro);
 				if($registro){
 					array_push($actualizados,$registro);
