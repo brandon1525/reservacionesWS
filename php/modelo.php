@@ -195,5 +195,16 @@ class Modelo{
 		$lastId = Database::getInstance()->getDb()->lastInsertId();
 		return $lastId;
 	}
+	public static function getActividadesbyIdpedido($id_pedido){
+		try {
+			$consulta = "SELECT travel_actividades.persona_actividad.id as id_persona_actividad, id_persona,id_actividad,no_ninos,no_adultos,fecha,hora,id_pedido, travel_actividades.actividad.*, travel_actividades.persona.* from travel_actividades.persona_actividad left join travel_actividades.actividad on persona_actividad.id_actividad=actividad.id left join travel_actividades.persona on persona.id=persona_actividad.id_persona where persona_actividad.id_pedido=?";
+			$comando = Database::getInstance()->getDb()->prepare($consulta);
+			$comando->execute(array($id_pedido));
+			$rows = $comando->fetchAll(PDO::FETCH_ASSOC);
+			return $rows;
+		} catch (PDOException $e) {
+			return $e;
+		}
+	}
 }
 ?>

@@ -356,13 +356,14 @@ $(document).ready(function(){
 
 	$('#add_cart_vuelo').click(function(){
 		var validate=validar_vuelo();
+		console.log(pedido_vuelo_g.length);
 		if(validate){
 			$('#sec_vuelos').find('.collapsible-header').click();
 			if(!$('#sec_hoteles').find('.collapsible-header').hasClass('active')){
 				$('#sec_hoteles').find('.collapsible-header').click();
 			}
 			var vuelo_seleccionado=$('#Aerolinea_vuelos').find('tr.seleccionar_vuelo.red.lighten-4');
-			$('#tabla_pedidos tbody').append('<tr>'+
+			$('#tabla_pedidos tbody').append('<tr class="cart_vuelo">'+
 				'<td>'+$(vuelo_seleccionado).find('td:nth-child(1)').text()+', numero de vuelo '+
 				$(vuelo_seleccionado).find('td:nth-child(6)').text()+', '+$('#num').val()+' personas</td>'+
 				'<td>'+(parseInt($(vuelo_seleccionado).find('td:nth-child(7)').text())*parseInt($('#num').val()))+'</td>'+
@@ -387,7 +388,7 @@ $(document).ready(function(){
 			var date2 = new Date(xf);
 			var timeDiff = Math.abs(date2.getTime() - date1.getTime());
 			var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-			$('#tabla_pedidos tbody').append('<tr>'+
+			$('#tabla_pedidos tbody').append('<tr class="cart_hotel">'+
 				'<td>'+$(hotel_seleccionado).find('td:nth-child(1)').text()+', '+
 				$(hotel_seleccionado).find('td:nth-child(3)').text()+', '+$('#numH').val()+' habitaciones, por '+diffDays+' días</td>'+
 				'<td>'+(parseInt($(hotel_seleccionado).find('td:nth-child(5)').text().replace("$", ""))*parseInt($('#numH').val())*parseInt(diffDays))+'</td>'+
@@ -407,7 +408,7 @@ $(document).ready(function(){
 			$('#table_actividades').find('tr.selec_actividad.red.lighten-4').each(function(index,actividad_seleccionada){
 				/*console.log(index);
 				console.log(actividad_seleccionada);*/
-				$('#tabla_pedidos tbody').append('<tr>'+
+				$('#tabla_pedidos tbody').append('<tr class="cart_actividades">'+
 				'<td>'+$(actividad_seleccionada).find('td:nth-child(1)').text()+', estado '+
 				$(actividad_seleccionada).find('td:nth-child(2)').text()+'</td>'+
 				'<td>'+
@@ -554,7 +555,23 @@ $(document).on('click','.asiento_seleccionado',function(){
 	});
 });
 $(document).on('click','.remove_cart_element',function(){
-	$(this).closest('tr').remove();
+	if($(this).closest('tr').hasClass('cart_vuelo')){
+		var index = $('.cart_vuelo').index($(this).closest('tr'));
+		pedido_vuelo_g.splice(index, 1);
+		$(this).closest('tr').remove();
+		console.log(pedido_vuelo_g);
+	}else if($(this).closest('tr').hasClass('cart_hotel')){
+		var index = $('.cart_hotel').index($(this).closest('tr'));
+		pedido_hotel_g.splice(index, 1);
+		$(this).closest('tr').remove();
+		console.log(pedido_hotel_g);
+	}else if($(this).closest('tr').hasClass('cart_actividades')){
+		var index = $('.cart_actividades').index($(this).closest('tr'));
+		pedido_actividades_g.splice(index, 1);
+		$(this).closest('tr').remove();
+		console.log(pedido_actividades_g);
+	}
+	//console.log($(this))
 	calcular_precio_pedido();
 });
 
